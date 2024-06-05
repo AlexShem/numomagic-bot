@@ -1,5 +1,6 @@
 .git/
 .idea/
 .venv/
+remote
 ./id_rsa
 ./id_rsa.pub
