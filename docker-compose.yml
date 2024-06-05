@@ -1,6 +1,9 @@
 version: '0.2'
 services:
   numerology_assistant:
-    build: .
+    build:
+      dockerfile: Dockerfile
+      args:
+        platform: linux/amd64
     image: registry365.cr.cloud.ru/numerology
     restart: always
