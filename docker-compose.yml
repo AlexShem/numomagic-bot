@@ -1,5 +1,6 @@
-version: '3'
+version: '0.2'
 services:
   numerology_assistant:
     build: .
+    image: registry365.cr.cloud.ru/numerology
     restart: always
