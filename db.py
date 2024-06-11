@@ -63,5 +63,5 @@ def get_user(user_id):
     if user_id in users:
         return users[user_id]
     else:
-        raise Exception("User does not exist")
+        return None
 

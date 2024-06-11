@@ -15,7 +15,8 @@ router = Router()
 
 @router.message(lambda message: message.text == "/start")
 async def send_welcome(message: types.Message):
-    db.add_new_user(message.from_user.id)
+    if db.get_user(message.from_user.id) is None:
+        db.add_new_user(message.from_user.id)
     await message.answer("Welcome to our bot! Please choose an option:", reply_markup=create_mode_buttons())
 
 
@@ -32,7 +33,8 @@ async def start_trial(callback: types.CallbackQuery, state: FSMContext):
         await callback.message.answer("Trial started! Now you can analyze your energy level.",
                                       reply_markup=create_analysis_button())
     else:
-        await callback.message.answer("You have already started a trial.")
+        await callback.message.answer("You have already started a trial.",
+                                      reply_markup=create_analysis_button())
 
 
 @router.callback_query(F.data == "analyze")
