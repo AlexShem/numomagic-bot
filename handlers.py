@@ -42,7 +42,7 @@ async def analyze(callback: types.CallbackQuery, state: FSMContext):
     user = db.get_user(callback.from_user.id)
     if user.is_legal():
         await state.set_state(AnalysisState.year)
-        await callback.message.answer("Please enter your birth year:")
+        await callback.message.answer("Please enter a year:")
     else:
         await callback.message.answer("Your trial period is expired or you have not started it yet.")
 
@@ -55,11 +55,11 @@ async def process_name(message: types.Message, state: FSMContext):
         year = int(year)
     except:
         return await message.answer("Invalid year please try again")
-    if year < 1930 or year > 2020:
+    if year < 1930:
         return await message.answer("Invalid year please try again")
     user.year = year
     await state.set_state(AnalysisState.month)
-    await message.answer("Please enter your birth month", reply_markup=create_month_buttons())
+    await message.answer("Enter a month", reply_markup=create_month_buttons())
 
 
 @router.callback_query(F.data.startswith("month"),
@@ -72,7 +72,7 @@ async def handle_month_callback(callback: types.CallbackQuery, state: FSMContext
     month = list(calendar.month_name).index(month)
     user.month = month
     await state.set_state(AnalysisState.day)
-    await callback.message.answer("Please enter your birth day: ")
+    await callback.message.answer("Enter a day: ")
 
 
 @router.message(AnalysisState.day)
@@ -88,5 +88,4 @@ async def process_birthday(message: types.Message, state: FSMContext):
         return await message.answer("Invalid date, please try again")
     user.day = day
     nrg = energy.calc_energy(user)
-    answer = energy.create_string_from_energy_chart(nrg)
-    await message.answer(answer, parse_mode=ParseMode.HTML, reply_markup=create_analysis_button())
+    await message.answer(nrg, reply_markup=create_analysis_button())
