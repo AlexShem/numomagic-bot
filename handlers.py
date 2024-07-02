@@ -6,6 +6,7 @@ from aiogram.enums import ParseMode
 from aiogram.fsm.context import FSMContext
 
 import db
+import description
 import energy
 from keyboards import create_month_buttons, create_mode_buttons, create_analysis_button
 from states import AnalysisState
@@ -48,7 +49,7 @@ async def analyze(callback: types.CallbackQuery, state: FSMContext):
 
 
 @router.message(AnalysisState.year)
-async def process_name(message: types.Message, state: FSMContext):
+async def process_year(message: types.Message, state: FSMContext):
     year = message.text.strip()
     user = db.get_user(message.from_user.id)
     try:
@@ -75,8 +76,17 @@ async def handle_month_callback(callback: types.CallbackQuery, state: FSMContext
     await callback.message.answer("Enter a day: ")
 
 
+def to_range(rng):
+    if not "-" in rng:
+        return list([int(rng)])
+    start, end = map(int, rng.split("-"))
+    range_object = range(start, end + 1)
+    range_list = list(range_object)
+    return range_list
+
+
 @router.message(AnalysisState.day)
-async def process_birthday(message: types.Message, state: FSMContext):
+async def process_day(message: types.Message, state: FSMContext):
     user = db.get_user(message.from_user.id)
     day = message.text.strip()
     try:
@@ -87,5 +97,15 @@ async def process_birthday(message: types.Message, state: FSMContext):
     if day < 1 or day > days_num:
         return await message.answer("Invalid date, please try again")
     user.day = day
-    nrg = energy.calc_energy(user)
-    await message.answer(nrg, reply_markup=create_analysis_button())
+    energy_chart = energy.get_energy_chart(user.year, user.month, user.day)
+    desc = description.get_description()
+    i = 0
+    result = ""
+    for time_period, items in desc.items():
+        for energy_range, text in items.items():
+            if energy_chart[i] in to_range(energy_range):
+                result += (f"Рекомендация в период времени: {time_period}\n"
+                           f"{text}\n"
+                           f"-------------------------------\n")
+        i += 1
+    await message.answer(result, reply_markup=create_analysis_button())
