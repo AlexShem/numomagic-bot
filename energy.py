@@ -1,23 +1,13 @@
-import math
-from datetime import datetime
 
-from db import User
-import emoji
-
-
-def get_energy_chart(year, month, day):
-    value = str(year * month * day)
+# Function returns digits of common energy level
+# Example: for 01.01.2024 common energy level is
+# 1 * 1 * 2024 = 2024 => 4 digits energy level
+# so function returns [2, 0, 2, 4]
+def get_energy_levels(year, month, day):
+    common_value = str(year * month * day)
     energy_chart = []
-    for i, digit in enumerate(value):
+    for i, digit in enumerate(common_value):
         energy_chart.append(int(digit))
     return energy_chart
-    # result = ""
-    # for hour in range(0, 24, step):
-    #     time = f"{hour}:00" + '-' + f"{hour + step}:00"
-    #     prev, nxt = energy_chart[hour], energy_chart[hour + step]
-    #     energy_chart = F"{prev} - {nxt}"
-    #     emoji_alarm = emoji.emojize(":alarm_clock:")
-    #     result += (f"In time period {emoji_alarm} {time}\n"
-    #                f"Energy level: {energy_chart}\n"
-    #                f"-------------------------------\n")
-    # return result
+
+

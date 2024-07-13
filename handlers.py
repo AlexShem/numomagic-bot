@@ -6,7 +6,7 @@ from aiogram.enums import ParseMode
 from aiogram.fsm.context import FSMContext
 
 import db
-import description
+import energy_dict
 import energy
 from keyboards import create_month_buttons, create_mode_buttons, create_analysis_button
 from states import AnalysisState
@@ -68,21 +68,31 @@ async def process_year(message: types.Message, state: FSMContext):
 async def handle_month_callback(callback: types.CallbackQuery, state: FSMContext):
     user = db.get_user(callback.from_user.id)
     month = callback.data[len("month_"):]
-    print(month)
-    print(list(calendar.month_name))
     month = list(calendar.month_name).index(month)
     user.month = month
     await state.set_state(AnalysisState.day)
     await callback.message.answer("Enter a day: ")
 
 
-def to_range(rng):
-    if not "-" in rng:
-        return list([int(rng)])
-    start, end = map(int, rng.split("-"))
-    range_object = range(start, end + 1)
-    range_list = list(range_object)
-    return range_list
+def prepare_user_energy_output(energy_levels):
+    # Converts range strings like "1-5" or "5-10" to list
+    def to_range(rng):
+        if not "-" in rng:
+            return list([int(rng)])
+        start, end = map(int, rng.split("-"))
+        range_object = range(start, end + 1)
+        range_list = list(range_object)
+        return range_list
+
+    energy_level_dictionary = energy_dict.load(len(energy_levels))
+    result = ""
+    for i, (time_period, items) in enumerate(energy_level_dictionary.items()):
+        for energy_value, description in items.items():
+            if energy_levels[i] in to_range(energy_value):
+                result += (f"Рекомендация в период времени: {time_period}\n"
+                           f"{description}\n"
+                           f"-------------------------------\n")
+    return result
 
 
 @router.message(AnalysisState.day)
@@ -97,15 +107,6 @@ async def process_day(message: types.Message, state: FSMContext):
     if day < 1 or day > days_num:
         return await message.answer("Invalid date, please try again")
     user.day = day
-    energy_chart = energy.get_energy_chart(user.year, user.month, user.day)
-    desc = description.get_description()
-    i = 0
-    result = ""
-    for time_period, items in desc.items():
-        for energy_range, text in items.items():
-            if energy_chart[i] in to_range(energy_range):
-                result += (f"Рекомендация в период времени: {time_period}\n"
-                           f"{text}\n"
-                           f"-------------------------------\n")
-        i += 1
-    await message.answer(result, reply_markup=create_analysis_button())
+    energy_levels = energy.get_energy_levels(user.year, user.month, user.day)
+    answer = prepare_user_energy_output(energy_levels)
+    await message.answer(answer, reply_markup=create_analysis_button())
