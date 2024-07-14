@@ -5,7 +5,7 @@ from aiogram import Router, types, F
 from aiogram.enums import ParseMode
 from aiogram.fsm.context import FSMContext
 
-import db
+import users
 import energy_dict
 import energy
 from keyboards import create_month_buttons, create_mode_buttons, create_analysis_button
@@ -16,8 +16,8 @@ router = Router()
 
 @router.message(lambda message: message.text == "/start")
 async def send_welcome(message: types.Message):
-    if db.get_user(message.from_user.id) is None:
-        db.add_new_user(message.from_user.id)
+    if users.get(message.from_user.id) is None:
+        users.add(message.from_user.id, message.from_user.username)
     await message.answer("Welcome to our bot! Please choose an option:", reply_markup=create_mode_buttons())
 
 
@@ -28,7 +28,7 @@ async def pay(callback: types.CallbackQuery):
 
 @router.callback_query(F.data == "trial")
 async def start_trial(callback: types.CallbackQuery, state: FSMContext):
-    user = db.get_user(callback.from_user.id)
+    user = db.get(callback.from_user.id)
     if user.trial_period_start is None:
         user.trial_period_start = datetime.now()
         await callback.message.answer("Trial started! Now you can analyze your energy level.",
@@ -40,7 +40,7 @@ async def start_trial(callback: types.CallbackQuery, state: FSMContext):
 
 @router.callback_query(F.data == "analyze")
 async def analyze(callback: types.CallbackQuery, state: FSMContext):
-    user = db.get_user(callback.from_user.id)
+    user = db.get(callback.from_user.id)
     if user.is_legal():
         await state.set_state(AnalysisState.year)
         await callback.message.answer("Please enter a year:")
@@ -51,7 +51,7 @@ async def analyze(callback: types.CallbackQuery, state: FSMContext):
 @router.message(AnalysisState.year)
 async def process_year(message: types.Message, state: FSMContext):
     year = message.text.strip()
-    user = db.get_user(message.from_user.id)
+    user = db.get(message.from_user.id)
     try:
         year = int(year)
     except:
@@ -66,7 +66,7 @@ async def process_year(message: types.Message, state: FSMContext):
 @router.callback_query(F.data.startswith("month"),
                        AnalysisState.month)
 async def handle_month_callback(callback: types.CallbackQuery, state: FSMContext):
-    user = db.get_user(callback.from_user.id)
+    user = db.get(callback.from_user.id)
     month = callback.data[len("month_"):]
     month = list(calendar.month_name).index(month)
     user.month = month
@@ -97,7 +97,7 @@ def prepare_user_energy_output(energy_levels):
 
 @router.message(AnalysisState.day)
 async def process_day(message: types.Message, state: FSMContext):
-    user = db.get_user(message.from_user.id)
+    user = db.get(message.from_user.id)
     day = message.text.strip()
     try:
         day = int(day)
