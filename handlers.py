@@ -1,8 +1,6 @@
 import calendar
-from datetime import datetime
 
 from aiogram import Router, types, F
-from aiogram.enums import ParseMode
 from aiogram.fsm.context import FSMContext
 
 import users
@@ -23,24 +21,31 @@ async def send_welcome(message: types.Message):
 
 @router.callback_query(F.data == "pay")
 async def pay(callback: types.CallbackQuery):
-    await callback.message.answer("Not available yet.", reply_markup=create_mode_buttons())
+    user = users.get(callback.from_user.id)
+    if user is None:
+        await callback.message.answer("Please restart a bot")
+    else:
+        user.pay()
+        await callback.message.answer("Subscription is successfully activated! Now you can analyze your energy level", reply_markup=create_mode_buttons())
 
 
 @router.callback_query(F.data == "trial")
 async def start_trial(callback: types.CallbackQuery, state: FSMContext):
-    user = db.get(callback.from_user.id)
-    if user.trial_period_start is None:
-        user.trial_period_start = datetime.now()
-        await callback.message.answer("Trial started! Now you can analyze your energy level.",
-                                      reply_markup=create_analysis_button())
+    user = users.get(callback.from_user.id)
+    if user is None:
+        await callback.message.answer("Please restart a bot")
     else:
-        await callback.message.answer("You have already started a trial.",
-                                      reply_markup=create_analysis_button())
+        if user.start_trial() is True:
+            await callback.message.answer("Trial started! Now you can analyze your energy level.",
+                                          reply_markup=create_analysis_button())
+        else:
+            await callback.message.answer("You have already started a trial.",
+                                          reply_markup=create_analysis_button())
 
 
 @router.callback_query(F.data == "analyze")
 async def analyze(callback: types.CallbackQuery, state: FSMContext):
-    user = db.get(callback.from_user.id)
+    user = users.get(callback.from_user.id)
     if user.is_legal():
         await state.set_state(AnalysisState.year)
         await callback.message.answer("Please enter a year:")
@@ -51,14 +56,13 @@ async def analyze(callback: types.CallbackQuery, state: FSMContext):
 @router.message(AnalysisState.year)
 async def process_year(message: types.Message, state: FSMContext):
     year = message.text.strip()
-    user = db.get(message.from_user.id)
     try:
         year = int(year)
     except:
         return await message.answer("Invalid year please try again")
     if year < 1930:
         return await message.answer("Invalid year please try again")
-    user.year = year
+    await state.update_data(year=year)
     await state.set_state(AnalysisState.month)
     await message.answer("Enter a month", reply_markup=create_month_buttons())
 
@@ -66,10 +70,9 @@ async def process_year(message: types.Message, state: FSMContext):
 @router.callback_query(F.data.startswith("month"),
                        AnalysisState.month)
 async def handle_month_callback(callback: types.CallbackQuery, state: FSMContext):
-    user = db.get(callback.from_user.id)
     month = callback.data[len("month_"):]
     month = list(calendar.month_name).index(month)
-    user.month = month
+    await state.update_data(month=month)
     await state.set_state(AnalysisState.day)
     await callback.message.answer("Enter a day: ")
 
@@ -97,16 +100,17 @@ def prepare_user_energy_output(energy_levels):
 
 @router.message(AnalysisState.day)
 async def process_day(message: types.Message, state: FSMContext):
-    user = db.get(message.from_user.id)
     day = message.text.strip()
     try:
         day = int(day)
     except:
         return await message.answer("Invalid date, please try again")
-    _, days_num = calendar.monthrange(user.year, user.month)
+    data = await state.get_data()
+    year = data.get("year")
+    month = data.get("month")
+    _, days_num = calendar.monthrange(year, month)
     if day < 1 or day > days_num:
         return await message.answer("Invalid date, please try again")
-    user.day = day
-    energy_levels = energy.get_energy_levels(user.year, user.month, user.day)
+    energy_levels = energy.get_energy_levels(year, month, day)
     answer = prepare_user_energy_output(energy_levels)
     await message.answer(answer, reply_markup=create_analysis_button())

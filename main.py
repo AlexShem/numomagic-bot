@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 
 from handlers import router
 from menu import main_menu_commands
+import db
 
 # exporting BOT_TOKEN from env file
 load_dotenv()
@@ -25,10 +26,12 @@ async def set_menu(bot: Bot):
 
 
 async def main():
+    db.connection.connect()
     bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     await set_menu(bot)
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
+    db.connection.close()
 
 
 if __name__ == "__main__":
