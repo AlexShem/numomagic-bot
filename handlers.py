@@ -26,7 +26,7 @@ async def pay(callback: types.CallbackQuery):
         await callback.message.answer("Please restart a bot")
     else:
         user.pay()
-        await callback.message.answer("Subscription is successfully activated! Now you can analyze your energy level", reply_markup=create_mode_buttons())
+        await callback.message.answer("Subscription is successfully activated! Now you can analyze your energy level", reply_markup=create_analysis_button())
 
 
 @router.callback_query(F.data == "trial")
