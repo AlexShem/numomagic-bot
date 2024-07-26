@@ -1,6 +1,6 @@
-from aiogram_dialog import Window
-from aiogram_dialog.widgets.kbd import SwitchTo, Button, Row, Calendar
-from aiogram_dialog.widgets.text import Const
+from aiogram_dialog import Window, DialogManager
+from aiogram_dialog.widgets.kbd import SwitchTo, Button, Row, Calendar, ScrollingGroup, NumberedPager
+from aiogram_dialog.widgets.text import Const, Format, List
 
 from handlers import on_premium, on_trial, on_date_selected
 from states.state_group import DialogSG
@@ -24,5 +24,24 @@ calendar_window = Window(
     Calendar(id='calendar', on_click=on_date_selected),
     state=DialogSG.CALENDAR)
 
+
+async def energy_description_list(**_kwargs):
+    return {
+        "description": (
+            ("time1", "Energy1"),
+            ("time2", "Energy2")
+        )
+    }
+
 result_window = Window(Const("Energy analysis result"),
+                       List(
+                           Format("{item[0]} : {item[1]}"),
+                           items="description",
+                           id="result",
+                           page_size=1
+                       ),
+                       NumberedPager(
+                           scroll="result",
+                       ),
+                       getter=energy_description_list,
                        state=DialogSG.RESULT)
