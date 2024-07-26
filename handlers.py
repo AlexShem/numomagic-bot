@@ -1,4 +1,5 @@
 import calendar
+from datetime import date
 
 from aiogram import Router, types, F
 from aiogram.fsm.context import FSMContext
@@ -82,25 +83,27 @@ router = Router()
 #     await callback.message.answer("Enter a day: ")
 #
 #
-# def prepare_user_energy_output(energy_levels):
-#     # Converts range strings like "1-5" or "5-10" to list
-#     def to_range(rng):
-#         if not "-" in rng:
-#             return list([int(rng)])
-#         start, end = map(int, rng.split("-"))
-#         range_object = range(start, end + 1)
-#         range_list = list(range_object)
-#         return range_list
-#
-#     energy_level_dictionary = energy_dict.load(len(energy_levels))
-#     result = ""
-#     for i, (time_period, items) in enumerate(energy_level_dictionary.items()):
-#         for energy_value, description in items.items():
-#             if energy_levels[i] in to_range(energy_value):
-#                 result += (f"Рекомендация в период времени: {time_period}\n"
-#                            f"{description}\n"
-#                            f"-------------------------------\n")
-#     return result
+def prepare_user_energy_output(energy_levels):
+    # Converts range strings like "1-5" or "5-10" to list
+    def to_range(rng):
+        if not "-" in rng:
+            return list([int(rng)])
+        start, end = map(int, rng.split("-"))
+        range_object = range(start, end + 1)
+        range_list = list(range_object)
+        return range_list
+
+    energy_level_dictionary = energy_dict.load(len(energy_levels))
+    result = list()
+    for i, (time_period, items) in enumerate(energy_level_dictionary.items()):
+        for energy_value, description in items.items():
+            if energy_levels[i] in to_range(energy_value):
+                result.append(f"Рекомендация в период времени: {time_period}\n"
+                              f"{description}\n"
+                              f"-------------------------------\n")
+    return result
+
+
 #
 #
 # @router.message(AnalysisState.day)
@@ -151,3 +154,12 @@ async def on_premium(
     else:
         user.pay()
         await manager.switch_to(DialogSG.ANALYSIS)
+
+
+async def on_date_selected(callback: CallbackQuery, widget,
+                           manager: DialogManager, selected_date: date):
+    manager.dialog_data["name"] = selected_date
+    energy_levels = energy.get_energy_levels(selected_date.year, selected_date.month, selected_date.day)
+    prepared_answer = prepare_user_energy_output(energy_levels)
+    print(prepared_answer)
+    await manager.switch_to(DialogSG.RESULT)
