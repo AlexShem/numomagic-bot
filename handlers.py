@@ -3,6 +3,7 @@ from datetime import date
 
 from aiogram import Router, types, F
 from aiogram.fsm.context import FSMContext
+from aiogram.fsm.state import State
 from aiogram.types import CallbackQuery, Message
 from aiogram_dialog import DialogManager, StartMode
 from aiogram_dialog.widgets.kbd import Button
@@ -12,7 +13,7 @@ import energy_dict
 import energy
 from keyboards import create_month_buttons, create_mode_buttons, create_analysis_button
 # from states import AnalysisState
-from states.state_group import DialogSG
+from states.state_group import DialogSG, FourDigitsStates
 
 router = Router()
 
@@ -99,8 +100,7 @@ def prepare_user_energy_output(energy_levels):
         for energy_value, description in items.items():
             if energy_levels[i] in to_range(energy_value):
                 result.append(f"Рекомендация в период времени: {time_period}\n"
-                              f"{description}\n"
-                              f"-------------------------------\n")
+                              f"{description}")
     return result
 
 
@@ -161,5 +161,28 @@ async def on_date_selected(callback: CallbackQuery, widget,
     manager.dialog_data["name"] = selected_date
     energy_levels = energy.get_energy_levels(selected_date.year, selected_date.month, selected_date.day)
     prepared_answer = prepare_user_energy_output(energy_levels)
-    print(prepared_answer)
-    await manager.switch_to(DialogSG.RESULT)
+    dialog_data = {f"period_{i+1}": text for i, text in enumerate(prepared_answer)}
+    if len(prepared_answer) == 4:
+        await manager.start(FourDigitsStates.STATE1, data=dialog_data)
+    else:
+        print("Does not 4 digits")
+
+
+async def close(callback: CallbackQuery, widget, manager: DialogManager):
+    await manager.done()
+
+
+async def on_b_4_1(callback: CallbackQuery, widget, manager: DialogManager):
+    await manager.switch_to(FourDigitsStates.STATE1)
+
+
+async def on_b_4_2(callback: CallbackQuery, widget, manager: DialogManager):
+    await manager.switch_to(FourDigitsStates.STATE2)
+
+
+async def on_b_4_3(callback: CallbackQuery, widget, manager: DialogManager):
+    await manager.switch_to(FourDigitsStates.STATE3)
+
+
+async def on_b_4_4(callback: CallbackQuery, widget, manager: DialogManager):
+    await manager.switch_to(FourDigitsStates.STATE4)

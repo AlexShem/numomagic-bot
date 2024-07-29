@@ -1,9 +1,9 @@
 from aiogram_dialog import Window, DialogManager
-from aiogram_dialog.widgets.kbd import SwitchTo, Button, Row, Calendar, ScrollingGroup, NumberedPager
-from aiogram_dialog.widgets.text import Const, Format, List
+from aiogram_dialog.widgets.kbd import SwitchTo, Button, Row, Calendar, Group
+from aiogram_dialog.widgets.text import Const, Format
 
-from handlers import on_premium, on_trial, on_date_selected
-from states.state_group import DialogSG
+from handlers import on_premium, on_trial, on_date_selected, on_b_4_1, on_b_4_2, on_b_4_3, on_b_4_4
+from states.state_group import DialogSG, FourDigitsStates
 
 user_option_window = Window(
     Const("Welcome to our bot! Please choose an option:"),
@@ -25,23 +25,45 @@ calendar_window = Window(
     state=DialogSG.CALENDAR)
 
 
-async def energy_description_list(**_kwargs):
-    return {
-        "description": (
-            ("time1", "Energy1"),
-            ("time2", "Energy2")
-        )
-    }
+# -------------------------------------------------------------------------------
 
-result_window = Window(Const("Energy analysis result"),
-                       List(
-                           Format("{item[0]} : {item[1]}"),
-                           items="description",
-                           id="result",
-                           page_size=1
-                       ),
-                       NumberedPager(
-                           scroll="result",
-                       ),
-                       getter=energy_description_list,
-                       state=DialogSG.RESULT)
+async def get_period_1(dialog_manager: DialogManager, **kwargs):
+    return {"period_1": dialog_manager.start_data.get("period_1")}
+
+
+async def get_period_2(dialog_manager: DialogManager, **kwargs):
+    return {"period_2": dialog_manager.start_data.get("period_2")}
+
+
+async def get_period_3(dialog_manager: DialogManager, **kwargs):
+    return {"period_3": dialog_manager.start_data.get("period_3")}
+
+
+async def get_period_4(dialog_manager: DialogManager, **kwargs):
+    return {"period_4": dialog_manager.start_data.get("period_4")}
+
+
+def create_four_digits_window():
+    button_group = Group(Button(Const("00:00-06:00"), id="b_4_1", on_click=on_b_4_1),
+                         Button(Const("06:00-12:00"), id="b_4_2", on_click=on_b_4_2),
+                         Button(Const("12:00-18:00"), id="b_4_3", on_click=on_b_4_3),
+                         Button(Const("18:00-24:00"), id="b_4_4", on_click=on_b_4_4))
+    windows = [
+        Window(Format("{period_1}"),
+               button_group,
+               state=FourDigitsStates.STATE1,
+               getter=get_period_1),
+        Window(Format("{period_2}"),
+               button_group,
+               state=FourDigitsStates.STATE2,
+               getter=get_period_2),
+        Window(Format("{period_3}"),
+               button_group,
+               state=FourDigitsStates.STATE3,
+               getter=get_period_3),
+        Window(Format("{period_4}"),
+               button_group,
+               state=FourDigitsStates.STATE4,
+               getter=get_period_4),
+    ]
+    return windows
