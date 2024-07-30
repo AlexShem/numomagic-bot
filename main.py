@@ -11,8 +11,8 @@ from aiogram_dialog import setup_dialogs
 from dotenv import load_dotenv
 
 from dialogs.dialogs import main_dialog, four_digits_dialog, five_digits_dialog, six_digits_dialog
-from handlers import start
-import db
+from handlers.handlers import start
+from db import db
 
 load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
