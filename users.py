@@ -1,6 +1,7 @@
+import os
 from datetime import timedelta, datetime
 from peewee import TextField, DoesNotExist, PrimaryKeyField, IntegerField
-from db import BaseModel
+from db import BaseModel, connection
 
 
 class User(BaseModel):
@@ -47,3 +48,7 @@ def get(user_id) -> User:
     except DoesNotExist:
         pass
     return user
+
+
+if not connection.table_exists('users'):
+    connection.create_tables([User])

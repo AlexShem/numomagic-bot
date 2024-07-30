@@ -1,6 +1,5 @@
 from datetime import date
 
-from aiogram import Router
 from aiogram.types import CallbackQuery, Message
 from aiogram_dialog import DialogManager, StartMode
 from aiogram_dialog.widgets.kbd import Button

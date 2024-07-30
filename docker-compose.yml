@@ -6,4 +6,6 @@ services:
       platforms:
         - "linux/amd64"
     image: registry365.cr.cloud.ru/numerology
+    volumes:
+      - ./db:/bot/db
     restart: always

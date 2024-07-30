@@ -19,7 +19,6 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 
 async def main():
-    db.connection.connect()
     bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     dialog_router = Router()
     dialog_router.include_router(main_dialog)

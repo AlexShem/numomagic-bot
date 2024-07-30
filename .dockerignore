@@ -5,3 +5,4 @@ remote
 ./id_rsa
 ./id_rsa.pub
 db
+test
