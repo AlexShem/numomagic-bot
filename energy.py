@@ -1,3 +1,5 @@
+import json
+
 
 # Function returns digits of common energy level
 # Example: for 01.01.2024 common energy level is
@@ -11,3 +13,9 @@ def get_energy_levels(year, month, day):
     return energy_chart
 
 
+# Function returns description from dict directory
+def load(periods):
+    file = f"dicts/{periods}-digits.json"
+    with open(file, "r") as f:
+        description = json.load(f)
+    return description

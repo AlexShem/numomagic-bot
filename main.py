@@ -32,7 +32,7 @@ async def main():
     setup_dialogs(dp)
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
-    db.connection.close_result_dialog()
+    db.connection.close()
 
 
 if __name__ == "__main__":

@@ -6,7 +6,6 @@ from aiogram_dialog import DialogManager, StartMode
 from aiogram_dialog.widgets.kbd import Button
 
 import users
-import energy_dict
 import energy
 from states.state_group import DialogSG, FiveDigitsStates, FourDigitsStates, SixDigitsStates
 
@@ -21,7 +20,7 @@ def prepare_user_energy_output(energy_levels):
         range_list = list(range_object)
         return range_list
 
-    energy_level_dictionary = energy_dict.load(len(energy_levels))
+    energy_level_dictionary = energy.load(len(energy_levels))
     result = list()
     for i, (time_period, items) in enumerate(energy_level_dictionary.items()):
         for energy_value, description in items.items():
