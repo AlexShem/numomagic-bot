@@ -1,0 +1,27 @@
+{
+    "00:00-06:00": {
+        "1-2": "Try to rest in a safe and familiar place that doesn’t require much adjustment. This will allow you to feel comfortable not only during rest but also if you need to work or do school assignments.",
+        "3-4": "The body maintains a good balance between wakefulness and sleep. This equilibrium can be disrupted by being in an unfamiliar place or having unpleasant conversations and arguments before bedtime. If you can’t achieve a calm state, listen to familiar music.",
+        "5-7": "If you go to bed early, you will see vivid dreams full of symbols. If you don’t manage to rest and instead choose to socialise with family or friends, don’t forget to make wishes and write down the ideas that come to you. Try to avoid resolving conflicts and stay away from areas of tension.",
+        "8-9": "Inner restlessness might pull you out of sleep, preventing proper rest. However, you will have plenty of energy for meeting friends, parties, working on your articles, reading your favourite books, and watching movies."
+    },
+    "06:00-12:00": {
+        "0": "It’s better to stay home and avoid conflicts you might easily get involved in. Your moral and physical strength will recover slowly.",
+        "1-2": "Postpone attempts to work or socialise. Everything you plan is likely to fall apart halfway through. A walk and activities that don’t require complex tasks and focus will be beneficial. Casual, non-dramatic communication will also be favourable during this period.",
+        "3-4": "Don’t overload yourself with worries and tasks that require control and attention. A walk, casual conversation without the goal of resolving issues, light fitness, or breathing exercises will help quickly improve your physical state.",
+        "5-7": "Energy is quickly replenished in the body. This can be supported by a walk and morning breakfast accompanied by comfortable music. Avoid negative information and arguments to avoid missing important signs that the day has prepared for you.",
+        "8-9": "Energy and physical strength are quickly replenished. Use this time to resolve disputes in relationships and tackle tasks requiring decisive actions. Even if things seem challenging, remember: everything will work out!"
+    },
+    "12:00-18:00": {
+        "0-1": "Do not make important decisions and don’t expect others to do so. You won’t get anything positive and will only waste your moral and physical resources, which will be hard to restore. Try to engage in activities that don’t require much effort.",
+        "2-3": "If you need to address 2-3 issues, taking your time will be successful. For rejuvenation, take an afternoon walk, listen to your favourite music, or talk to someone who makes you feel comfortable.",
+        "4-7": "This is a good time to socialise in pleasant company, participate in preparation, and execute events. Incoming information will be useful for the future. However, your physical state might be unstable, so be more careful with your diet.",
+        "8-9": "Your energy is at a peak. To maximise its use, try to create a comfortable environment for work, communication, or rest. Since you will be highly sensitive and easily irritated by any changes, try to keep everything under control."
+    },
+    "18:00-24:00": {
+        "0-1": "Do not schedule crucial meetings, start important conversations, or delve into complex topics. You may get drawn into conflicts and disputes, which will dampen your spirit and overall mood. Postpone fitness activities and be mindful of your diet.",
+        "2-3": "Pay attention to your physical condition, be careful with alcohol and smoking. Try to avoid negative events and information. Hobbies, socialising with friends, walking, music, movies—these are tools for quick recovery.",
+        "4-7": "A good evening. Try to plan the upcoming week, as the schedule will work like a set plan, and 80% will be easily accomplished. Spend time with family, relatives, or friends. If you find yourself in unfamiliar company or spend time alone, you will receive important information or form ideas, as there will be signs and clues everywhere.",
+        "8-9": "This is a wonderful end to the day. Relax, watch movies, read, listen to music, visit a friend, or go to a party. Everything will be favourable for you."
+    }
+}

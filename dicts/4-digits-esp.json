@@ -1,0 +1,27 @@
+{
+    "00:00-06:00": {
+        "1-2": "Intenta descansar en un lugar seguro y familiar, que no requiera mucho tiempo para acostumbrarte. Esto te permitirá sentirte cómodo no solo durante el descanso, sino también si necesitas trabajar o realizar tareas académicas.",
+        "3-4": "El cuerpo controla bien los estados de vigilia y sueño. Este equilibrio puede alterarse estando en un lugar desconocido o debido a conversaciones desagradables y discusiones antes de dormir. Si no puedes estabilizarte, escucha música familiar para ti.",
+        "5-7": "Si te acuestas temprano, tendrás sueños vívidos con muchos símbolos. Si no logras descansar y prefieres pasar tiempo con familiares o amigos, no olvides pedir deseos y anotar las ideas que te vengan a la mente. Evita aclarar problemas y mantente alejado de las zonas de conflicto.",
+        "8-9": "La inquietud interna puede sacarte del sueño, impidiendo un descanso pleno. Sin embargo, tendrás mucha energía para reunirte con amigos, ir de fiesta, trabajar en tus artículos, leer libros favoritos y ver películas."
+    },
+    "06:00-12:00": {
+        "0": "Es mejor quedarse en casa y evitar conflictos, en los que podrías verte envuelto fácilmente. Tus fuerzas morales y físicas se recuperarán lentamente.",
+        "1-2": "Postpón los intentos de trabajar y socializar. Todo lo que planees tenderá a desmoronarse a medio camino. Un paseo y actividades que no requieran tareas complejas y concentración serán beneficiosas. La comunicación sin prisas ni dramas también será favorable en este período.",
+        "3-4": "No te sobrecargues con tareas que requieran control y atención. Un paseo, conversaciones sin el objetivo de aclarar relaciones, fitness sin esfuerzo o ejercicios de respiración ayudarán a mejorar rápidamente tu estado físico.",
+        "5-7": "La energía se recupera rápidamente en el cuerpo. Esto se puede apoyar con un paseo y un desayuno matutino con música agradable de fondo. Evita la información negativa y las disputas para no perder señales importantes que este día tiene para ti.",
+        "8-9": "Las fuerzas energéticas y físicas se recuperan rápidamente. Usa este tiempo para resolver cuestiones conflictivas en las relaciones y abordar tareas que requieran decisiones firmes. Incluso si todo parece difícil, recuerda: ¡todo saldrá bien!"
+    },
+    "12:00-18:00": {
+        "0-1": "No tomes decisiones importantes ni lo pidas a otros. No obtendrás nada positivo, solo gastarás tus recursos morales y físicos, que serán difíciles de recuperar. Intenta ocuparte de tareas que no requieran esfuerzo.",
+        "2-3": "Si necesitas abordar 2-3 cuestiones, hacerlo sin prisa será exitoso. Para recuperar fuerzas, da un paseo después del almuerzo, escucha música favorita o conversa con una persona agradable y cómoda para ti.",
+        "4-7": "Es un buen momento para socializar en compañía agradable, participar en la preparación y realización de eventos. La información que recibas será útil para el futuro. Sin embargo, el estado físico puede fallar, trata de ser más cuidadoso y selectivo con la comida.",
+        "8-9": "Tu energía está en auge. Para aprovecharla al máximo, intenta crear un ambiente cómodo para trabajar, socializar o descansar. Como serás muy sensible e irritable ante cualquier cambio, trata de mantener todo bajo control."
+    },
+    "18:00-24:00": {
+        "0-1": "No programes encuentros decisivos, no inicies conversaciones importantes ni toques temas complejos. Podrías ser arrastrado a conflictos y discusiones, lo que afectaría tu espíritu y ánimo en general. Postpón el ejercicio y presta atención a la comida.",
+        "2-3": "Presta atención a tu estado físico, sé cuidadoso con el alcohol y el tabaco. Evita eventos negativos y la información. Hobbies, conversaciones con amigos, paseos, música, películas, son herramientas para una rápida recuperación.",
+        "4-7": "Buena noche. Intenta planificar la semana próxima, ya que el horario funcionará como una configuración y el 80% se cumplirá fácilmente. Pasa tiempo con tus seres queridos, familiares o amigos. Si te encuentras en una compañía desconocida o pasas tiempo solo, recibirás información importante o formarás ideas, ya que habrá señales y pistas por todas partes.",
+        "8-9": "Un final de día excelente. Descansa, mira películas, lee, escucha música, puedes visitar a alguien o ir a una fiesta. ¡Todo será favorable para ti!"
+    }
+}

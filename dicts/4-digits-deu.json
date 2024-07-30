@@ -1,0 +1,27 @@
+{
+    "00:00-06:00": {
+        "1-2": "Versuchen Sie, sich an einem sicheren und vertrauten Ort auszuruhen, der keine lange Eingewöhnungszeit erfordert. Das ermöglicht es Ihnen, sich nicht nur während der Ruhe, sondern auch bei der Arbeit oder beim Erledigen von Aufgaben wohlzufühlen.",
+        "3-4": "Der Körper steuert den Zustand von Wachheit und Schlaf gut. Dieses Gleichgewicht kann durch einen Aufenthalt an einem unbekannten Ort oder unangenehme Gespräche und Streitigkeiten vor dem Schlafengehen gestört werden. Wenn es Ihnen schwerfällt, in einen ausgeglichenen Zustand zu kommen, hören Sie vertraute Musik.",
+        "5-7": "Wenn Sie früh zu Bett gehen, werden Sie lebhafte Träume mit vielen Symbolen sehen. Sollten Sie keine Ruhe finden und stattdessen die Gesellschaft von Freunden oder Angehörigen bevorzugen, vergessen Sie nicht, sich etwas zu wünschen und Ideen aufzuschreiben, die Ihnen einfallen. Versuchen Sie, Konflikte zu vermeiden.",
+        "8-9": "Innere Unruhe kann Sie aus dem Schlaf reißen und einen vollständigen Ruhezustand verhindern. Sie werden jedoch viel Energie für Treffen mit Freunden, Partys, die Arbeit an Ihren Artikeln, das Lesen Ihrer Lieblingsbücher und das Anschauen von Filmen haben."
+    },
+    "06:00-12:00": {
+        "0": "Es ist besser, zu Hause zu bleiben und Konflikte zu vermeiden, in die Sie leicht verwickelt werden können. Ihre geistigen und körperlichen Kräfte werden sich nur langsam erholen.",
+        "1-2": "Verschieben Sie Versuche, zu arbeiten oder sich auszutauschen. Alles, was Sie planen, wird voraussichtlich auf halbem Weg scheitern. Ein Spaziergang und Aktivitäten, die keine komplexen Aufgaben oder Konzentration erfordern, werden hilfreich sein. Eine unaufgeregte Kommunikation ist in dieser Zeit ebenfalls günstig.",
+        "3-4": "Überlasten Sie sich nicht mit Aufgaben, die Kontrolle und Aufmerksamkeit erfordern. Ein Spaziergang, Gespräche ohne den Versuch, Probleme zu klären, Fitness ohne Anstrengung oder Atemübungen können den körperlichen Zustand schnell verbessern.",
+        "5-7": "Die Energie im Körper wird schnell wiederhergestellt. Dies kann durch einen Spaziergang und ein Frühstück am Morgen bei angenehmer Musik unterstützt werden. Vermeiden Sie negative Informationen und Streitigkeiten, um wichtige Zeichen, die der Tag für Sie bereithält, nicht zu verpassen.",
+        "8-9": "Ihre energetischen und physischen Kräfte erholen sich schnell. Nutzen Sie diese Zeit, um strittige Fragen in Beziehungen zu klären und Aufgaben zu lösen, die entschlossenes Handeln erfordern. Auch wenn es schwierig erscheint, denken Sie daran: Es wird gelingen!"
+    },
+    "12:00-18:00": {
+        "0-1": "Treffen Sie keine wichtigen Entscheidungen und verlangen Sie dies auch nicht von anderen. Sie werden nichts Positives erreichen und nur Ihre moralischen und physischen Ressourcen verschwenden, die schwer wiederherzustellen sind. Versuchen Sie, sich mit Dingen zu beschäftigen, die keine Anstrengung erfordern.",
+        "2-3": "Wenn es notwendig ist, 2-3 Fragen zu klären, wird eine langsame Durchführung erfolgreich sein. Um die Kräfte wiederherzustellen, machen Sie einen Nachmittagsspaziergang, hören Sie Ihre Lieblingsmusik oder sprechen Sie mit einer Ihnen angenehmen Person.",
+        "4-7": "Dies ist eine gute Zeit für Gespräche in angenehmer Gesellschaft und für die Teilnahme an der Vorbereitung und Umsetzung von Veranstaltungen. Die Informationen, die Sie erhalten, werden in Zukunft nützlich sein. Allerdings kann der körperliche Zustand nachlassen, daher achten Sie darauf, was Sie essen.",
+        "8-9": "Ihre Energie ist auf dem Höhepunkt. Um sie optimal zu nutzen, versuchen Sie, eine komfortable Umgebung für Arbeit, Kommunikation oder Erholung zu schaffen. Da Sie auf Veränderungen sehr empfindlich und gereizt reagieren könnten, versuchen Sie, alles unter Kontrolle zu halten."
+    },
+    "18:00-24:00": {
+        "0-1": "Planen Sie keine schicksalhaften Treffen, beginnen Sie keine wichtigen Gespräche und sprechen Sie keine schwierigen Themen an. Man könnte Sie in Konflikte und Streitigkeiten verwickeln, was Ihre Stimmung und Ihre Entschlossenheit insgesamt unterdrücken könnte. Verschieben Sie Fitnessaktivitäten und achten Sie auf Ihre Ernährung.",
+        "2-3": "Achten Sie auf Ihren körperlichen Zustand und seien Sie vorsichtig mit Alkohol und Rauchen. Vermeiden Sie negative Ereignisse und Informationen. Hobbys, Gespräche mit Freunden, Spaziergänge, Musik und Filme sind schnelle Mittel zur Erholung.",
+        "4-7": "Ein schöner Abend. Planen Sie die kommende Woche, da der Plan wie eine Anweisung funktionieren wird und 80% der Aufgaben leicht erfüllt werden können. Verbringen Sie Zeit mit Ihren Lieben, Verwandten oder Freunden. Sollten Sie sich in unbekannter Gesellschaft befinden oder allein sein, werden Sie wichtige Informationen erhalten oder Ideen entwickeln, da überall Zeichen und Hinweise zu finden sind.",
+        "8-9": "Ein großartiger Abschluss des Tages. Entspannen Sie sich, schauen Sie Filme, lesen Sie, hören Sie Musik oder besuchen Sie Freunde oder Partys. Alles wird für Sie günstig sein!"
+    }
+}

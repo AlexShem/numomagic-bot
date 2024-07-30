@@ -1,0 +1,27 @@
+{
+    "00:00-06:00": {
+        "1-2": "Essayez de vous reposer dans un endroit sûr et familier qui ne nécessite pas de longue adaptation. Cela vous permettra de vous sentir à l'aise non seulement pendant le repos, mais aussi en cas de besoin de travailler ou de réaliser des tâches éducatives.",
+        "3-4": "Le corps contrôle bien les états de veille et de sommeil. Cet équilibre peut être perturbé par le fait de se trouver dans un lieu inconnu ou par des conversations désagréables et des disputes avant de dormir. Si vous n'arrivez pas à vous mettre dans un état d'esprit calme, écoutez de la musique qui vous est familière.",
+        "5-7": "Si vous allez vous coucher tôt, vous verrez des rêves vifs avec de nombreux symboles. Si vous ne parvenez pas à vous reposer et préférez interagir avec des proches ou des amis, n'oubliez pas de faire des vœux et de noter les idées qui vous viennent. Essayez de ne pas régler des différends et évitez les zones de conflit.",
+        "8-9": "L'inquiétude intérieure peut vous sortir de l'état de sommeil, perturbant ainsi un repos complet. Cependant, vous aurez beaucoup d'énergie pour rencontrer des amis, faire des soirées, travailler sur vos articles, lire vos livres préférés et regarder des films."
+    },
+    "06:00-12:00": {
+        "0": "Il vaut mieux rester à la maison et éviter les conflits dans lesquels vous pourriez facilement être entraîné. Vos forces morales et physiques se rétabliront lentement.",
+        "1-2": "Remettez à plus tard les tentatives de travail et de communication. Tout ce que vous planifierez aura tendance à s'effondrer à mi-chemin. Une promenade et des activités ne nécessitant pas de tâches complexes et de concentration seront bénéfiques. Une communication sans précipitation ni drame sera également favorable durant cette période.",
+        "3-4": "Ne vous surchargez pas de préoccupations et de tâches nécessitant un contrôle et une attention. Une promenade, une communication sans but de régler des relations, du fitness sans charge ou des exercices de respiration aideront à améliorer rapidement l'état physique.",
+        "5-7": "L'énergie se rétablit rapidement dans le corps. Cela peut être renforcé par une promenade et un petit-déjeuner matinal sur fond de musique confortable. Évitez les informations négatives et les disputes pour ne pas manquer les signes importants que cette journée vous a préparés.",
+        "8-9": "Les forces énergétiques et physiques se rétablissent rapidement. Utilisez ce temps pour résoudre les questions litigieuses dans les relations et les tâches nécessitant des décisions volontaires. Même si tout semble difficile, rappelez-vous : tout ira bien !"
+    },
+    "12:00-18:00": {
+        "0-1": "Ne prenez pas de décisions importantes et ne le demandez pas aux autres. Vous ne gagnerez rien de positif et ne ferez que dilapider vos ressources morales et physiques, qu'il sera difficile de récupérer. Essayez de vous occuper de tâches ne nécessitant pas de tension.",
+        "2-3": "Si vous devez régler 2-3 questions, une réalisation sans hâte sera réussie. Pour récupérer vos forces, profitez d'une promenade après le déjeuner, d'écouter votre musique préférée ou de parler avec une personne agréable et confortable pour vous.",
+        "4-7": "C'est un bon moment pour discuter en compagnie agréable, participer à la préparation et à la réalisation d'événements. Les informations qui arrivent seront utiles pour l'avenir. Cependant, votre état physique peut flancher, essayez d'être plus prudent et sélectif dans votre alimentation.",
+        "8-9": "Votre énergie est à son comble. Pour l'utiliser au maximum, essayez de créer une atmosphère confortable pour le travail, la communication ou le repos. Étant donné que vous serez hypersensible et irritable face aux changements, essayez de tout garder sous contrôle."
+    },
+    "18:00-24:00": {
+        "0-1": "Ne planifiez pas de rencontres décisives, n'entamez pas de conversations importantes et n'abordez pas de sujets complexes. Vous pourriez être entraîné dans des conflits et des querelles, ce qui entraînera une suppression de votre esprit et de votre humeur en général. Remettez le fitness et soyez attentif à la nourriture.",
+        "2-3": "Faites attention à votre état physique, soyez prudent avec l'alcool et le tabac. Essayez d'éviter les événements et les informations négatifs. Les loisirs, la communication avec des amis, la promenade, la musique, le cinéma sont des outils pour une récupération rapide.",
+        "4-7": "Bonne soirée. Essayez de planifier la semaine à venir, car l'emploi du temps fonctionnera comme une directive et 80 % se réalisera facilement. Passez du temps avec vos proches, votre famille ou vos amis. Si vous vous trouvez dans une compagnie inconnue ou passez du temps seul, vous recevrez des informations importantes ou formerez des idées, car il y aura des signes et des indices partout.",
+        "8-9": "Excellente fin de journée. Détendez-vous, regardez des films, lisez, écoutez de la musique, vous pouvez rendre visite à des amis ou aller à une fête. Tout sera favorable pour vous !"
+    }
+}
