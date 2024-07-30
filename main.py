@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import os
+from dotenv import load_dotenv
 
 from aiogram import Bot, Dispatcher, Router
 from aiogram.client.default import DefaultBotProperties
@@ -8,11 +9,10 @@ from aiogram.enums.parse_mode import ParseMode
 from aiogram.filters import CommandStart
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram_dialog import setup_dialogs
-from dotenv import load_dotenv
 
 from dialogs.dialogs import main_dialog, four_digits_dialog, five_digits_dialog, six_digits_dialog
 from handlers.handlers import start
-from db import db
+import db
 
 load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")

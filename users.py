@@ -1,6 +1,6 @@
 from datetime import timedelta, datetime
 from peewee import TextField, DoesNotExist, PrimaryKeyField, IntegerField
-from db.db import BaseModel
+from db import BaseModel
 
 
 class User(BaseModel):
