@@ -8,7 +8,24 @@ class DialogSG(StatesGroup):
 
 
 class FourDigitsStates(StatesGroup):
-    STATE1 = State()
-    STATE2 = State()
-    STATE3 = State()
-    STATE4 = State()
+    PERIOD1 = State()
+    PERIOD2 = State()
+    PERIOD3 = State()
+    PERIOD4 = State()
+
+
+class FiveDigitsStates(StatesGroup):
+    PERIOD1 = State()
+    PERIOD2 = State()
+    PERIOD3 = State()
+    PERIOD4 = State()
+    PERIOD5 = State()
+
+
+class SixDigitsStates(StatesGroup):
+    PERIOD1 = State()
+    PERIOD2 = State()
+    PERIOD3 = State()
+    PERIOD4 = State()
+    PERIOD5 = State()
+    PERIOD6 = State()
