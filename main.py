@@ -13,6 +13,8 @@ from aiogram_dialog import setup_dialogs
 from dialogs.dialogs import main_dialog, four_digits_dialog, five_digits_dialog, six_digits_dialog
 from handlers.handlers import start
 
+import logging_config
+
 load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
@@ -34,5 +36,6 @@ async def main():
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger(__name__)
+    logger.info("Bot started")
     asyncio.run(main())
