@@ -7,9 +7,8 @@
 
 ## Локальный запуск в докере
 1) В файле `.env` раскомментировать нужный токен (прод или тест)
-2) В файле `docker-compose.yml` проверить маппинг volume до базы данных
-3) Запустить в корне репозитория `docker compose build`
-4) Запустить `docker compose up`
+2) Запустить в корне репозитория `docker compose build`
+3) Запустить `docker compose up`
 
 
 ## Удаленный деплой в докер контейнере
@@ -17,7 +16,6 @@
 2) Запустить в корне репозитория `docker compose build`
 3) Запустить в корне репозитория `docker compose push`
 4) На удаленной машине разместить файл `remote/docker-compose.yml`
-5) Проверить в нем маппинг до базы данных
-6) Запустить `docker compose pull`
-7) Запустить `docker compose up`
+5) Запустить `docker compose pull`
+6) Запустить `docker compose up`
 

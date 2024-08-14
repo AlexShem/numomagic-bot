@@ -1,6 +1,6 @@
 from aiogram_dialog import Dialog
 
-from windows.windows import (user_option_window, energy_analysis_window, calendar_window,
+from windows.windows import (energy_analysis_window, calendar_window,
                              create_four_digits_window, create_five_digits_window, create_six_digits_window,
                              lang_window)
 

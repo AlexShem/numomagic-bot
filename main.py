@@ -12,7 +12,6 @@ from aiogram_dialog import setup_dialogs
 
 from dialogs.dialogs import main_dialog, four_digits_dialog, five_digits_dialog, six_digits_dialog
 from handlers.handlers import start
-import db
 
 load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
@@ -31,8 +30,7 @@ async def main():
     setup_dialogs(dp)
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
-    db.connection.commit()
-    db.connection.close()
+
 
 
 if __name__ == "__main__":

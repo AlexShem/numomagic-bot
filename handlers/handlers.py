@@ -5,7 +5,6 @@ from aiogram_dialog import DialogManager, StartMode
 from aiogram_dialog.widgets.kbd import Button
 
 from lang import Lang
-import users
 import energy
 from states.state_group import DialogSG, FiveDigitsStates, FourDigitsStates, SixDigitsStates
 
@@ -31,35 +30,7 @@ def prepare_user_energy_output(energy_levels, lang: Lang):
 
 
 async def start(message: Message, dialog_manager: DialogManager):
-    if users.get(message.from_user.id) is None:
-        users.add(message.from_user.id, message.from_user.username)
     await dialog_manager.start(DialogSG.MAIN, mode=StartMode.RESET_STACK)
-
-
-async def on_trial(
-        callback: CallbackQuery,
-        button: Button,
-        manager: DialogManager,
-):
-    user = users.get(callback.from_user.id)
-    if user is None:
-        await callback.message.answer("Please restart a bot")
-    else:
-        user.start_trial()
-        await manager.switch_to(DialogSG.ANALYSIS)
-
-
-async def on_premium(
-        callback: CallbackQuery,
-        button: Button,
-        manager: DialogManager,
-):
-    user = users.get(callback.from_user.id)
-    if user is None:
-        await callback.message.answer("Please restart a bot")
-    else:
-        user.pay()
-        await manager.switch_to(DialogSG.ANALYSIS)
 
 
 async def on_date_selected(callback: CallbackQuery, widget,
