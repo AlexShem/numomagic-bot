@@ -30,7 +30,7 @@ calendar_window = Window(
 
 lang_window = Window(Const("Welcome to Numo Magic bot! Please, choose your language"),
                      Group(
-                         Button(Const("English"), id=lang.Lang.ENG.value, on_click=on_lang_selected),
+                         Button(Const("English 🇬🇧"), id=lang.Lang.ENG.value, on_click=on_lang_selected),
                          Button(Const("Russian 🇷🇺"), id=lang.Lang.RUS.value, on_click=on_lang_selected),
                          Button(Const("Deutsch 🇩🇪"), id=lang.Lang.DEU.value, on_click=on_lang_selected),
                          Button(Const("Spanish 🇪🇸"), id=lang.Lang.ESP.value, on_click=on_lang_selected),
