@@ -2,9 +2,11 @@ from aiogram_dialog import Window, DialogManager
 from aiogram_dialog.widgets.kbd import SwitchTo, Button, Row, Calendar, Group
 from aiogram_dialog.widgets.text import Const, Format
 
+import lang
+
 from handlers.handlers import (on_premium, on_trial, on_date_selected,
                                on_5_1, on_5_2, on_5_3, on_5_4, on_5_5, on_4_1, on_4_2, on_4_3, on_4_4, on_6_1,
-                               on_6_2, on_6_3, on_6_4, on_6_5, on_6_6, close_result_dialog)
+                               on_6_2, on_6_3, on_6_4, on_6_5, on_6_6, close_result_dialog, on_lang_selected)
 from states.state_group import DialogSG, FiveDigitsStates, FourDigitsStates, SixDigitsStates
 
 user_option_window = Window(
@@ -25,6 +27,17 @@ calendar_window = Window(
     Const("Select your energy date"),
     Calendar(id='calendar', on_click=on_date_selected),
     state=DialogSG.CALENDAR)
+
+lang_window = Window(Const("Welcome to Numo Magic bot! Please, choose your language"),
+                     Group(
+                         Button(Const("English"), id=lang.Lang.ENG.value, on_click=on_lang_selected),
+                         Button(Const("Russian 🇷🇺"), id=lang.Lang.RUS.value, on_click=on_lang_selected),
+                         Button(Const("Deutsch 🇩🇪"), id=lang.Lang.DEU.value, on_click=on_lang_selected),
+                         Button(Const("Spanish 🇪🇸"), id=lang.Lang.ESP.value, on_click=on_lang_selected),
+                         Button(Const("French 🇫🇷"), id=lang.Lang.FRA.value, on_click=on_lang_selected),
+                         width=2
+                     ),
+                     state=DialogSG.MAIN)
 
 
 # -------------------------------------------------------------------------------

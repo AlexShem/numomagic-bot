@@ -4,12 +4,13 @@ from aiogram.types import CallbackQuery, Message
 from aiogram_dialog import DialogManager, StartMode
 from aiogram_dialog.widgets.kbd import Button
 
+from lang import Lang
 import users
 import energy
 from states.state_group import DialogSG, FiveDigitsStates, FourDigitsStates, SixDigitsStates
 
 
-def prepare_user_energy_output(energy_levels):
+def prepare_user_energy_output(energy_levels, lang: Lang):
     # Converts range strings like "1-5" or "5-10" to list
     def to_range(rng):
         if not "-" in rng:
@@ -19,7 +20,7 @@ def prepare_user_energy_output(energy_levels):
         range_list = list(range_object)
         return range_list
 
-    energy_level_dictionary = energy.load(len(energy_levels))
+    energy_level_dictionary = energy.load(len(energy_levels), lang)
     result = list()
     for i, (time_period, items) in enumerate(energy_level_dictionary.items()):
         for energy_value, description in items.items():
@@ -63,9 +64,9 @@ async def on_premium(
 
 async def on_date_selected(callback: CallbackQuery, widget,
                            manager: DialogManager, selected_date: date):
-    manager.dialog_data["name"] = selected_date
     energy_levels = energy.get_energy_levels(selected_date.year, selected_date.month, selected_date.day)
-    prepared_answer = prepare_user_energy_output(energy_levels)
+    lang = manager.dialog_data["lang"]
+    prepared_answer = prepare_user_energy_output(energy_levels, lang)
     dialog_data = {f"period_{i + 1}": text for i, text in enumerate(prepared_answer)}
     if len(prepared_answer) == 4:
         await manager.start(FourDigitsStates.PERIOD1, data=dialog_data)
@@ -73,6 +74,20 @@ async def on_date_selected(callback: CallbackQuery, widget,
         await manager.start(FiveDigitsStates.PERIOD1, data=dialog_data)
     else:
         await manager.start(SixDigitsStates.PERIOD1, data=dialog_data)
+
+
+async def on_lang_selected(callback: CallbackQuery, button: Button, manager: DialogManager):
+    if button.widget_id == Lang.ESP.value:
+        manager.dialog_data["lang"] = Lang.ESP
+    elif button.widget_id == Lang.RUS.value:
+        manager.dialog_data["lang"] = Lang.RUS
+    elif button.widget_id == Lang.DEU.value:
+        manager.dialog_data["lang"] = Lang.DEU
+    elif button.widget_id == Lang.FRA.value:
+        manager.dialog_data["lang"] = Lang.FRA
+    else:
+        manager.dialog_data["lang"] = Lang.ENG
+    await manager.switch_to(DialogSG.CALENDAR)
 
 
 async def close_result_dialog(callback: CallbackQuery, widget, manager: DialogManager):

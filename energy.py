@@ -1,4 +1,5 @@
 import json
+from lang import Lang
 
 
 # Function returns digits of common energy level
@@ -14,8 +15,8 @@ def get_energy_levels(year, month, day):
 
 
 # Function returns description from dict directory
-def load(periods):
-    file = f"dicts/{periods}-digits.json"
+def load(digits, lang: Lang):
+    file = f"dicts/{digits}-digits-{lang.value}.json"
     with open(file, "r") as f:
         description = json.load(f)
     return description
