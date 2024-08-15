@@ -7,17 +7,15 @@ LOGGING = {
     "formatters": {
         "json": {
             "format": "%(asctime)s %(levelname)s %(message)s %(module)s",
-            "class": "pythonjsonlogger.jsonlogger.JsonFormatter",
         }
     },
     "handlers": {
         "stdout": {
-            "class": "logging.StreamHandler",
             "stream": "ext://sys.stdout",
             "formatter": "json",
         }
     },
-    "loggers": {"": {"handlers": ["stdout"], "level": "DEBUG"}},
+    "loggers": {"": {"handlers": ["stdout"], "level": "WARN"}},
 }
 
 

@@ -1,5 +1,6 @@
 import asyncio
-import logging
+import json
+import logging.config
 import os
 from dotenv import load_dotenv
 
@@ -12,8 +13,6 @@ from aiogram_dialog import setup_dialogs
 
 from dialogs.dialogs import main_dialog, four_digits_dialog, five_digits_dialog, six_digits_dialog
 from handlers.handlers import start
-
-import logging_config
 
 load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
@@ -36,6 +35,10 @@ async def main():
 
 
 if __name__ == "__main__":
+    logger_config_path = os.path.join(os.path.dirname(__file__), 'logger', 'config.json')
+    with open(logger_config_path, 'r') as f:
+        logger_config = json.load(f)
+        logging.config.dictConfig(logger_config)
     logger = logging.getLogger(__name__)
-    logger.info("Bot started")
+    logger.warning("Bot v1.3.0 started")
     asyncio.run(main())

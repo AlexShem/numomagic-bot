@@ -5,5 +5,5 @@ services:
       dockerfile: Dockerfile
       platforms:
         - "linux/amd64"
-    image: registry365.cr.cloud.ru/numerology
+    image: registry365.cr.cloud.ru/numerology:v1.2.1
     restart: always
