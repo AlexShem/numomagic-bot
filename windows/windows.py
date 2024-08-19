@@ -27,6 +27,10 @@ lang_window = Window(Const("Welcome to Numo Magic bot! Please, choose your langu
                          Button(Const("Deutsch 🇩🇪"), id=lang.Lang.DEU.value, on_click=on_lang_selected),
                          Button(Const("Spanish 🇪🇸"), id=lang.Lang.ESP.value, on_click=on_lang_selected),
                          Button(Const("French 🇫🇷"), id=lang.Lang.FRA.value, on_click=on_lang_selected),
+                         Button(Const("Arabic 🇸🇦"), id=lang.Lang.ARA.value, on_click=on_lang_selected),
+                         Button(Const("Chinese 🇨🇳"), id=lang.Lang.CHI.value, on_click=on_lang_selected),
+                         Button(Const("Hindi 🇮🇳"), id=lang.Lang.HIN.value, on_click=on_lang_selected),
+                         Button(Const("Japanese 🇯🇵"), id=lang.Lang.JPN.value, on_click=on_lang_selected),
                          width=2
                      ),
                      state=DialogSG.MAIN)
