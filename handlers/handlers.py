@@ -20,12 +20,24 @@ def prepare_user_energy_output(energy_levels, lang: Lang):
         return range_list
 
     energy_level_dictionary = energy.load(len(energy_levels), lang)
+    lang_messages = {
+        Lang.RUS: "Рекомендация в период времени:",
+        Lang.ENG: "Recommendation in the time period:",
+        Lang.ESP: "Recomendación en el período de tiempo:",
+        Lang.DEU: "Empfehlung im Zeitraum:",
+        Lang.FRA: "Recommandation dans la période de temps:",
+        Lang.ARA: "توصية في الفترة الزمنية:",
+        Lang.CHI: "时间段内的建议:",
+        Lang.HIN: "समय अवधि में सिफारिश:",
+        Lang.JPN: "期間内の推奨:"
+    }
+
     result = list()
     for i, (time_period, items) in enumerate(energy_level_dictionary.items()):
         for energy_value, description in items.items():
             if energy_levels[i] in to_range(energy_value):
-                result.append(f"Рекомендация в период времени: {time_period}\n"
-                              f"{description}")
+                message = lang_messages.get(lang, "Recommendation in the time period:")
+                result.append(f"{message} {time_period}\n{description}")
     return result
 
 
@@ -56,6 +68,14 @@ async def on_lang_selected(callback: CallbackQuery, button: Button, manager: Dia
         manager.dialog_data["lang"] = Lang.DEU
     elif button.widget_id == Lang.FRA.value:
         manager.dialog_data["lang"] = Lang.FRA
+    elif button.widget_id == Lang.ARA.value:
+        manager.dialog_data["lang"] = Lang.ARA
+    elif button.widget_id == Lang.CHI.value:
+        manager.dialog_data["lang"] = Lang.CHI
+    elif button.widget_id == Lang.HIN.value:
+        manager.dialog_data["lang"] = Lang.HIN
+    elif button.widget_id == Lang.JPN.value:
+        manager.dialog_data["lang"] = Lang.JPN
     else:
         manager.dialog_data["lang"] = Lang.ENG
     await manager.switch_to(DialogSG.CALENDAR)

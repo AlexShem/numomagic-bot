@@ -7,3 +7,7 @@ class Lang(enum.Enum):
     RUS = "rus"
     ESP = "esp"
     FRA = "fra"
+    ARA = "ara"
+    CHI = "chi"
+    HIN = "hin"
+    JPN = "jpn"
