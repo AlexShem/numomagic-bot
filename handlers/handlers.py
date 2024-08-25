@@ -12,7 +12,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-def prepare_user_energy_output(energy_levels, lang: Lang):
+def prepare_user_energy_output(energy_levels, lang: Lang, date: date):
     # Converts range strings like "1-5" or "5-10" to list
     def to_range(rng):
         if not "-" in rng:
@@ -40,7 +40,7 @@ def prepare_user_energy_output(energy_levels, lang: Lang):
         for energy_value, description in items.items():
             if energy_levels[i] in to_range(energy_value):
                 message = lang_messages.get(lang, "Recommendation in the time period:")
-                result.append(f"{message} {time_period}\n{description}")
+                result.append(f"{message} {time_period} | {date}\n{description}")
     return result
 
 
@@ -53,7 +53,7 @@ async def on_date_selected(callback: CallbackQuery, widget,
                            manager: DialogManager, selected_date: date):
     energy_levels = energy.get_energy_levels(selected_date.year, selected_date.month, selected_date.day)
     lang = manager.dialog_data["lang"]
-    prepared_answer = prepare_user_energy_output(energy_levels, lang)
+    prepared_answer = prepare_user_energy_output(energy_levels, lang, selected_date)
     dialog_data = {f"period_{i + 1}": text for i, text in enumerate(prepared_answer)}
     if len(prepared_answer) == 4:
         await manager.start(FourDigitsStates.PERIOD1, data=dialog_data)
