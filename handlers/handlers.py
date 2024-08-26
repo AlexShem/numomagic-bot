@@ -1,3 +1,4 @@
+from logger.logger import get_logger
 from datetime import date
 
 from aiogram.types import CallbackQuery, Message
@@ -7,11 +8,8 @@ from aiogram_dialog.widgets.kbd import Button
 from lang import Lang
 import energy
 from states.state_group import DialogSG, FiveDigitsStates, FourDigitsStates, SixDigitsStates
-import logging
 
-
-logger = logging.getLogger(__name__)
-
+logger = get_logger(__name__)
 def prepare_user_energy_output(energy_levels, lang: Lang, date: date):
     # Converts range strings like "1-5" or "5-10" to list
     def to_range(rng):
@@ -45,8 +43,8 @@ def prepare_user_energy_output(energy_levels, lang: Lang, date: date):
 
 
 async def start(message: Message, dialog_manager: DialogManager):
-    await dialog_manager.start(DialogSG.MAIN, mode=StartMode.RESET_STACK)
     logger.warning(f"User {message.from_user.username} started a bot")
+    await dialog_manager.start(DialogSG.MAIN, mode=StartMode.RESET_STACK)
 
 
 async def on_date_selected(callback: CallbackQuery, widget,

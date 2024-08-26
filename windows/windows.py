@@ -15,9 +15,18 @@ energy_analysis_window = Window(
     state=DialogSG.ANALYSIS
 )
 
+
+async def get_select_date_message(dialog_manager: DialogManager, **kwargs):
+    if dialog_manager.dialog_data.get("lang") == lang.Lang.ENG:
+        return {"select_date_message": "Select date of energy analysis"}
+    elif dialog_manager.dialog_data.get("lang") == lang.Lang.RUS:
+        return {"select_date_message": "Выберите дату, на которую хотели бы получить энергетическую рекомендацию"}
+
+
 calendar_window = Window(
-    Const("Select your energy date"),
+    Format("{select_date_message}"),
     Calendar(id='calendar', on_click=on_date_selected),
+    getter=get_select_date_message,
     state=DialogSG.CALENDAR)
 
 lang_window = Window(Const("Welcome to Numo Magic bot! Please, choose your language"),
