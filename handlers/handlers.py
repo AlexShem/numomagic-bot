@@ -22,23 +22,59 @@ def prepare_user_energy_output(energy_levels, lang: Lang, date: date):
 
     energy_level_dictionary = energy.load(len(energy_levels), lang)
     lang_messages = {
-        Lang.RUS: "Рекомендация в период времени:",
-        Lang.ENG: "Recommendation in the time period:",
-        Lang.ESP: "Recomendación en el período de tiempo:",
-        Lang.DEU: "Empfehlung im Zeitraum:",
-        Lang.FRA: "Recommandation dans la période de temps:",
-        Lang.ARA: "توصية في الفترة الزمنية:",
-        Lang.CHI: "时间段内的建议:",
-        Lang.HIN: "समय अवधि में सिफारिश:",
-        Lang.JPN: "期間内の推奨:"
+        Lang.RUS: {
+            "date": "Дата",
+            "time": "Время",
+            "recommendation": "Рекомендация"
+        },
+        Lang.ENG: {
+            "date": "Date",
+            "time": "Time",
+            "recommendation": "Recommendation"
+        },
+        Lang.ESP: {
+            "date": "Fecha",
+            "time": "Hora",
+            "recommendation": "Recomendación"
+        },
+        Lang.DEU: {
+            "date": "Datum",
+            "time": "Zeit",
+            "recommendation": "Empfehlung"
+        },
+        Lang.FRA: {
+            "date": "Date",
+            "time": "Heure",
+            "recommendation": "Recommandation"
+        },
+        Lang.ARA: {
+            "date": "تاريخ",
+            "time": "وقت",
+            "recommendation": "توصية"
+        },
+        Lang.CHI: {
+            "date": "日期",
+            "time": "时间",
+            "recommendation": "建议"
+        },
+        Lang.HIN: {
+            "date": "तारीख",
+            "time": "समय",
+            "recommendation": "सिफारिश"
+        },
+        Lang.JPN: {
+            "date": "日付",
+            "time": "時間",
+            "recommendation": "推奨事項"
+        }
     }
 
     result = list()
     for i, (time_period, items) in enumerate(energy_level_dictionary.items()):
         for energy_value, description in items.items():
             if energy_levels[i] in to_range(energy_value):
-                message = lang_messages.get(lang, "Recommendation in the time period:")
-                result.append(f"{message} {time_period} | {date}\n{description}")
+                messages = lang_messages.get(lang, lang_messages[Lang.ENG])
+                result.append(f"🗓 {messages['date']}: {date}\n🕒 {messages['time']}: {time_period}\n\n📌 {messages['recommendation']}:\n{description}")
     return result
 
 
