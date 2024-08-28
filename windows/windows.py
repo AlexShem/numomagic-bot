@@ -38,7 +38,7 @@ calendar_window = Window(
     getter=get_select_date_message,
     state=DialogSG.CALENDAR)
 
-lang_window = Window(Const("Welcome to Numo Magic bot! Please, choose your language"),
+lang_window = Window(Const("Welcome to NumoMagic bot! Please, choose your language"),
                      Group(
                          Button(Const("English 🇬🇧"), id=lang.Lang.ENG.value, on_click=on_lang_selected),
                          Button(Const("Russian 🇷🇺"), id=lang.Lang.RUS.value, on_click=on_lang_selected),
