@@ -182,3 +182,81 @@ def create_six_digits_window():
                getter=get_period_6),
     ]
     return windows
+
+
+async def get_join_channel_message(dialog_manager: DialogManager, **kwargs):
+    lang_messages = {
+        lang.Lang.ENG: "You can learn more about numerology on our Telegram channel. "
+                        "To get access to the channel, you can pay in Telegram Stars or send a join request and pay using a bank transfer. "
+                        "Click the buttons below to get access to the channel.",
+        lang.Lang.RUS: "Вы можете узнать больше о нумерологии на нашем Telegram-канале. "
+                        "Чтобы получить доступ к каналу, вы можете оплатить в Telegram Stars или отправить запрос на вступление и оплатить банковским переводом. "
+                        "Нажмите на кнопки ниже, чтобы получить доступ к каналу.",
+        lang.Lang.ESP: "Puede obtener más información sobre numerología en nuestro canal de Telegram. "
+                        "Para acceder al canal, puede pagar en Telegram Stars o enviar una solicitud de unirse y pagar mediante una transferencia bancaria. "
+                        "Haga clic en los botones a continuación para acceder al canal.",
+        lang.Lang.DEU: "Sie können mehr über Numerologie auf unserem Telegram-Kanal erfahren. "
+                        "Um Zugriff auf den Kanal zu erhalten, können Sie in Telegram Stars bezahlen oder eine Beitrittsanfrage senden und per Banküberweisung bezahlen. "
+                        "Klicken Sie auf die Schaltflächen unten, um Zugriff auf den Kanal zu erhalten.",
+        lang.Lang.FRA: "Vous pouvez en apprendre plus sur la numérologie sur notre chaîne Telegram. "
+                        "Pour accéder à la chaîne, vous pouvez payer en étoiles Telegram ou envoyer une demande de rejoindre et payer par virement bancaire. "
+                        "Cliquez sur les boutons ci-dessous pour accéder à la chaîne.",
+        lang.Lang.ARA: "يمكنك معرفة المزيد حول علم الأعداد على قناتنا على تطبيق تليجرام. "
+                        "للوصول إلى القناة، يمكنك الدفع بنجوم تليجرام أو إرسال طلب انضمام والدفع عبر التحويل المصرفي. "
+                        "انقر على الأزرار أدناه للوصول إلى القناة.",
+        lang.Lang.CHI: "您可以在我们的Telegram频道上了解更多关于数字学的信息。 "
+                        "要访问频道，您可以使用Telegram Stars支付或发送加入请求并通过银行转账支付。 "
+                        "单击下面的按钮以访问频道。",
+        lang.Lang.HIN: "आप हमारे टेलीग्राम चैनल पर अंकशास्त्र के बारे में अधिक जान सकते हैं। "
+                        "चैनल तक पहुंचने के लिए, आप टेलीग्राम स्टार्स में भुगतान कर सकते हैं या ज्वाइन अनुरोध भेजकर बैंक ट्रांसफर के जरिए भुगतान कर सकते हैं। "
+                        "चैनल तक पहुंचने के लिए नीचे दिए गए बटन पर क्लिक करें।",
+        lang.Lang.JPN: "当社のTelegramチャンネルで数秘術について詳しく知ることができます。 "
+                        "チャンネルにアクセスするには、Telegram Starsで支払うか、参加リクエストを送信して銀行振込で支払うことができます。 "
+                        "チャンネルにアクセスするには、以下のボタンをクリックしてください。"
+    }
+
+    selected_lang = dialog_manager.dialog_data.get("lang", lang.Lang.ENG)
+    return {"join_channel_message": lang_messages.get(selected_lang, "You can learn more about numerology on our Telegram channel. "
+                        "To get access to the channel, you can pay in Telegram Stars or send a join request and pay using a bank transfer. "
+                        "Click the buttons below to get access to the channel.")}
+
+
+async def get_join_channel_buttons(dialog_manager: DialogManager, **kwargs):
+    lang_messages = {
+        lang.Lang.ENG: {"stars": "Telegram stars", "other": "Other payment"},
+        lang.Lang.RUS: {"stars": "Telegram stars", "other": "Other payment"},
+        lang.Lang.ESP: {"stars": "Telegram stars", "other": "Other payment"},
+        lang.Lang.DEU: {"stars": "Telegram stars", "other": "Other payment"},
+        lang.Lang.FRA: {"stars": "Telegram stars", "other": "Other payment"},
+        lang.Lang.ARA: {"stars": "Telegram stars", "other": "Other payment"},
+        lang.Lang.CHI: {"stars": "Telegram stars", "other": "Other payment"},
+        lang.Lang.HIN: {"stars": "Telegram stars", "other": "Other payment"},
+        lang.Lang.JPN: {"stars": "Telegram stars", "other": "Other payment"}
+    }
+
+    selected_lang = dialog_manager.dialog_data.get("lang", lang.Lang.ENG)
+    return {"join_channel_buttons": lang_messages.get(selected_lang, {"stars": "Telegram stars", "other": "Other payment"})}
+
+
+async def get_join_channel_star_link(dialog_manager: DialogManager, **kwargs):
+    selected_lang = dialog_manager.dialog_data.get("lang", lang.Lang.ENG)
+    if selected_lang == lang.Lang.RUS:
+        return {"join_channel_star_link": "https://t.me/+0-JREGcV0KBiOTM0"}
+    return {"join_channel_star_link": "https://t.me/+zTjKEuObGCw2NWFk"}
+
+
+async def get_join_channel_request_link(dialog_manager: DialogManager, **kwargs):
+    selected_lang = dialog_manager.dialog_data.get("lang", lang.Lang.ENG)
+    if selected_lang == lang.Lang.RUS:
+        return {"join_channel_request_link": "https://t.me/+9t7ylcITlJdmYTk0"}
+    return {"join_channel_request_link": "https://t.me/+zTjKEuObGCw2NWFk"}
+
+
+join_channel_window = Window(
+    Format("{join_channel_message}"),
+    Button(Format("{join_channel_buttons[stars]}"), id="join_channel_star", on_click=get_join_channel_star_link),
+    Button(Format("{join_channel_buttons[other]}"), id="join_channel_request", on_click=get_join_channel_request_link),
+    Button(Const("Close"), id="close", on_click=close_result_dialog),
+    getter=[get_join_channel_message, get_join_channel_buttons],
+    state=DialogSG.JOIN_CHANNEL
+)
