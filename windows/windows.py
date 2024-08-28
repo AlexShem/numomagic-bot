@@ -17,10 +17,19 @@ energy_analysis_window = Window(
 
 
 async def get_select_date_message(dialog_manager: DialogManager, **kwargs):
-    if dialog_manager.dialog_data.get("lang") == lang.Lang.ENG:
-        return {"select_date_message": "Select date of energy analysis"}
-    elif dialog_manager.dialog_data.get("lang") == lang.Lang.RUS:
-        return {"select_date_message": "Выберите дату, на которую хотели бы получить энергетическую рекомендацию"}
+    lang_messages = {
+        lang.Lang.ENG: "Choose a date to get your recommendations.",
+        lang.Lang.RUS: "Выберите дату, чтобы получить рекомендации.",
+        lang.Lang.ESP: "Elija una fecha para obtener sus recomendaciones.",
+        lang.Lang.DEU: "Wählen Sie ein Datum, um Ihre Empfehlungen zu erhalten.",
+        lang.Lang.FRA: "Choisissez une date pour obtenir vos recommandations.",
+        lang.Lang.ARA: "اختر تاريخًا للحصول على توصياتك.",
+        lang.Lang.CHI: "选择一个日期以获取您的建议。",
+        lang.Lang.HIN: "अपनी सिफारिशें प्राप्त करने के लिए एक तिथि चुनें।",
+        lang.Lang.JPN: "推奨事項を取得する日付を選択してください。"
+    }
+    selected_lang = dialog_manager.dialog_data.get("lang", lang.Lang.ENG)
+    return {"select_date_message": lang_messages.get(selected_lang, "Choose a date to get your recommendations.")}
 
 
 calendar_window = Window(
