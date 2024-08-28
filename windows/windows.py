@@ -15,12 +15,30 @@ energy_analysis_window = Window(
     state=DialogSG.ANALYSIS
 )
 
+
+async def get_select_date_message(dialog_manager: DialogManager, **kwargs):
+    lang_messages = {
+        lang.Lang.ENG: "Choose a date to get your recommendations.",
+        lang.Lang.RUS: "Выберите дату, чтобы получить рекомендации.",
+        lang.Lang.ESP: "Elija una fecha para obtener sus recomendaciones.",
+        lang.Lang.DEU: "Wählen Sie ein Datum, um Ihre Empfehlungen zu erhalten.",
+        lang.Lang.FRA: "Choisissez une date pour obtenir vos recommandations.",
+        lang.Lang.ARA: "اختر تاريخًا للحصول على توصياتك.",
+        lang.Lang.CHI: "选择一个日期以获取您的建议。",
+        lang.Lang.HIN: "अपनी सिफारिशें प्राप्त करने के लिए एक तिथि चुनें।",
+        lang.Lang.JPN: "推奨事項を取得する日付を選択してください。"
+    }
+    selected_lang = dialog_manager.dialog_data.get("lang", lang.Lang.ENG)
+    return {"select_date_message": lang_messages.get(selected_lang, "Choose a date to get your recommendations.")}
+
+
 calendar_window = Window(
-    Const("Select your energy date"),
+    Format("{select_date_message}"),
     Calendar(id='calendar', on_click=on_date_selected),
+    getter=get_select_date_message,
     state=DialogSG.CALENDAR)
 
-lang_window = Window(Const("Welcome to Numo Magic bot! Please, choose your language"),
+lang_window = Window(Const("Welcome to NumoMagic bot! Please, choose your language"),
                      Group(
                          Button(Const("English 🇬🇧"), id=lang.Lang.ENG.value, on_click=on_lang_selected),
                          Button(Const("Russian 🇷🇺"), id=lang.Lang.RUS.value, on_click=on_lang_selected),

@@ -1,3 +1,4 @@
+from logger.logger import get_logger
 from datetime import date
 
 from aiogram.types import CallbackQuery, Message
@@ -7,12 +8,9 @@ from aiogram_dialog.widgets.kbd import Button
 from lang import Lang
 import energy
 from states.state_group import DialogSG, FiveDigitsStates, FourDigitsStates, SixDigitsStates
-import logging
 
-
-logger = logging.getLogger(__name__)
-
-def prepare_user_energy_output(energy_levels, lang: Lang):
+logger = get_logger(__name__)
+def prepare_user_energy_output(energy_levels, lang: Lang, date: date):
     # Converts range strings like "1-5" or "5-10" to list
     def to_range(rng):
         if not "-" in rng:
@@ -24,36 +22,72 @@ def prepare_user_energy_output(energy_levels, lang: Lang):
 
     energy_level_dictionary = energy.load(len(energy_levels), lang)
     lang_messages = {
-        Lang.RUS: "Рекомендация в период времени:",
-        Lang.ENG: "Recommendation in the time period:",
-        Lang.ESP: "Recomendación en el período de tiempo:",
-        Lang.DEU: "Empfehlung im Zeitraum:",
-        Lang.FRA: "Recommandation dans la période de temps:",
-        Lang.ARA: "توصية في الفترة الزمنية:",
-        Lang.CHI: "时间段内的建议:",
-        Lang.HIN: "समय अवधि में सिफारिश:",
-        Lang.JPN: "期間内の推奨:"
+        Lang.RUS: {
+            "date": "Дата",
+            "time": "Время",
+            "recommendation": "Рекомендация"
+        },
+        Lang.ENG: {
+            "date": "Date",
+            "time": "Time",
+            "recommendation": "Recommendation"
+        },
+        Lang.ESP: {
+            "date": "Fecha",
+            "time": "Hora",
+            "recommendation": "Recomendación"
+        },
+        Lang.DEU: {
+            "date": "Datum",
+            "time": "Zeit",
+            "recommendation": "Empfehlung"
+        },
+        Lang.FRA: {
+            "date": "Date",
+            "time": "Heure",
+            "recommendation": "Recommandation"
+        },
+        Lang.ARA: {
+            "date": "تاريخ",
+            "time": "وقت",
+            "recommendation": "توصية"
+        },
+        Lang.CHI: {
+            "date": "日期",
+            "time": "时间",
+            "recommendation": "建议"
+        },
+        Lang.HIN: {
+            "date": "तारीख",
+            "time": "समय",
+            "recommendation": "सिफारिश"
+        },
+        Lang.JPN: {
+            "date": "日付",
+            "time": "時間",
+            "recommendation": "推奨事項"
+        }
     }
 
     result = list()
     for i, (time_period, items) in enumerate(energy_level_dictionary.items()):
         for energy_value, description in items.items():
             if energy_levels[i] in to_range(energy_value):
-                message = lang_messages.get(lang, "Recommendation in the time period:")
-                result.append(f"{message} {time_period}\n{description}")
+                messages = lang_messages.get(lang, lang_messages[Lang.ENG])
+                result.append(f"🗓 {messages['date']}: {date}\n🕒 {messages['time']}: {time_period}\n\n📌 {messages['recommendation']}:\n{description}")
     return result
 
 
 async def start(message: Message, dialog_manager: DialogManager):
-    await dialog_manager.start(DialogSG.MAIN, mode=StartMode.RESET_STACK)
     logger.warning(f"User {message.from_user.username} started a bot")
+    await dialog_manager.start(DialogSG.MAIN, mode=StartMode.RESET_STACK)
 
 
 async def on_date_selected(callback: CallbackQuery, widget,
                            manager: DialogManager, selected_date: date):
     energy_levels = energy.get_energy_levels(selected_date.year, selected_date.month, selected_date.day)
     lang = manager.dialog_data["lang"]
-    prepared_answer = prepare_user_energy_output(energy_levels, lang)
+    prepared_answer = prepare_user_energy_output(energy_levels, lang, selected_date)
     dialog_data = {f"period_{i + 1}": text for i, text in enumerate(prepared_answer)}
     if len(prepared_answer) == 4:
         await manager.start(FourDigitsStates.PERIOD1, data=dialog_data)

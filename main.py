@@ -1,7 +1,7 @@
 import asyncio
-import json
-import logging.config
 import os
+
+from logger.logger import get_logger
 from dotenv import load_dotenv
 
 from aiogram import Bot, Dispatcher, Router
@@ -16,9 +16,11 @@ from handlers.handlers import start
 
 load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
+logger = get_logger(__name__)
 
 
 async def main():
+    logger.warning("Bot is starting")
     bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     dialog_router = Router()
     dialog_router.include_router(main_dialog)
@@ -33,12 +35,5 @@ async def main():
     await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
 
 
-
 if __name__ == "__main__":
-    logger_config_path = os.path.join(os.path.dirname(__file__), 'logger', 'config.json')
-    with open(logger_config_path, 'r') as f:
-        logger_config = json.load(f)
-        logging.config.dictConfig(logger_config)
-    logger = logging.getLogger(__name__)
-    logger.warning("Bot v1.3.0 started")
     asyncio.run(main())

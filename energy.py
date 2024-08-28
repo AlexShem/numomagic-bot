@@ -17,6 +17,6 @@ def get_energy_levels(year, month, day):
 # Function returns description from dict directory
 def load(digits, lang: Lang):
     file = f"dicts/{digits}-digits-{lang.value}.json"
-    with open(file, "r") as f:
+    with open(file, "r", encoding="utf-8") as f:
         description = json.load(f)
     return description
