@@ -1,13 +1,14 @@
 from aiogram_dialog import Window, DialogManager
-from aiogram_dialog.widgets.kbd import SwitchTo, Button, Calendar, Group
+from aiogram_dialog.widgets.kbd import SwitchTo, Button, Calendar, Group, Url
 from aiogram_dialog.widgets.text import Const, Format
 
 import lang
 
 from handlers.handlers import (on_date_selected,
                                on_5_1, on_5_2, on_5_3, on_5_4, on_5_5, on_4_1, on_4_2, on_4_3, on_4_4, on_6_1,
-                               on_6_2, on_6_3, on_6_4, on_6_5, on_6_6, close_result_dialog, on_lang_selected)
-from states.state_group import DialogSG, FiveDigitsStates, FourDigitsStates, SixDigitsStates
+                               on_6_2, on_6_3, on_6_4, on_6_5, on_6_6, close_join_channel_dialog, on_lang_selected,
+                               on_join_channel)
+from states.state_group import DialogSG, FiveDigitsStates, FourDigitsStates, SixDigitsStates, JoinChannelStatesGroup
 
 energy_analysis_window = Window(
     Const("Press the button to open a calendar and start the energy analysis"),
@@ -85,7 +86,7 @@ def create_four_digits_window():
                          Button(Const("06:00-12:00"), id="b_4_2", on_click=on_4_2),
                          Button(Const("12:00-18:00"), id="b_4_3", on_click=on_4_3),
                          Button(Const("18:00-24:00"), id="b_4_4", on_click=on_4_4),
-                         Button(Const("Close"), id="close", on_click=close_result_dialog),
+                         Button(Const("Close"), id="close", on_click=close_join_channel_dialog),
                          width=2)
     windows = [
         Window(Format("{period_1}"),
@@ -115,7 +116,7 @@ def create_five_digits_window():
         Button(Const("9:36-14:24"), id="b_5_3", on_click=on_5_3),
         Button(Const("14:24-19:12"), id="b_5_4", on_click=on_5_4),
         Button(Const("19:12-24:00"), id="b_5_5", on_click=on_5_5),
-        Button(Const("Close"), id="close", on_click=close_result_dialog),
+        Button(Const("Close"), id="close", on_click=close_join_channel_dialog),
         width=2
     )
 
@@ -152,7 +153,8 @@ def create_six_digits_window():
         Button(Const("12:00-16:00"), id="b_6_4", on_click=on_6_4),
         Button(Const("16:00-20:00"), id="b_6_5", on_click=on_6_5),
         Button(Const("20:00-24:00"), id="b_6_6", on_click=on_6_6),
-        Button(Const("Close"), id="close", on_click=close_result_dialog),
+        Button(Const("Close"), id="close", on_click=close_join_channel_dialog),
+               Button(Format("Узнать больше"), id="join_channel", on_click=on_join_channel),
         width=2
     )
     windows = [
@@ -234,19 +236,19 @@ async def get_join_channel_buttons(dialog_manager: DialogManager, **kwargs):
         lang.Lang.JPN: {"stars": "Telegram stars", "other": "Other payment"}
     }
 
-    selected_lang = dialog_manager.dialog_data.get("lang", lang.Lang.ENG)
+    selected_lang = dialog_manager.start_data.get("lang", lang.Lang.ENG)
     return {"join_channel_buttons": lang_messages.get(selected_lang, {"stars": "Telegram stars", "other": "Other payment"})}
 
 
 async def get_join_channel_star_link(dialog_manager: DialogManager, **kwargs):
-    selected_lang = dialog_manager.dialog_data.get("lang", lang.Lang.ENG)
+    selected_lang = dialog_manager.start_data.get("lang", lang.Lang.ENG)
     if selected_lang == lang.Lang.RUS:
         return {"join_channel_star_link": "https://t.me/+0-JREGcV0KBiOTM0"}
     return {"join_channel_star_link": "https://t.me/+zTjKEuObGCw2NWFk"}
 
 
 async def get_join_channel_request_link(dialog_manager: DialogManager, **kwargs):
-    selected_lang = dialog_manager.dialog_data.get("lang", lang.Lang.ENG)
+    selected_lang = dialog_manager.start_data.get("lang", lang.Lang.ENG)
     if selected_lang == lang.Lang.RUS:
         return {"join_channel_request_link": "https://t.me/+9t7ylcITlJdmYTk0"}
     return {"join_channel_request_link": "https://t.me/+zTjKEuObGCw2NWFk"}
@@ -254,9 +256,9 @@ async def get_join_channel_request_link(dialog_manager: DialogManager, **kwargs)
 
 join_channel_window = Window(
     Format("{join_channel_message}"),
-    Button(Format("{join_channel_buttons[stars]}"), id="join_channel_star", on_click=get_join_channel_star_link),
-    Button(Format("{join_channel_buttons[other]}"), id="join_channel_request", on_click=get_join_channel_request_link),
-    Button(Const("Close"), id="close", on_click=close_result_dialog),
-    getter=[get_join_channel_message, get_join_channel_buttons],
-    state=DialogSG.JOIN_CHANNEL
+    Url(Format("{join_channel_buttons[stars]}"), Format("{join_channel_star_link}")),
+    Url(Format("{join_channel_buttons[other]}"), Format("{join_channel_request_link}")),
+    Button(Const("Close"), id="close", on_click=close_join_channel_dialog),
+    getter=[get_join_channel_message, get_join_channel_buttons, get_join_channel_star_link, get_join_channel_request_link],
+    state=JoinChannelStatesGroup.MAIN
 )

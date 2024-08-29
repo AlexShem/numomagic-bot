@@ -7,7 +7,7 @@ from aiogram_dialog.widgets.kbd import Button
 
 from lang import Lang
 import energy
-from states.state_group import DialogSG, FiveDigitsStates, FourDigitsStates, SixDigitsStates
+from states.state_group import DialogSG, FiveDigitsStates, FourDigitsStates, SixDigitsStates, JoinChannelStatesGroup
 
 logger = get_logger(__name__)
 def prepare_user_energy_output(energy_levels, lang: Lang, date: date):
@@ -121,8 +121,10 @@ async def on_lang_selected(callback: CallbackQuery, button: Button, manager: Dia
     logger.warning(f"User {callback.from_user.username} selected language {manager.dialog_data['lang']}")
 
 
+async def on_join_channel(callback: CallbackQuery, button, manager: DialogManager):
+    await manager.start(JoinChannelStatesGroup.MAIN, data=manager.dialog_data)
 
-async def close_result_dialog(callback: CallbackQuery, widget, manager: DialogManager):
+async def close_join_channel_dialog(callback: CallbackQuery, button, manager: DialogManager):
     await manager.done()
 
 

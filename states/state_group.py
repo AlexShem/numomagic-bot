@@ -5,7 +5,9 @@ class DialogSG(StatesGroup):
     MAIN = State()
     ANALYSIS = State()
     CALENDAR = State()
-    JOIN_CHANNEL = State()
+
+class JoinChannelStatesGroup(StatesGroup):
+    MAIN = State()
 
 
 class FourDigitsStates(StatesGroup):

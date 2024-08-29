@@ -11,7 +11,7 @@ from aiogram.filters import CommandStart
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram_dialog import setup_dialogs
 
-from dialogs.dialogs import main_dialog, four_digits_dialog, five_digits_dialog, six_digits_dialog
+from dialogs.dialogs import main_dialog, four_digits_dialog, five_digits_dialog, six_digits_dialog, join_channel_dialog
 from handlers.handlers import start
 
 load_dotenv()
@@ -27,6 +27,7 @@ async def main():
     dialog_router.include_router(four_digits_dialog)
     dialog_router.include_router(five_digits_dialog)
     dialog_router.include_router(six_digits_dialog)
+    dialog_router.include_router(join_channel_dialog)
     dp = Dispatcher(storage=MemoryStorage())
     dp.message.register(start, CommandStart())
     dp.include_router(dialog_router)
