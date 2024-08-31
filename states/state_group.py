@@ -1,13 +1,9 @@
-from aiogram.fsm.state import State, StatesGroup, StatesGroupMeta
+from aiogram.fsm.state import State, StatesGroup
 
 
 class DialogSG(StatesGroup):
     MAIN = State()
-    ANALYSIS = State()
     CALENDAR = State()
-
-class JoinChannelStatesGroup(StatesGroup):
-    MAIN = State()
 
 
 class FourDigitsStates(StatesGroup):
@@ -32,3 +28,7 @@ class SixDigitsStates(StatesGroup):
     PERIOD4 = State()
     PERIOD5 = State()
     PERIOD6 = State()
+
+
+class JoinChannelStatesGroup(StatesGroup):
+    MAIN = State()

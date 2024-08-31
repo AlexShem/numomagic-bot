@@ -10,13 +10,13 @@ import energy
 from states.state_group import DialogSG, FiveDigitsStates, FourDigitsStates, SixDigitsStates, JoinChannelStatesGroup
 
 logger = get_logger(__name__)
-def prepare_user_energy_output(energy_levels, lang: Lang, date: date):
+def prepare_user_energy_output(energy_levels, lang: Lang, selected_date: date):
     # Converts range strings like "1-5" or "5-10" to list
     def to_range(rng):
         if not "-" in rng:
             return list([int(rng)])
-        start, end = map(int, rng.split("-"))
-        range_object = range(start, end + 1)
+        range_start, range_end = map(int, rng.split("-"))
+        range_object = range(range_start, range_end + 1)
         range_list = list(range_object)
         return range_list
 
@@ -74,7 +74,7 @@ def prepare_user_energy_output(energy_levels, lang: Lang, date: date):
         for energy_value, description in items.items():
             if energy_levels[i] in to_range(energy_value):
                 messages = lang_messages.get(lang, lang_messages[Lang.ENG])
-                result.append(f"🗓 {messages['date']}: {date}\n🕒 {messages['time']}: {time_period}\n\n📌 {messages['recommendation']}:\n{description}")
+                result.append(f"🗓 {messages['date']}: {selected_date}\n🕒 {messages['time']}: {time_period}\n\n📌 {messages['recommendation']}:\n{description}")
     return result
 
 
