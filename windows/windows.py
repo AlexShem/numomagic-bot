@@ -1,60 +1,65 @@
 from aiogram_dialog import Window, DialogManager
-from aiogram_dialog.widgets.kbd import SwitchTo, Button, Calendar, Group
-from aiogram_dialog.widgets.text import Const, Format
+from aiogram_dialog.widgets.kbd import SwitchTo, Button, Calendar, Group, Url
+from aiogram_dialog.widgets.text import Const, Format, Case
+from magic_filter import F
 
-import lang
+from lang import Lang
 
-from handlers.handlers import (on_date_selected,
-                               on_5_1, on_5_2, on_5_3, on_5_4, on_5_5, on_4_1, on_4_2, on_4_3, on_4_4, on_6_1,
-                               on_6_2, on_6_3, on_6_4, on_6_5, on_6_6, close_result_dialog, on_lang_selected)
-from states.state_group import DialogSG, FiveDigitsStates, FourDigitsStates, SixDigitsStates
+from handlers.handlers import (
+    on_lang_selected, on_date_selected,
+    on_4_1, on_4_2, on_4_3, on_4_4,
+    on_5_1, on_5_2, on_5_3, on_5_4, on_5_5,
+    on_6_1, on_6_2, on_6_3, on_6_4, on_6_5, on_6_6,
+    close_recommendation_dialog,
+    on_join_channel, close_join_channel_dialog,
+    get_join_channel_message, get_join_channel_buttons, get_join_channel_star_link, get_join_channel_request_link
+)
+from states.state_group import DialogSG, FiveDigitsStates, FourDigitsStates, SixDigitsStates, JoinChannelStatesGroup
 
-energy_analysis_window = Window(
-    Const("Press the button to open a calendar and start the energy analysis"),
-    SwitchTo(Const("Calendar"), id="calendar", state=DialogSG.CALENDAR),
-    state=DialogSG.ANALYSIS
+
+# Language selection window -------------------------------------------------------
+
+lang_window = Window(
+    Const("Welcome to NumoMagic bot! Please, choose your language"),
+    Group(
+        Button(Const("English 🇬🇧"), id=Lang.ENG.value, on_click=on_lang_selected),
+        Button(Const("Russian 🇷🇺"), id=Lang.RUS.value, on_click=on_lang_selected),
+        Button(Const("Deutsch 🇩🇪"), id=Lang.DEU.value, on_click=on_lang_selected),
+        Button(Const("Spanish 🇪🇸"), id=Lang.ESP.value, on_click=on_lang_selected),
+        Button(Const("French 🇫🇷"), id=Lang.FRA.value, on_click=on_lang_selected),
+        Button(Const("Arabic 🇸🇦"), id=Lang.ARA.value, on_click=on_lang_selected),
+        Button(Const("Chinese 🇨🇳"), id=Lang.CHI.value, on_click=on_lang_selected),
+        Button(Const("Hindi 🇮🇳"), id=Lang.HIN.value, on_click=on_lang_selected),
+        Button(Const("Japanese 🇯🇵"), id=Lang.JPN.value, on_click=on_lang_selected),
+        width=2
+    ),
+    state=DialogSG.MAIN
 )
 
 
-async def get_select_date_message(dialog_manager: DialogManager, **kwargs):
-    lang_messages = {
-        lang.Lang.ENG: "Choose a date to get your recommendations.",
-        lang.Lang.RUS: "Выберите дату, чтобы получить рекомендации.",
-        lang.Lang.ESP: "Elija una fecha para obtener sus recomendaciones.",
-        lang.Lang.DEU: "Wählen Sie ein Datum, um Ihre Empfehlungen zu erhalten.",
-        lang.Lang.FRA: "Choisissez une date pour obtenir vos recommandations.",
-        lang.Lang.ARA: "اختر تاريخًا للحصول على توصياتك.",
-        lang.Lang.CHI: "选择一个日期以获取您的建议。",
-        lang.Lang.HIN: "अपनी सिफारिशें प्राप्त करने के लिए एक तिथि चुनें।",
-        lang.Lang.JPN: "推奨事項を取得する日付を選択してください。"
-    }
-    selected_lang = dialog_manager.dialog_data.get("lang", lang.Lang.ENG)
-    return {"select_date_message": lang_messages.get(selected_lang, "Choose a date to get your recommendations.")}
-
+# Calendar window -------------------------------------------------------
 
 calendar_window = Window(
-    Format("{select_date_message}"),
+    Case(
+        {
+            Lang.ENG: Const("Choose a date to get your recommendations."),
+            Lang.RUS: Const("Выберите дату, чтобы получить рекомендации."),
+            Lang.ESP: Const("Elija una fecha para obtener sus recomendaciones."),
+            Lang.DEU: Const("Wählen Sie ein Datum, um Ihre Empfehlungen zu erhalten."),
+            Lang.FRA: Const("Choisissez une date pour obtenir vos recommandations."),
+            Lang.ARA: Const("اختر تاريخًا للحصول على توصياتك."),
+            Lang.CHI: Const("选择日期以获取您的建议。"),
+            Lang.HIN: Const("अपनी सिफारिशों प्राप्त करने के लिए एक तारीख चुनें।"),
+            Lang.JPN: Const("お勧めを取得するための日付を選択してください。")
+        },
+        selector=F["dialog_data"]["lang"],
+    ),
     Calendar(id='calendar', on_click=on_date_selected),
-    getter=get_select_date_message,
-    state=DialogSG.CALENDAR)
-
-lang_window = Window(Const("Welcome to NumoMagic bot! Please, choose your language"),
-                     Group(
-                         Button(Const("English 🇬🇧"), id=lang.Lang.ENG.value, on_click=on_lang_selected),
-                         Button(Const("Russian 🇷🇺"), id=lang.Lang.RUS.value, on_click=on_lang_selected),
-                         Button(Const("Deutsch 🇩🇪"), id=lang.Lang.DEU.value, on_click=on_lang_selected),
-                         Button(Const("Spanish 🇪🇸"), id=lang.Lang.ESP.value, on_click=on_lang_selected),
-                         Button(Const("French 🇫🇷"), id=lang.Lang.FRA.value, on_click=on_lang_selected),
-                         Button(Const("Arabic 🇸🇦"), id=lang.Lang.ARA.value, on_click=on_lang_selected),
-                         Button(Const("Chinese 🇨🇳"), id=lang.Lang.CHI.value, on_click=on_lang_selected),
-                         Button(Const("Hindi 🇮🇳"), id=lang.Lang.HIN.value, on_click=on_lang_selected),
-                         Button(Const("Japanese 🇯🇵"), id=lang.Lang.JPN.value, on_click=on_lang_selected),
-                         width=2
-                     ),
-                     state=DialogSG.MAIN)
+    state=DialogSG.CALENDAR
+)
 
 
-# -------------------------------------------------------------------------------
+# Recommendation windows -------------------------------------------------------
 
 async def get_period_1(dialog_manager: DialogManager, **kwargs):
     return {"period_1": dialog_manager.start_data.get("period_1")}
@@ -81,12 +86,47 @@ async def get_period_6(dialog_manager: DialogManager, **kwargs):
 
 
 def create_four_digits_window():
-    button_group = Group(Button(Const("00:00-06:00"), id="b_4_1", on_click=on_4_1),
-                         Button(Const("06:00-12:00"), id="b_4_2", on_click=on_4_2),
-                         Button(Const("12:00-18:00"), id="b_4_3", on_click=on_4_3),
-                         Button(Const("18:00-24:00"), id="b_4_4", on_click=on_4_4),
-                         Button(Const("Close"), id="close", on_click=close_result_dialog),
-                         width=2)
+    button_group = Group(
+        Button(Const("00:00-06:00"), id="b_4_1", on_click=on_4_1),
+        Button(Const("06:00-12:00"), id="b_4_2", on_click=on_4_2),
+        Button(Const("12:00-18:00"), id="b_4_3", on_click=on_4_3),
+        Button(Const("18:00-24:00"), id="b_4_4", on_click=on_4_4),
+        Button(
+            Case(
+                {
+                    Lang.ENG: Const("Close"),
+                    Lang.RUS: Const("Закрыть"),
+                    Lang.ESP: Const("Cerrar"),
+                    Lang.DEU: Const("Schließen"),
+                    Lang.FRA: Const("Fermer"),
+                    Lang.ARA: Const("إغلاق"),
+                    Lang.CHI: Const("关闭"),
+                    Lang.HIN: Const("बंद करे"),
+                    Lang.JPN: Const("閉じる")
+                },
+                selector=F["start_data"]["lang"]
+            ),
+            id="button_close_recommendation", on_click=close_recommendation_dialog
+        ),
+        Button(
+            Case(
+                {
+                    Lang.ENG: Const("Learn more"),
+                    Lang.RUS: Const("Узнать больше"),
+                    Lang.ESP: Const("Aprender más"),
+                    Lang.DEU: Const("Mehr erfahren"),
+                    Lang.FRA: Const("En savoir plus"),
+                    Lang.ARA: Const("تعلم أكثر"),
+                    Lang.CHI: Const("了解更多"),
+                    Lang.HIN: Const("और जानें"),
+                    Lang.JPN: Const("もっと知る")
+                },
+                selector=F["start_data"]["lang"]
+            ),
+            id="join_channel", on_click=on_join_channel
+        ),
+        width=2
+    )
     windows = [
         Window(Format("{period_1}"),
                button_group,
@@ -115,7 +155,40 @@ def create_five_digits_window():
         Button(Const("9:36-14:24"), id="b_5_3", on_click=on_5_3),
         Button(Const("14:24-19:12"), id="b_5_4", on_click=on_5_4),
         Button(Const("19:12-24:00"), id="b_5_5", on_click=on_5_5),
-        Button(Const("Close"), id="close", on_click=close_result_dialog),
+        Button(
+            Case(
+                {
+                    Lang.ENG: Const("Close"),
+                    Lang.RUS: Const("Закрыть"),
+                    Lang.ESP: Const("Cerrar"),
+                    Lang.DEU: Const("Schließen"),
+                    Lang.FRA: Const("Fermer"),
+                    Lang.ARA: Const("إغلاق"),
+                    Lang.CHI: Const("关闭"),
+                    Lang.HIN: Const("बंद करे"),
+                    Lang.JPN: Const("閉じる")
+                },
+                selector=F["start_data"]["lang"]
+            ),
+            id="button_close_recommendation", on_click=close_recommendation_dialog
+        ),
+        Button(
+            Case(
+                {
+                    Lang.ENG: Const("Learn more"),
+                    Lang.RUS: Const("Узнать больше"),
+                    Lang.ESP: Const("Aprender más"),
+                    Lang.DEU: Const("Mehr erfahren"),
+                    Lang.FRA: Const("En savoir plus"),
+                    Lang.ARA: Const("تعلم أكثر"),
+                    Lang.CHI: Const("了解更多"),
+                    Lang.HIN: Const("और जानें"),
+                    Lang.JPN: Const("もっと知る")
+                },
+                selector=F["start_data"]["lang"]
+            ),
+            id="join_channel", on_click=on_join_channel
+        ),
         width=2
     )
 
@@ -152,7 +225,40 @@ def create_six_digits_window():
         Button(Const("12:00-16:00"), id="b_6_4", on_click=on_6_4),
         Button(Const("16:00-20:00"), id="b_6_5", on_click=on_6_5),
         Button(Const("20:00-24:00"), id="b_6_6", on_click=on_6_6),
-        Button(Const("Close"), id="close", on_click=close_result_dialog),
+        Button(
+            Case(
+                {
+                    Lang.ENG: Const("Close"),
+                    Lang.RUS: Const("Закрыть"),
+                    Lang.ESP: Const("Cerrar"),
+                    Lang.DEU: Const("Schließen"),
+                    Lang.FRA: Const("Fermer"),
+                    Lang.ARA: Const("إغلاق"),
+                    Lang.CHI: Const("关闭"),
+                    Lang.HIN: Const("बंद करे"),
+                    Lang.JPN: Const("閉じる")
+                },
+                selector=F["start_data"]["lang"]
+            ),
+            id="button_close_recommendation", on_click=close_recommendation_dialog
+        ),
+        Button(
+            Case(
+                {
+                    Lang.ENG: Const("Learn more"),
+                    Lang.RUS: Const("Узнать больше"),
+                    Lang.ESP: Const("Aprender más"),
+                    Lang.DEU: Const("Mehr erfahren"),
+                    Lang.FRA: Const("En savoir plus"),
+                    Lang.ARA: Const("تعلم أكثر"),
+                    Lang.CHI: Const("了解更多"),
+                    Lang.HIN: Const("और जानें"),
+                    Lang.JPN: Const("もっと知る")
+                },
+                selector=F["start_data"]["lang"]
+            ),
+            id="join_channel", on_click=on_join_channel
+        ),
         width=2
     )
     windows = [
@@ -182,3 +288,29 @@ def create_six_digits_window():
                getter=get_period_6),
     ]
     return windows
+
+
+join_channel_window = Window(
+    Format("{join_channel_message}"),
+    Url(Format("{join_channel_buttons[stars]}"),Format("{join_channel_star_link}")),
+    Url(Format("{join_channel_buttons[other]}"), Format("{join_channel_request_link}")),
+    Button(
+        Case(
+            {
+                Lang.ENG: Const("Close"),
+                Lang.RUS: Const("Закрыть"),
+                Lang.ESP: Const("Cerrar"),
+                Lang.DEU: Const("Schließen"),
+                Lang.FRA: Const("Fermer"),
+                Lang.ARA: Const("إغلاق"),
+                Lang.CHI: Const("关闭"),
+                Lang.HIN: Const("बंद करे"),
+                Lang.JPN: Const("閉じる")
+            },
+            selector=F["start_data"]["lang"]
+        ),
+        id="button_close_join_channel", on_click=close_join_channel_dialog
+    ),
+    getter=[get_join_channel_message, get_join_channel_buttons, get_join_channel_star_link, get_join_channel_request_link],
+    state=JoinChannelStatesGroup.MAIN
+)
