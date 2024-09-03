@@ -1,9 +1,10 @@
-from aiogram_dialog.widgets.kbd import Button
+from aiogram_dialog.widgets.kbd import Button, Group, SwitchTo
 from aiogram_dialog.widgets.text import Format, Case, Const
 from magic_filter import MagicFilter
 
 from handlers.handlers import close_recommendation_dialog, on_join_channel
 from lang import Lang
+from states.state_group import PaymentStatesGroup
 
 
 def get_localized_close_button(F: MagicFilter):
@@ -44,3 +45,12 @@ def get_localized_learn_more_button(F: MagicFilter):
         ),
         id="join_channel", on_click=on_join_channel
     )]
+def create_payment_buttons_group(F: MagicFilter):
+    button_group = Group(
+        SwitchTo(Const("Revolut"), id="revolut_btn", state=PaymentStatesGroup.REVOLUT),
+        SwitchTo(Const("Paypal"), id="paypal_btn", state=PaymentStatesGroup.PAYPAL),
+        SwitchTo(Const("Bank transfer"), id="bank_transfer_btn", state=PaymentStatesGroup.BANK),
+        *get_localized_close_button(F),
+        width=2
+    )
+    return [button_group]

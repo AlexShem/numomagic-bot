@@ -32,3 +32,8 @@ class SixDigitsStates(StatesGroup):
 
 class JoinChannelStatesGroup(StatesGroup):
     MAIN = State()
+
+class PaymentStatesGroup(StatesGroup):
+    BANK = State()
+    REVOLUT = State()
+    PAYPAL = State()

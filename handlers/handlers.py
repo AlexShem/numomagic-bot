@@ -7,7 +7,8 @@ from aiogram_dialog.widgets.kbd import Button
 
 from lang import Lang
 import energy
-from states.state_group import DialogSG, FiveDigitsStates, FourDigitsStates, SixDigitsStates, JoinChannelStatesGroup
+from states.state_group import DialogSG, FiveDigitsStates, FourDigitsStates, SixDigitsStates, JoinChannelStatesGroup, \
+    PaymentStatesGroup
 
 logger = get_logger(__name__)
 
@@ -284,3 +285,6 @@ async def get_join_channel_request_link(dialog_manager: DialogManager, **kwargs)
     if selected_lang == Lang.RUS:
         return {"join_channel_request_link": "https://t.me/+9t7ylcITlJdmYTk0"}
     return {"join_channel_request_link": "https://t.me/+zTjKEuObGCw2NWFk"}
+
+async def on_another_payment_button(callback: CallbackQuery, button, manager: DialogManager):
+    await manager.start(PaymentStatesGroup.BANK, data=manager.start_data)

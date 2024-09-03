@@ -12,7 +12,8 @@ from handlers.handlers import (
     on_6_1, on_6_2, on_6_3, on_6_4, on_6_5, on_6_6,
     close_recommendation_dialog,
     on_join_channel, close_join_channel_dialog,
-    get_join_channel_message, get_join_channel_buttons, get_join_channel_star_link, get_join_channel_request_link
+    get_join_channel_message, get_join_channel_buttons, get_join_channel_star_link, get_join_channel_request_link,
+    on_another_payment_button
 )
 from states.state_group import DialogSG, FiveDigitsStates, FourDigitsStates, SixDigitsStates, JoinChannelStatesGroup
 from .common_elements import get_localized_close_button, get_localized_learn_more_button
@@ -198,7 +199,7 @@ def create_join_channel_window():
         Window(
             Format("{join_channel_message}"),
             Url(Format("{join_channel_buttons[stars]}"), Format("{join_channel_star_link}")),
-            Url(Format("{join_channel_buttons[other]}"), Format("{join_channel_request_link}")),
+            Button(Format("{join_channel_buttons[other]}"), id="another_payment_button", on_click=on_another_payment_button),
             *get_localized_close_button(F),
             getter=[get_join_channel_message, get_join_channel_buttons, get_join_channel_star_link,
                     get_join_channel_request_link],
