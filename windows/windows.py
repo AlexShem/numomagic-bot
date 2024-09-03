@@ -15,7 +15,7 @@ from handlers.handlers import (
     get_join_channel_message, get_join_channel_buttons, get_join_channel_star_link, get_join_channel_request_link
 )
 from states.state_group import DialogSG, FiveDigitsStates, FourDigitsStates, SixDigitsStates, JoinChannelStatesGroup
-from .common_elements import get_localized_close_button
+from .common_elements import get_localized_close_button, get_localized_learn_more_button
 
 # Language selection window -------------------------------------------------------
 
@@ -91,23 +91,7 @@ def create_four_digits_window():
         Button(Const("12:00-18:00"), id="b_4_3", on_click=on_4_3),
         Button(Const("18:00-24:00"), id="b_4_4", on_click=on_4_4),
         *get_localized_close_button(F),
-        Button(
-            Case(
-                {
-                    Lang.ENG: Const("Learn more"),
-                    Lang.RUS: Const("Узнать больше"),
-                    Lang.ESP: Const("Aprender más"),
-                    Lang.DEU: Const("Mehr erfahren"),
-                    Lang.FRA: Const("En savoir plus"),
-                    Lang.ARA: Const("تعلم أكثر"),
-                    Lang.CHI: Const("了解更多"),
-                    Lang.HIN: Const("और जानें"),
-                    Lang.JPN: Const("もっと知る")
-                },
-                selector=F["start_data"]["lang"]
-            ),
-            id="join_channel", on_click=on_join_channel
-        ),
+        *get_localized_learn_more_button(F),
         width=2
     )
     windows = [
@@ -139,23 +123,7 @@ def create_five_digits_window():
         Button(Const("14:24-19:12"), id="b_5_4", on_click=on_5_4),
         Button(Const("19:12-24:00"), id="b_5_5", on_click=on_5_5),
         *get_localized_close_button(F),
-        Button(
-            Case(
-                {
-                    Lang.ENG: Const("Learn more"),
-                    Lang.RUS: Const("Узнать больше"),
-                    Lang.ESP: Const("Aprender más"),
-                    Lang.DEU: Const("Mehr erfahren"),
-                    Lang.FRA: Const("En savoir plus"),
-                    Lang.ARA: Const("تعلم أكثر"),
-                    Lang.CHI: Const("了解更多"),
-                    Lang.HIN: Const("और जानें"),
-                    Lang.JPN: Const("もっと知る")
-                },
-                selector=F["start_data"]["lang"]
-            ),
-            id="join_channel", on_click=on_join_channel
-        ),
+        *get_localized_learn_more_button(F),
         width=2
     )
 
@@ -193,23 +161,7 @@ def create_six_digits_window():
         Button(Const("16:00-20:00"), id="b_6_5", on_click=on_6_5),
         Button(Const("20:00-24:00"), id="b_6_6", on_click=on_6_6),
         *get_localized_close_button(F),
-        Button(
-            Case(
-                {
-                    Lang.ENG: Const("Learn more"),
-                    Lang.RUS: Const("Узнать больше"),
-                    Lang.ESP: Const("Aprender más"),
-                    Lang.DEU: Const("Mehr erfahren"),
-                    Lang.FRA: Const("En savoir plus"),
-                    Lang.ARA: Const("تعلم أكثر"),
-                    Lang.CHI: Const("了解更多"),
-                    Lang.HIN: Const("और जानें"),
-                    Lang.JPN: Const("もっと知る")
-                },
-                selector=F["start_data"]["lang"]
-            ),
-            id="join_channel", on_click=on_join_channel
-        ),
+        *get_localized_learn_more_button(F),
         width=2
     )
     windows = [

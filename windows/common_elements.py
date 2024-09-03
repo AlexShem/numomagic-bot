@@ -2,7 +2,7 @@ from aiogram_dialog.widgets.kbd import Button
 from aiogram_dialog.widgets.text import Format, Case, Const
 from magic_filter import MagicFilter
 
-from handlers.handlers import close_recommendation_dialog
+from handlers.handlers import close_recommendation_dialog, on_join_channel
 from lang import Lang
 
 
@@ -23,4 +23,24 @@ def get_localized_close_button(F: MagicFilter):
             selector=F["start_data"]["lang"]
         ),
         id="button_close_recommendation", on_click=close_recommendation_dialog
+    )]
+
+
+def get_localized_learn_more_button(F: MagicFilter):
+    return [Button(
+        Case(
+            {
+                Lang.ENG: Const("Learn more"),
+                Lang.RUS: Const("Узнать больше"),
+                Lang.ESP: Const("Aprender más"),
+                Lang.DEU: Const("Mehr erfahren"),
+                Lang.FRA: Const("En savoir plus"),
+                Lang.ARA: Const("تعلم أكثر"),
+                Lang.CHI: Const("了解更多"),
+                Lang.HIN: Const("और जानें"),
+                Lang.JPN: Const("もっと知る")
+            },
+            selector=F["start_data"]["lang"]
+        ),
+        id="join_channel", on_click=on_join_channel
     )]
