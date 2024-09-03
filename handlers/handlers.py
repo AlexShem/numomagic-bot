@@ -142,11 +142,6 @@ async def on_date_selected(callback: CallbackQuery, widget, manager: DialogManag
     logger.warning(f"User {callback.from_user.username} selected date {selected_date}, energy levels: {energy_levels}")
 
 
-# When the user selects the "Close" recommendation button, display the calendar view.
-async def close_recommendation_dialog(callback: CallbackQuery, widget, manager: DialogManager):
-    await manager.done()
-
-
 async def on_4_1(callback: CallbackQuery, widget, manager: DialogManager):
     await manager.switch_to(FourDigitsStates.PERIOD1)
 
