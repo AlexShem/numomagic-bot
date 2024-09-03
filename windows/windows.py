@@ -15,7 +15,7 @@ from handlers.handlers import (
     get_join_channel_message, get_join_channel_buttons, get_join_channel_star_link, get_join_channel_request_link
 )
 from states.state_group import DialogSG, FiveDigitsStates, FourDigitsStates, SixDigitsStates, JoinChannelStatesGroup
-
+from .common_elements import get_localized_close_button
 
 # Language selection window -------------------------------------------------------
 
@@ -35,7 +35,6 @@ lang_window = Window(
     ),
     state=DialogSG.MAIN
 )
-
 
 # Calendar window -------------------------------------------------------
 
@@ -91,23 +90,7 @@ def create_four_digits_window():
         Button(Const("06:00-12:00"), id="b_4_2", on_click=on_4_2),
         Button(Const("12:00-18:00"), id="b_4_3", on_click=on_4_3),
         Button(Const("18:00-24:00"), id="b_4_4", on_click=on_4_4),
-        Button(
-            Case(
-                {
-                    Lang.ENG: Const("Close"),
-                    Lang.RUS: Const("Закрыть"),
-                    Lang.ESP: Const("Cerrar"),
-                    Lang.DEU: Const("Schließen"),
-                    Lang.FRA: Const("Fermer"),
-                    Lang.ARA: Const("إغلاق"),
-                    Lang.CHI: Const("关闭"),
-                    Lang.HIN: Const("बंद करे"),
-                    Lang.JPN: Const("閉じる")
-                },
-                selector=F["start_data"]["lang"]
-            ),
-            id="button_close_recommendation", on_click=close_recommendation_dialog
-        ),
+        *get_localized_close_button(F),
         Button(
             Case(
                 {
@@ -155,23 +138,7 @@ def create_five_digits_window():
         Button(Const("9:36-14:24"), id="b_5_3", on_click=on_5_3),
         Button(Const("14:24-19:12"), id="b_5_4", on_click=on_5_4),
         Button(Const("19:12-24:00"), id="b_5_5", on_click=on_5_5),
-        Button(
-            Case(
-                {
-                    Lang.ENG: Const("Close"),
-                    Lang.RUS: Const("Закрыть"),
-                    Lang.ESP: Const("Cerrar"),
-                    Lang.DEU: Const("Schließen"),
-                    Lang.FRA: Const("Fermer"),
-                    Lang.ARA: Const("إغلاق"),
-                    Lang.CHI: Const("关闭"),
-                    Lang.HIN: Const("बंद करे"),
-                    Lang.JPN: Const("閉じる")
-                },
-                selector=F["start_data"]["lang"]
-            ),
-            id="button_close_recommendation", on_click=close_recommendation_dialog
-        ),
+        *get_localized_close_button(F),
         Button(
             Case(
                 {
@@ -225,23 +192,7 @@ def create_six_digits_window():
         Button(Const("12:00-16:00"), id="b_6_4", on_click=on_6_4),
         Button(Const("16:00-20:00"), id="b_6_5", on_click=on_6_5),
         Button(Const("20:00-24:00"), id="b_6_6", on_click=on_6_6),
-        Button(
-            Case(
-                {
-                    Lang.ENG: Const("Close"),
-                    Lang.RUS: Const("Закрыть"),
-                    Lang.ESP: Const("Cerrar"),
-                    Lang.DEU: Const("Schließen"),
-                    Lang.FRA: Const("Fermer"),
-                    Lang.ARA: Const("إغلاق"),
-                    Lang.CHI: Const("关闭"),
-                    Lang.HIN: Const("बंद करे"),
-                    Lang.JPN: Const("閉じる")
-                },
-                selector=F["start_data"]["lang"]
-            ),
-            id="button_close_recommendation", on_click=close_recommendation_dialog
-        ),
+        *get_localized_close_button(F),
         Button(
             Case(
                 {
@@ -290,27 +241,15 @@ def create_six_digits_window():
     return windows
 
 
-join_channel_window = Window(
-    Format("{join_channel_message}"),
-    Url(Format("{join_channel_buttons[stars]}"),Format("{join_channel_star_link}")),
-    Url(Format("{join_channel_buttons[other]}"), Format("{join_channel_request_link}")),
-    Button(
-        Case(
-            {
-                Lang.ENG: Const("Close"),
-                Lang.RUS: Const("Закрыть"),
-                Lang.ESP: Const("Cerrar"),
-                Lang.DEU: Const("Schließen"),
-                Lang.FRA: Const("Fermer"),
-                Lang.ARA: Const("إغلاق"),
-                Lang.CHI: Const("关闭"),
-                Lang.HIN: Const("बंद करे"),
-                Lang.JPN: Const("閉じる")
-            },
-            selector=F["start_data"]["lang"]
-        ),
-        id="button_close_join_channel", on_click=close_join_channel_dialog
-    ),
-    getter=[get_join_channel_message, get_join_channel_buttons, get_join_channel_star_link, get_join_channel_request_link],
-    state=JoinChannelStatesGroup.MAIN
-)
+def create_join_channel_window():
+    window = [
+        Window(
+            Format("{join_channel_message}"),
+            Url(Format("{join_channel_buttons[stars]}"), Format("{join_channel_star_link}")),
+            Url(Format("{join_channel_buttons[other]}"), Format("{join_channel_request_link}")),
+            *get_localized_close_button(F),
+            getter=[get_join_channel_message, get_join_channel_buttons, get_join_channel_star_link,
+                    get_join_channel_request_link],
+            state=JoinChannelStatesGroup.MAIN
+        )]
+    return window
