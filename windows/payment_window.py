@@ -14,6 +14,8 @@ async def get_bank_payment_description(dialog_manager: DialogManager, **kwargs):
         return {"description": "Оплата по платежной системе на русском"}
     elif selected_lang == Lang.ENG:
         return {"description": "Payment via payment system in English"}
+    else:
+        return {"description": "Payment via payment system in English"}
 
 async def get_revolut_payment_description(dialog_manager: DialogManager, **kwargs):
     selected_lang = dialog_manager.start_data.get("lang", Lang.ENG)
