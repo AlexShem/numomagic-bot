@@ -1,5 +1,5 @@
-from aiogram_dialog.widgets.kbd import Button, Group, SwitchTo
-from aiogram_dialog.widgets.text import Format, Case, Const
+from aiogram_dialog.widgets.kbd import Button, Group, SwitchTo, Url
+from aiogram_dialog.widgets.text import Format, Case, Const, Text
 from magic_filter import MagicFilter
 
 from handlers.handlers import close_recommendation_dialog, on_join_channel
@@ -45,11 +45,32 @@ def get_localized_learn_more_button(F: MagicFilter):
         ),
         id="join_channel", on_click=on_join_channel
     )]
+
+def get_channel_url(F):
+    return [Url(
+        Case(
+            {
+                Lang.ENG: Const("Join Channel"),
+                Lang.RUS: Const("Подключиться к каналу"),
+                ...: Const("Not implemented language"),
+            },
+            selector=F["start_data"]["lang"]
+        ),
+        Case(
+            {
+                Lang.ENG: Const("https://t.me/+9t7ylcITlJdmYTk0"),
+                Lang.RUS: Const("https://t.me/+zTjKEuObGCw2NWFk"),
+                ...: Const("https://t.me/+9t7ylcITlJdmYTk0")
+            },
+            selector=F["start_data"]["lang"]
+        )
+    )]
 def create_payment_buttons_group(F: MagicFilter):
     button_group = Group(
         SwitchTo(Const("Revolut"), id="revolut_btn", state=PaymentStatesGroup.REVOLUT),
         SwitchTo(Const("Paypal"), id="paypal_btn", state=PaymentStatesGroup.PAYPAL),
         SwitchTo(Const("Bank transfer"), id="bank_transfer_btn", state=PaymentStatesGroup.BANK),
+        *get_channel_url(F),
         *get_localized_close_button(F),
         width=2
     )
