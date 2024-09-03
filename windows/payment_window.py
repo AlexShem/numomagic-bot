@@ -21,12 +21,16 @@ async def get_revolut_payment_description(dialog_manager: DialogManager, **kwarg
         return {"description": "Оплата по Revolut на русском"}
     elif selected_lang == Lang.ENG:
         return {"description": "Payment via Revolut in English"}
+    else:
+        return {"description": "Payment via Revolut in English"}
 
 async def get_paypal_payment_description(dialog_manager: DialogManager, **kwargs):
     selected_lang = dialog_manager.start_data.get("lang", Lang.ENG)
     if selected_lang == Lang.RUS:
         return {"description": "Оплата по Paypal на русском"}
     elif selected_lang == Lang.ENG:
+        return {"description": "Payment via Paypal in English"}
+    else:
         return {"description": "Payment via Paypal in English"}
 
 def create_bank_payment_window():

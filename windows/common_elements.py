@@ -2,7 +2,7 @@ from aiogram_dialog.widgets.kbd import Button, Group, SwitchTo, Url
 from aiogram_dialog.widgets.text import Format, Case, Const, Text
 from magic_filter import MagicFilter
 
-from handlers.handlers import close_recommendation_dialog, on_join_channel, on_close_dialog
+from handlers.handlers import on_join_channel, on_close_dialog
 from lang import Lang
 from states.state_group import PaymentStatesGroup
 
