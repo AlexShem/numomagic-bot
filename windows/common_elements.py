@@ -46,25 +46,40 @@ def get_localized_learn_more_button(F: MagicFilter):
         id="join_channel", on_click=on_join_channel
     )]
 
-def get_channel_url(F):
+def get_channel_url(F: MagicFilter):
     return [Url(
         Case(
             {
                 Lang.ENG: Const("Join Channel"),
                 Lang.RUS: Const("Подключиться к каналу"),
+                Lang.ESP: Const("Unirse al canal"),
+                Lang.DEU: Const("Kanal beitreten"),
+                Lang.FRA: Const("Rejoindre le canal"),
+                Lang.ARA: Const("انضم إلى القناة"),
+                Lang.CHI: Const("加入频道"),
+                Lang.HIN: Const("चैनल से जुड़ें"),
+                Lang.JPN: Const("チャンネルに参加"),
                 ...: Const("Not implemented language"),
             },
             selector=F["start_data"]["lang"]
         ),
         Case(
             {
-                Lang.ENG: Const("https://t.me/+9t7ylcITlJdmYTk0"),
-                Lang.RUS: Const("https://t.me/+zTjKEuObGCw2NWFk"),
-                ...: Const("https://t.me/+9t7ylcITlJdmYTk0")
+                Lang.ENG: Const("https://t.me/+1cEaSbrrGshmNzlk"),
+                Lang.RUS: Const("https://t.me/+9t7ylcITlJdmYTk0"),
+                Lang.ESP: Const("https://t.me/+9l-JYRXy2CA2YzU0"),
+                Lang.DEU: Const("https://t.me/+sZ_KGJI5L5hhZWM0"),
+                Lang.FRA: Const("https://t.me/+6u5KXd2hUXhiMGM8"),
+                Lang.ARA: Const("https://t.me/+9_BfGfHMQrM0MmNk"),
+                Lang.CHI: Const("https://t.me/+HsIGO3-8dZ45ODBk"),
+                Lang.HIN: Const("https://t.me/+RAalShGyKscyOGU0"),
+                Lang.JPN: Const("https://t.me/+q723Uy3pLaw1YzJk"),
+                ...: Const("https://t.me/+1cEaSbrrGshmNzlk")
             },
             selector=F["start_data"]["lang"]
         )
     )]
+
 def create_payment_buttons_group(F: MagicFilter):
     button_group = Group(
         SwitchTo(Const("Revolut"), id="revolut_btn", state=PaymentStatesGroup.REVOLUT),
