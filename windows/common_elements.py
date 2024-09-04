@@ -82,9 +82,26 @@ def get_channel_url(F: MagicFilter):
 
 def create_payment_buttons_group(F: MagicFilter):
     button_group = Group(
-        SwitchTo(Const("Revolut"), id="revolut_btn", state=PaymentStatesGroup.REVOLUT),
-        SwitchTo(Const("Paypal"), id="paypal_btn", state=PaymentStatesGroup.PAYPAL),
-        SwitchTo(Const("Bank transfer"), id="bank_transfer_btn", state=PaymentStatesGroup.BANK),
+        SwitchTo(Const("💳 Revolut"), id="revolut_btn", state=PaymentStatesGroup.REVOLUT),
+        SwitchTo(Const("🅿️ PayPal"), id="paypal_btn", state=PaymentStatesGroup.PAYPAL),
+        SwitchTo(
+            Case(
+                {
+                    Lang.ENG: Const("🏦 Bank Transfer"),
+                    Lang.RUS: Const("🏦 Банковский перевод"),
+                    Lang.ESP: Const("🏦 Transferencia bancaria"),
+                    Lang.DEU: Const("🏦 Bank Transfer"),
+                    Lang.FRA: Const("🏦 Virement bancaire"),
+                    Lang.ARA: Const("🏦 تحويل بنكي"),
+                    Lang.CHI: Const("🏦 银行转账"),
+                    Lang.HIN: Const("🏦 बैंक ट्रांसफर"),
+                    Lang.JPN: Const("🏦 銀行振込")
+                },
+                selector=F["start_data"]["lang"]
+            ),
+            id="bank_transfer_btn", state=PaymentStatesGroup.BANK
+        ),
+        # SwitchTo(Const("🔐 Crypto"), id="crypto_btn", state=PaymentStatesGroup.CRYPTO), # Not implemented
         *get_channel_url(F),
         *get_localized_close_button(F),
         width=2
