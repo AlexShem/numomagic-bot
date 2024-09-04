@@ -47,15 +47,15 @@ async def get_join_channel_message(dialog_manager: DialogManager, **kwargs):
 
 async def get_join_channel_buttons(dialog_manager: DialogManager, **kwargs):
     lang_messages = {
-        Lang.ENG: {"stars": "⭐Telegram stars", "other": "💸Other payment"},
-        Lang.RUS: {"stars": "⭐Telegram stars", "other": "💸Другой способ оплаты"},
-        Lang.ESP: {"stars": "⭐Telegram stars", "other": "💸Otro pago"},
-        Lang.DEU: {"stars": "⭐Telegram stars", "other": "💸Andere Zahlung"},
-        Lang.FRA: {"stars": "⭐Telegram stars", "other": "💸Autre paiement"},
-        Lang.ARA: {"stars": "⭐Telegram stars", "other": "💸دفع آخر"},
-        Lang.CHI: {"stars": "⭐Telegram stars", "other": "💸其他付款"},
-        Lang.HIN: {"stars": "⭐Telegram stars", "other": "💸अन्य भुगतान"},
-        Lang.JPN: {"stars": "⭐Telegram stars", "other": "💸その他の支払い"}
+        Lang.ENG: {"stars": "⭐ Telegram stars", "other": "💸 Other payment"},
+        Lang.RUS: {"stars": "⭐ Telegram stars", "other": "💸 Другой способ оплаты"},
+        Lang.ESP: {"stars": "⭐ Telegram stars", "other": "💸 Otro pago"},
+        Lang.DEU: {"stars": "⭐ Telegram stars", "other": "💸 Andere Zahlung"},
+        Lang.FRA: {"stars": "⭐ Telegram stars", "other": "💸 Autre paiement"},
+        Lang.ARA: {"stars": "⭐ Telegram stars", "other": "💸 دفع آخر"},
+        Lang.CHI: {"stars": "⭐ Telegram stars", "other": "💸 其他付款"},
+        Lang.HIN: {"stars": "⭐ Telegram stars", "other": "💸 अन्य भुगतान"},
+        Lang.JPN: {"stars": "⭐ Telegram stars", "other": "💸 その他の支払い"}
     }
 
     selected_lang = dialog_manager.start_data.get("lang", Lang.ENG)
