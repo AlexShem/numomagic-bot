@@ -83,8 +83,26 @@ async def get_join_channel_buttons(dialog_manager: DialogManager, **kwargs):
 async def get_join_channel_star_link(dialog_manager: DialogManager, **kwargs):
     selected_lang = dialog_manager.start_data.get("lang", Lang.ENG)
     if selected_lang == Lang.RUS:
-        return {"join_channel_star_link": "https://t.me/+0-JREGcV0KBiOTM0"}
-    return {"join_channel_star_link": "https://t.me/+zTjKEuObGCw2NWFk"}
+        return {"join_channel_star_link": "https://t.me/+9_OFSHP1TDkwZTE0"}
+    elif selected_lang == Lang.ENG:
+        return {"join_channel_star_link": "https://t.me/+fEHq8cfO_ZkyZTFk"}
+    elif selected_lang == Lang.ESP:
+        return {"join_channel_star_link": "https://t.me/+iLXGQeQ0cPUxZDdk"}
+    elif selected_lang == Lang.DEU:
+        return {"join_channel_star_link": "https://t.me/+w4Pwus6n3vNiY2I0"}
+    elif selected_lang == Lang.FRA:
+        return {"join_channel_star_link": "https://t.me/+Fsx6VOCQEKQ1N2Q0"}
+    elif selected_lang == Lang.ARA:
+        return {"join_channel_star_link": "https://t.me/+rLhCOAsX6qQ4OGU0"}
+    elif selected_lang == Lang.CHI:
+        return {"join_channel_star_link": "https://t.me/+CMlr-bBOw64yZjI0"}
+    elif selected_lang == Lang.HIN:
+        return {"join_channel_star_link": "https://t.me/+d9ABhsgKgvtkMDBk"}
+    elif selected_lang == Lang.JPN:
+        return {"join_channel_star_link": "https://t.me/+3nqJNbZqyZkyZDdk"}
+
+    # Else, return the English link
+    return {"join_channel_star_link": "https://t.me/+fEHq8cfO_ZkyZTFk"}
 
 
 
