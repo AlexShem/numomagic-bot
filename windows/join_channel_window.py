@@ -10,33 +10,51 @@ from windows.common_elements import get_localized_close_button
 
 async def get_join_channel_message(dialog_manager: DialogManager, **kwargs):
     lang_messages = {
-        Lang.ENG: "You can learn more about numerology on our Telegram channel. "
-                        "To get access to the channel, you can pay in Telegram Stars or send a join request and pay using a bank transfer. "
-                        "Click the buttons below to get access to the channel.",
-        Lang.RUS: "Вы можете узнать больше о нумерологии на нашем Telegram-канале. "
-                        "Чтобы получить доступ к каналу, вы можете оплатить в Telegram Stars или отправить запрос на вступление и оплатить банковским переводом. "
-                        "Нажмите на кнопки ниже, чтобы получить доступ к каналу.",
-        Lang.ESP: "Puede obtener más información sobre numerología en nuestro canal de Telegram. "
-                        "Para acceder al canal, puede pagar en Telegram Stars o enviar una solicitud de unirse y pagar mediante una transferencia bancaria. "
-                        "Haga clic en los botones a continuación para acceder al canal.",
-        Lang.DEU: "Sie können mehr über Numerologie auf unserem Telegram-Kanal erfahren. "
-                        "Um Zugriff auf den Kanal zu erhalten, können Sie in Telegram Stars bezahlen oder eine Beitrittsanfrage senden und per Banküberweisung bezahlen. "
-                        "Klicken Sie auf die Schaltflächen unten, um Zugriff auf den Kanal zu erhalten.",
-        Lang.FRA: "Vous pouvez en apprendre plus sur la numérologie sur notre chaîne Telegram. "
-                        "Pour accéder à la chaîne, vous pouvez payer en étoiles Telegram ou envoyer une demande de rejoindre et payer par virement bancaire. "
-                        "Cliquez sur les boutons ci-dessous pour accéder à la chaîne.",
-        Lang.ARA: "يمكنك معرفة المزيد حول علم الأعداد على قناتنا على تطبيق تليجرام. "
-                        "للوصول إلى القناة، يمكنك الدفع بنجوم تليجرام أو إرسال طلب انضمام والدفع عبر التحويل المصرفي. "
-                        "انقر على الأزرار أدناه للوصول إلى القناة.",
-        Lang.CHI: "您可以在我们的Telegram频道上了解更多关于数字学的信息。 "
-                        "要访问频道，您可以使用Telegram Stars支付或发送加入请求并通过银行转账支付。 "
-                        "单击下面的按钮以访问频道。",
-        Lang.HIN: "आप हमारे टेलीग्राम चैनल पर अंकशास्त्र के बारे में अधिक जान सकते हैं। "
-                        "चैनल तक पहुंचने के लिए, आप टेलीग्राम स्टार्स में भुगतान कर सकते हैं या ज्वाइन अनुरोध भेजकर बैंक ट्रांसफर के जरिए भुगतान कर सकते हैं। "
-                        "चैनल तक पहुंचने के लिए नीचे दिए गए बटन पर क्लिक करें।",
-        Lang.JPN: "当社のTelegramチャンネルで数秘術について詳しく知ることができます。 "
-                        "チャンネルにアクセスするには、Telegram Starsで支払うか、参加リクエストを送信して銀行振込で支払うことができます。 "
-                        "チャンネルにアクセスするには、以下のボタンをクリックしてください。"
+        Lang.RUS: "✨ Добро пожаловать в мир магии и нумерологии! ✨\n\n"
+                  "Если вам нравится открывать и использовать прогнозирование в области эзотерики, обязательно посетите наш закрытый канал. "
+                  "Вы откроете для себя ритуальную часть нумерологии через магию чисел и кодов.🔮\n\n"
+                  "⭐️ Если у вас есть Telegram Premium, вы можете использовать 500 звезд в месяц для получения доступа к эксклюзивным материалам! Это простой и удобный способ приобщиться к тайным знаниям.\n\n"
+                  "💸 Не хотите использовать звезды или нет Telegram Premium? Не проблема! Нажмите кнопку ниже, чтобы узнать, как еще можно оплатить доступ и стать частью нашего сообщества.",
+        Lang.ENG: "✨ Welcome to the world of magic and numerology! ✨\n\n"
+                  "If you enjoy exploring and utilizing predictions in the realm of esotericism, be sure to visit our private channel. "
+                  "You will discover the ritualistic side of numerology through the magic of numbers and codes.🔮\n\n"
+                  "⭐️ If you have Telegram Premium, you can use 500 stars per month to gain access to exclusive materials! It's a simple and convenient way to tap into secret knowledge.\n\n"
+                  "💸 Prefer not to use stars or don’t have Telegram Premium? No problem! Click the button below to learn about other payment methods and join our community.",
+        Lang.ESP: "✨ ¡Bienvenido al mundo de la magia y la numerología! ✨\n\n"
+                  "Si disfrutas explorando y utilizando predicciones en el ámbito de la esoteria, asegúrate de visitar nuestro canal privado. "
+                  "Descubrirás el lado ritual de la numerología a través de la magia de los números y códigos.🔮\n\n"
+                  "⭐️ Si tienes Telegram Premium, puedes usar 500 estrellas al mes para acceder a materiales exclusivos. ¡Es una forma sencilla y conveniente de acceder a conocimientos secretos!\n\n"
+                  "💸 ¿Prefieres no usar estrellas o no tienes Telegram Premium? ¡No hay problema! Haz clic en el botón de abajo para conocer otros métodos de pago y unirte a nuestra comunidad.",
+        Lang.DEU: "✨ Willkommen in der Welt der Magie und Numerologie! ✨\n\n"
+                  "Wenn Sie es genießen, Vorhersagen im Bereich der Esoterik zu erforschen und zu nutzen, sollten Sie unbedingt unserem privaten Kanal beitreten. "
+                  "Sie werden die rituelle Seite der Numerologie durch die Magie der Zahlen und Codes entdecken.🔮\n\n"
+                  "⭐️ Wenn Sie Telegram Premium haben, können Sie 500 Sterne pro Monat verwenden, um Zugang zu exklusiven Materialien zu erhalten! Es ist ein einfacher und bequemer Weg, geheimes Wissen zu erlangen.\n\n"
+                  "💸 Möchten Sie keine Sterne verwenden oder haben Sie kein Telegram Premium? Kein Problem! Klicken Sie unten auf die Schaltfläche, um mehr über andere Zahlungsmethoden zu erfahren und unserem Kanal beizutreten.",
+        Lang.FRA: "✨ Bienvenue dans le monde de la magie et de la numérologie ! ✨\n\n"
+                  "Si vous aimez explorer et utiliser les prédictions dans le domaine de l'ésotérisme, assurez-vous de visiter notre canal privé. "
+                  "Vous découvrirez le côté rituel de la numérologie à travers la magie des chiffres et des codes.🔮\n\n"
+                  "⭐️ Si vous avez Telegram Premium, vous pouvez utiliser 500 étoiles par mois pour accéder à des matériaux exclusifs ! C'est un moyen simple et pratique d'accéder à des connaissances secrètes.\n\n"
+                  "💸 Vous préférez ne pas utiliser d'étoiles ou vous n'avez pas Telegram Premium ? Pas de problème ! Cliquez sur le bouton ci-dessous pour en savoir plus sur les autres méthodes de paiement et rejoindre notre communauté.",
+        Lang.ARA: "✨ مرحبًا بكم في عالم السحر والتنجيم! ✨\n\n"
+                  "إذا كنت تستمتع باستكشاف واستخدام التنبؤات في مجال الروحانيات، فلا تنسَ زيارة قناتنا المغلقة. "
+                  "ستكتشف الجانب الطقوسي من علم الأرقام من خلال سحر الأرقام والرموز.🔮\n\n"
+                  "⭐️ إذا كان لديك Telegram Premium، يمكنك استخدام 500 نجمة شهريًا للوصول إلى مواد حصرية! إنه وسيلة بسيطة ومريحة للوصول إلى المعرفة السرية.\n\n"
+                  "💸 تفضل عدم استخدام النجوم أو ليس لديك Telegram Premium؟ لا مشكلة! اضغط على الزر أدناه لتتعرف على طرق الدفع الأخرى والانضمام إلى قناتنا.",
+        Lang.CHI: "✨ 欢迎来到魔法和数字学的世界！✨\n\n"
+                  "如果你喜欢探索和运用神秘学领域的预测，务必访问我们的私密频道。"
+                  "你将通过数字和代码的魔力，发现数字学的仪式部分。🔮\n\n"
+                  "⭐️ 如果你有 Telegram Premium，你可以每月使用 500 星来获得独家内容的访问权限！这是一种简单便捷的方式，接触到秘密知识。\n\n"
+                  "💸 不想使用星星或没有 Telegram Premium？没问题！点击下方按钮了解其他支付方式并加入我们的频道。",
+        Lang.HIN: "✨ जादू और अंकशास्त्र की दुनिया में आपका स्वागत है! ✨\n\n"
+                  "यदि आपको गूढ़ विद्या के क्षेत्र में भविष्यवाणियों का उपयोग और अन्वेषण करना पसंद है, तो हमारे निजी चैनल का दौरा अवश्य करें। "
+                  "आप अंकों और कोड्स के जादू के माध्यम से अंकशास्त्र के अनुष्ठानिक भाग की खोज करेंगे।🔮\n\n"
+                  "⭐️ यदि आपके पास Telegram Premium है, तो आप 500 स्टार्स प्रति माह का उपयोग करके विशेष सामग्री प्राप्त कर सकते हैं! यह गुप्त ज्ञान का हिस्सा बनने का एक सरल और सुविधाजनक तरीका है।\n\n"
+                  "💸 स्टार्स का उपयोग नहीं करना चाहते या आपके पास Telegram Premium नहीं है? कोई समस्या नहीं! नीचे दिए गए बटन पर क्लिक करें और अन्य भुगतान विधियों के बारे में जानें और हमारे चैनल का हिस्सा बनें।",
+        Lang.JPN: "✨ 魔法と数秘術の世界へようこそ！✨\n\n"
+                  "占いの分野で予測を探求し、活用することが好きなら、ぜひ私たちの非公開チャンネルを訪れてください。 "
+                  "あなたは、数字とコードの魔法を通じて、数秘術の儀式的な側面を発見するでしょう。🔮\n\n"
+                  "⭐️ Telegram Premiumをお持ちの方は、月額500スターを利用して独占コンテンツにアクセスできます！ 秘密の知識に触れるための簡単で便利な方法です。\n\n"
+                  "💸 スターを利用したくない、またはTelegram Premiumをお持ちでない方は？ 問題ありません！他の支払い方法について確認し、コミュニティに参加するには、下のボタンをクリックしてください。"
     }
 
     selected_lang = dialog_manager.start_data.get("lang", Lang.ENG)
