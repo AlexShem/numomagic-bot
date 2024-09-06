@@ -37,3 +37,4 @@ class PaymentStatesGroup(StatesGroup):
     BANK = State()
     REVOLUT = State()
     PAYPAL = State()
+    UK_BANK = State()

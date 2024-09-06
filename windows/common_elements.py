@@ -80,9 +80,29 @@ def get_channel_url(F: MagicFilter):
         )
     )]
 
+def get_localized_more_methods_button(F: MagicFilter):
+    return [Button(
+        Case(
+            {
+                Lang.ENG: Const("More methods available soon"),
+                Lang.RUS: Const("Больше методов скоро"),
+                Lang.ESP: Const("Más métodos disponibles pronto"),
+                Lang.DEU: Const("Weitere Methoden bald verfügbar"),
+                Lang.FRA: Const("Plus de méthodes bientôt disponibles"),
+                Lang.ARA: Const("المزيد من الطرق قريبًا"),
+                Lang.CHI: Const("更多方法即将推出"),
+                Lang.HIN: Const("जल्द ही और अधिक विधियाँ उपलब्ध होगी"),
+                Lang.JPN: Const("もっと多くの方法が間もなく利用可能になります"),
+                ...: Const("Not implemented language")
+            },
+            selector=F["start_data"]["lang"]
+        ),
+        id="more_methods"
+    )]
+
 def create_payment_buttons_group(F: MagicFilter):
     button_group = Group(
-        SwitchTo(Const("💳 Revolut"), id="revolut_btn", state=PaymentStatesGroup.REVOLUT),
+        # SwitchTo(Const("💳 Revolut"), id="revolut_btn", state=PaymentStatesGroup.REVOLUT), # Not implemented
         SwitchTo(Const("🅿️ PayPal"), id="paypal_btn", state=PaymentStatesGroup.PAYPAL),
         SwitchTo(
             Case(
@@ -101,8 +121,10 @@ def create_payment_buttons_group(F: MagicFilter):
             ),
             id="bank_transfer_btn", state=PaymentStatesGroup.BANK
         ),
+        SwitchTo(Const("🇬🇧🏦 UK Bank Transfer"), id="uk_bank_transfer_btn", state=PaymentStatesGroup.UK_BANK),
         # SwitchTo(Const("🔐 Crypto"), id="crypto_btn", state=PaymentStatesGroup.CRYPTO), # Not implemented
         *get_channel_url(F),
+        *get_localized_more_methods_button(F),
         *get_localized_close_button(F),
         width=2
     )
