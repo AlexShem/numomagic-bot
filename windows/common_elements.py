@@ -11,7 +11,7 @@ def get_localized_close_button(F: MagicFilter):
     return [Button(
         Case(
             {
-                Lang.ENG: Const("Close"),
+                Lang.ENG: Const("Close"),    #TODO: Make referense to payment description
                 Lang.RUS: Const("Закрыть"),
                 Lang.ESP: Const("Cerrar"),
                 Lang.DEU: Const("Schließen"),
