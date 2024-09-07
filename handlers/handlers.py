@@ -131,7 +131,6 @@ async def on_date_selected(callback: CallbackQuery, widget, manager: DialogManag
     dialog_data["lang"] = lang
 
     logger.warning(f"User {callback.from_user.username} selected date {selected_date}, energy levels: {energy_levels}")
-    logger.warning(f"The dialog data is: {dialog_data}")
 
     if len(prepared_answer) == 4:
         await manager.start(FourDigitsStates.PERIOD1, data=dialog_data)
@@ -139,7 +138,6 @@ async def on_date_selected(callback: CallbackQuery, widget, manager: DialogManag
         await manager.start(FiveDigitsStates.PERIOD1, data=dialog_data)
     else:
         await manager.start(SixDigitsStates.PERIOD1, data=dialog_data)
-    logger.warning(f"User {callback.from_user.username} selected date {selected_date}, energy levels: {energy_levels}")
 
 
 async def on_4_1(callback: CallbackQuery, widget, manager: DialogManager):
@@ -206,14 +204,14 @@ async def on_6_6(callback: CallbackQuery, widget, manager: DialogManager):
 
 async def on_join_channel(callback: CallbackQuery, button, manager: DialogManager):
     logger.warning(f"User {callback.from_user.username} selected to join the channel")
-    logger.warning(f"The dialog data is: {manager.start_data}")
     await manager.start(JoinChannelStatesGroup.MAIN, data=manager.start_data)
 
 async def on_another_payment_button(callback: CallbackQuery, button, manager: DialogManager):
+    logger.warning(f"User {callback.from_user.username} selected another payment method")
     await manager.start(PaymentStatesGroup.BANK, data=manager.start_data)
 
 
-# Commong close button handler -----------------------------------------------
+# Common close button handler -----------------------------------------------
 
 async def on_close_dialog(callback: CallbackQuery, button, manager: DialogManager):
     await manager.done()
