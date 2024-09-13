@@ -1,5 +1,5 @@
 from aiogram_dialog import Window, DialogManager
-from aiogram_dialog.widgets.kbd import Url, Button
+from aiogram_dialog.widgets.kbd import Url, Button, Row
 from aiogram_dialog.widgets.text import Format
 from magic_filter import F
 
@@ -14,48 +14,66 @@ async def get_join_channel_message(dialog_manager: DialogManager, **kwargs):
                   "Если вам нравится открывать и использовать прогнозирование в области эзотерики, обязательно посетите наш закрытый канал. "
                   "Вы откроете для себя ритуальную часть нумерологии через магию чисел и кодов.🔮\n\n"
                   "⭐️ Если у вас есть Telegram Premium, вы можете использовать 500 звезд в месяц для получения доступа к эксклюзивным материалам! Это простой и удобный способ приобщиться к тайным знаниям.\n\n"
-                  "💸 Не хотите использовать звезды или нет Telegram Premium? Не проблема! Нажмите кнопку ниже, чтобы узнать, как еще можно оплатить доступ и стать частью нашего сообщества.",
+                  "💳 Чтобы оплатить картой, просто нажмите на кнопку подписки и следуйте инструкциям бота Tribute. Вам нужно будет разрешить боту отправлять вам сообщения для завершения платежа.\n\n"
+                  "💸 Не хотите использовать звезды или у вас нет Telegram Premium? Нажмите кнопку ниже, чтобы узнать о других способах оплаты, таких как банковский перевод или PayPal, и присоединиться к нашему сообществу.",
+
         Lang.ENG: "✨ Welcome to the world of magic and numerology! ✨\n\n"
                   "If you enjoy exploring and utilizing predictions in the realm of esotericism, be sure to visit our private channel. "
                   "You will discover the ritualistic side of numerology through the magic of numbers and codes.🔮\n\n"
                   "⭐️ If you have Telegram Premium, you can use 500 stars per month to gain access to exclusive materials! It's a simple and convenient way to tap into secret knowledge.\n\n"
-                  "💸 Prefer not to use stars or don’t have Telegram Premium? No problem! Click the button below to learn about other payment methods and join our community.",
+                  "💳 To pay with a card, simply click the subscription button and follow the Tribute bot’s instructions. You’ll need to allow the bot to send you messages to complete the payment.\n\n"
+                  "💸 Prefer not to use stars or don’t have Telegram Premium? Click the button below to learn about other payment methods, such as bank transfer or PayPal, and join our community.",
+
         Lang.ESP: "✨ ¡Bienvenido al mundo de la magia y la numerología! ✨\n\n"
-                  "Si disfrutas explorando y utilizando predicciones en el ámbito de la esoteria, asegúrate de visitar nuestro canal privado. "
-                  "Descubrirás el lado ritual de la numerología a través de la magia de los números y códigos.🔮\n\n"
-                  "⭐️ Si tienes Telegram Premium, puedes usar 500 estrellas al mes para acceder a materiales exclusivos. ¡Es una forma sencilla y conveniente de acceder a conocimientos secretos!\n\n"
-                  "💸 ¿Prefieres no usar estrellas o no tienes Telegram Premium? ¡No hay problema! Haz clic en el botón de abajo para conocer otros métodos de pago y unirte a nuestra comunidad.",
+                  "Si disfrutas explorando y utilizando predicciones en el ámbito de la esoterismo, no olvides visitar nuestro canal privado. "
+                  "Descubrirás el lado ritualista de la numerología a través de la magia de los números y los códigos.🔮\n\n"
+                  "⭐️ Si tienes Telegram Premium, puedes usar 500 estrellas por mes para acceder a materiales exclusivos. ¡Es una forma simple y conveniente de acceder a conocimientos secretos!\n\n"
+                  "💳 Para pagar con tarjeta, simplemente haz clic en el botón de suscripción y sigue las instrucciones del bot Tribute. Necesitarás permitir que el bot te envíe mensajes para completar el pago.\n\n"
+                  "💸 ¿Prefieres no usar estrellas o no tienes Telegram Premium? Haz clic en el botón de abajo para conocer otros métodos de pago, como transferencia bancaria o PayPal, y únete a nuestra comunidad.",
+
         Lang.DEU: "✨ Willkommen in der Welt der Magie und Numerologie! ✨\n\n"
-                  "Wenn Sie es genießen, Vorhersagen im Bereich der Esoterik zu erforschen und zu nutzen, sollten Sie unbedingt unserem privaten Kanal beitreten. "
-                  "Sie werden die rituelle Seite der Numerologie durch die Magie der Zahlen und Codes entdecken.🔮\n\n"
-                  "⭐️ Wenn Sie Telegram Premium haben, können Sie 500 Sterne pro Monat verwenden, um Zugang zu exklusiven Materialien zu erhalten! Es ist ein einfacher und bequemer Weg, geheimes Wissen zu erlangen.\n\n"
-                  "💸 Möchten Sie keine Sterne verwenden oder haben Sie kein Telegram Premium? Kein Problem! Klicken Sie unten auf die Schaltfläche, um mehr über andere Zahlungsmethoden zu erfahren und unserem Kanal beizutreten.",
+                  "Wenn Sie es lieben, Vorhersagen in der Welt der Esoterik zu erkunden und zu nutzen, sollten Sie unbedingt unseren privaten Kanal besuchen. "
+                  "Entdecken Sie die rituelle Seite der Numerologie durch die Magie der Zahlen und Codes.🔮\n\n"
+                  "⭐️ Wenn Sie Telegram Premium haben, können Sie 500 Sterne pro Monat nutzen, um Zugang zu exklusiven Materialien zu erhalten! Es ist ein einfacher und bequemer Weg, geheimes Wissen zu nutzen.\n\n"
+                  "💳 Um mit einer Karte zu bezahlen, klicken Sie einfach auf die Abonnement-Schaltfläche und folgen Sie den Anweisungen des Tribute-Bots. Sie müssen dem Bot erlauben, Ihnen Nachrichten zu senden, um die Zahlung abzuschließen.\n\n"
+                  "💸 Möchten Sie keine Sterne verwenden oder haben kein Telegram Premium? Klicken Sie unten, um mehr über andere Zahlungsmethoden wie Banküberweisung oder PayPal zu erfahren und unserer Community beizutreten.",
+
         Lang.FRA: "✨ Bienvenue dans le monde de la magie et de la numérologie ! ✨\n\n"
-                  "Si vous aimez explorer et utiliser les prédictions dans le domaine de l'ésotérisme, assurez-vous de visiter notre canal privé. "
-                  "Vous découvrirez le côté rituel de la numérologie à travers la magie des chiffres et des codes.🔮\n\n"
-                  "⭐️ Si vous avez Telegram Premium, vous pouvez utiliser 500 étoiles par mois pour accéder à des matériaux exclusifs ! C'est un moyen simple et pratique d'accéder à des connaissances secrètes.\n\n"
-                  "💸 Vous préférez ne pas utiliser d'étoiles ou vous n'avez pas Telegram Premium ? Pas de problème ! Cliquez sur le bouton ci-dessous pour en savoir plus sur les autres méthodes de paiement et rejoindre notre communauté.",
-        Lang.ARA: "✨ مرحبًا بكم في عالم السحر والتنجيم! ✨\n\n"
-                  "إذا كنت تستمتع باستكشاف واستخدام التنبؤات في مجال الروحانيات، فلا تنسَ زيارة قناتنا المغلقة. "
-                  "ستكتشف الجانب الطقوسي من علم الأرقام من خلال سحر الأرقام والرموز.🔮\n\n"
-                  "⭐️ إذا كان لديك Telegram Premium، يمكنك استخدام 500 نجمة شهريًا للوصول إلى مواد حصرية! إنه وسيلة بسيطة ومريحة للوصول إلى المعرفة السرية.\n\n"
-                  "💸 تفضل عدم استخدام النجوم أو ليس لديك Telegram Premium؟ لا مشكلة! اضغط على الزر أدناه لتتعرف على طرق الدفع الأخرى والانضمام إلى قناتنا.",
-        Lang.CHI: "✨ 欢迎来到魔法和数字学的世界！✨\n\n"
-                  "如果你喜欢探索和运用神秘学领域的预测，务必访问我们的私密频道。"
-                  "你将通过数字和代码的魔力，发现数字学的仪式部分。🔮\n\n"
-                  "⭐️ 如果你有 Telegram Premium，你可以每月使用 500 星来获得独家内容的访问权限！这是一种简单便捷的方式，接触到秘密知识。\n\n"
-                  "💸 不想使用星星或没有 Telegram Premium？没问题！点击下方按钮了解其他支付方式并加入我们的频道。",
-        Lang.HIN: "✨ जादू और अंकशास्त्र की दुनिया में आपका स्वागत है! ✨\n\n"
-                  "यदि आपको गूढ़ विद्या के क्षेत्र में भविष्यवाणियों का उपयोग और अन्वेषण करना पसंद है, तो हमारे निजी चैनल का दौरा अवश्य करें। "
-                  "आप अंकों और कोड्स के जादू के माध्यम से अंकशास्त्र के अनुष्ठानिक भाग की खोज करेंगे।🔮\n\n"
-                  "⭐️ यदि आपके पास Telegram Premium है, तो आप 500 स्टार्स प्रति माह का उपयोग करके विशेष सामग्री प्राप्त कर सकते हैं! यह गुप्त ज्ञान का हिस्सा बनने का एक सरल और सुविधाजनक तरीका है।\n\n"
-                  "💸 स्टार्स का उपयोग नहीं करना चाहते या आपके पास Telegram Premium नहीं है? कोई समस्या नहीं! नीचे दिए गए बटन पर क्लिक करें और अन्य भुगतान विधियों के बारे में जानें और हमारे चैनल का हिस्सा बनें।",
-        Lang.JPN: "✨ 魔法と数秘術の世界へようこそ！✨\n\n"
-                  "占いの分野で予測を探求し、活用することが好きなら、ぜひ私たちの非公開チャンネルを訪れてください。 "
-                  "あなたは、数字とコードの魔法を通じて、数秘術の儀式的な側面を発見するでしょう。🔮\n\n"
-                  "⭐️ Telegram Premiumをお持ちの方は、月額500スターを利用して独占コンテンツにアクセスできます！ 秘密の知識に触れるための簡単で便利な方法です。\n\n"
-                  "💸 スターを利用したくない、またはTelegram Premiumをお持ちでない方は？ 問題ありません！他の支払い方法について確認し、コミュニティに参加するには、下のボタンをクリックしてください。"
+                  "Si vous aimez explorer et utiliser les prédictions dans le domaine de l'ésotérisme, n'oubliez pas de visiter notre chaîne privée. "
+                  "Vous découvrirez le côté rituel de la numérologie à travers la magie des nombres et des codes.🔮\n\n"
+                  "⭐️ Si vous avez Telegram Premium, vous pouvez utiliser 500 étoiles par mois pour accéder à des contenus exclusifs ! C'est un moyen simple et pratique de puiser dans des connaissances secrètes.\n\n"
+                  "💳 Pour payer par carte, cliquez simplement sur le bouton d'abonnement et suivez les instructions du bot Tribute. Vous devrez autoriser le bot à vous envoyer des messages pour finaliser le paiement.\n\n"
+                  "💸 Vous préférez ne pas utiliser les étoiles ou vous n'avez pas Telegram Premium ? Cliquez sur le bouton ci-dessous pour en savoir plus sur d'autres méthodes de paiement, telles que virement bancaire ou PayPal, et rejoignez notre communauté.",
+
+        Lang.ARA: "✨ مرحبًا بكم في عالم السحر وعلم الأرقام! ✨\n\n"
+                  "إذا كنت تستمتع باستكشاف واستخدام التنبؤات في عالم الروحانيات، فلا تفوت زيارة قناتنا الخاصة. "
+                  "ستكتشف الجانب الطقسي لعلم الأرقام من خلال سحر الأرقام والرموز.🔮\n\n"
+                  "⭐️ إذا كان لديك Telegram Premium، يمكنك استخدام 500 نجمة شهريًا للوصول إلى المواد الحصرية! إنه وسيلة بسيطة ومريحة للوصول إلى المعرفة السرية.\n\n"
+                  "💳 للدفع بالبطاقة، اضغط ببساطة على زر الاشتراك واتبع تعليمات البوت Tribute. ستحتاج إلى السماح للبوت بإرسال الرسائل إليك لإتمام الدفع.\n\n"
+                  "💸 تفضل عدم استخدام النجوم أو ليس لديك Telegram Premium؟ اضغط على الزر أدناه للتعرف على طرق الدفع الأخرى مثل التحويل المصرفي أو PayPal والانضمام إلى مجتمعنا.",
+
+        Lang.CHI: "✨ 欢迎来到魔法与数字学的世界！ ✨\n\n"
+                  "如果您喜欢探索和利用预测，务必访问我们的私人频道。"
+                  "您将通过数字和代码的魔法发现数字学的仪式化一面。🔮\n\n"
+                  "⭐️ 如果您有 Telegram Premium，您每月可以使用 500 星星来获得独家材料的访问权限！这是获取秘密知识的简单便捷方式。\n\n"
+                  "💳 要使用银行卡支付，只需点击订阅按钮，并按照 Tribute 机器人的指示操作。您需要允许机器人向您发送消息以完成付款。\n\n"
+                  "💸 不想使用星星或没有 Telegram Premium？点击下方按钮，了解其他支付方式，如银行转账或 PayPal，加入我们的社区。",
+
+        Lang.HIN: "✨ जादू और अंक ज्योतिष की दुनिया में आपका स्वागत है! ✨\n\n"
+                  "यदि आपको गूढ़शास्त्र की दुनिया में भविष्यवाणियों का पता लगाना और उनका उपयोग करना पसंद है, तो हमारे निजी चैनल की सदस्यता अवश्य लें। "
+                  "आप संख्याओं और कोड की जादुई दुनिया के माध्यम से अंक ज्योतिष के अनुष्ठानिक पक्ष की खोज करेंगे।🔮\n\n"
+                  "⭐️ यदि आपके पास Telegram Premium है, तो आप 500 सितारों का उपयोग करके विशेष सामग्री तक पहुंच सकते हैं! यह गुप्त ज्ञान तक पहुंचने का एक सरल और सुविधाजनक तरीका है।\n\n"
+                  "💳 कार्ड से भुगतान करने के लिए, बस सब्सक्रिप्शन बटन पर क्लिक करें और Tribute बॉट के निर्देशों का पालन करें। आपको भुगतान पूरा करने के लिए बॉट को संदेश भेजने की अनुमति देनी होगी।\n\n"
+                  "💸 क्या आप सितारों का उपयोग नहीं करना चाहते हैं या आपके पास Telegram Premium नहीं है? कोई बात नहीं! अन्य भुगतान विधियों, जैसे बैंक ट्रांसफर या PayPal, के बारे में जानने के लिए नीचे दिए गए बटन पर क्लिक करें और हमारे समुदाय से जुड़ें।",
+
+        Lang.JPN: "✨ 魔法と数秘術の世界へようこそ！ ✨\n\n"
+                "予言を探求し、活用するのが好きな方は、ぜひ私たちのプライベートチャンネルを訪れてください。 "
+                "数秘術の儀式的な側面を、数字とコードの魔法を通じて発見することができます。🔮\n\n"
+                "⭐️ Telegram Premiumをお持ちの方は、月に500スターを使って限定コンテンツにアクセスできます！ 秘密の知識に触れるためのシンプルで便利な方法です。\n\n"
+                "💳 カードで支払うには、サブスクリプションボタンをクリックして、Tributeボットの指示に従ってください。 支払いを完了するために、ボットにメッセージを送信する許可が必要です。\n\n"
+                "💸 スターを使用したくない場合や、Telegram Premiumをお持ちでない場合は、下のボタンをクリックして、銀行振込やPayPalなどの他の支払い方法について知り、私たちのコミュニティに参加してください。"
     }
+
 
     selected_lang = dialog_manager.start_data.get("lang", Lang.ENG)
     return {"join_channel_message": lang_messages.get(selected_lang, "You can learn more about numerology on our Telegram channel. "
@@ -65,15 +83,15 @@ async def get_join_channel_message(dialog_manager: DialogManager, **kwargs):
 
 async def get_join_channel_buttons(dialog_manager: DialogManager, **kwargs):
     lang_messages = {
-        Lang.ENG: {"stars": "⭐ Telegram stars", "other": "💸 Other payment"},
-        Lang.RUS: {"stars": "⭐ Telegram stars", "other": "💸 Другой способ оплаты"},
-        Lang.ESP: {"stars": "⭐ Telegram stars", "other": "💸 Otro pago"},
-        Lang.DEU: {"stars": "⭐ Telegram stars", "other": "💸 Andere Zahlung"},
-        Lang.FRA: {"stars": "⭐ Telegram stars", "other": "💸 Autre paiement"},
-        Lang.ARA: {"stars": "⭐ Telegram stars", "other": "💸 دفع آخر"},
-        Lang.CHI: {"stars": "⭐ Telegram stars", "other": "💸 其他付款"},
-        Lang.HIN: {"stars": "⭐ Telegram stars", "other": "💸 अन्य भुगतान"},
-        Lang.JPN: {"stars": "⭐ Telegram stars", "other": "💸 その他の支払い"}
+        Lang.ENG: {"stars": "⭐ Telegram stars", "card_monthly": "💳 Card (Monthly)", "card_yearly": "💳 Card (Yearly)", "other": "💸 Other payment"},
+        Lang.RUS: {"stars": "⭐ Telegram stars", "card_monthly": "💳 Карта (Ежемесячно)", "card_yearly": "💳 Карта (Ежегодно)", "other": "💸 Другой способ оплаты"},
+        Lang.ESP: {"stars": "⭐ Telegram stars", "card_monthly": "💳 Tarjeta (Mensual)", "card_yearly": "💳 Tarjeta (Anual)", "other": "💸 Otro pago"},
+        Lang.DEU: {"stars": "⭐ Telegram stars", "card_monthly": "💳 Karte (Monatlich)", "card_yearly": "💳 Karte (Jährlich)", "other": "💸 Andere Zahlung"},
+        Lang.FRA: {"stars": "⭐ Telegram stars", "card_monthly": "💳 Carte (Mensuel)", "card_yearly": "💳 Carte (Annuel)", "other": "💸 Autre paiement"},
+        Lang.ARA: {"stars": "⭐ Telegram stars", "card_monthly": "💳 بطاقة (شهريًا)", "card_yearly": "💳 بطاقة (سنويًا)", "other": "💸 دفع آخر"},
+        Lang.CHI: {"stars": "⭐ Telegram stars", "card_monthly": "💳 卡 (每月)", "card_yearly": "💳 卡 (每年)", "other": "💸 其他付款"},
+        Lang.HIN: {"stars": "⭐ Telegram stars", "card_monthly": "💳 कार्ड (मासिक)", "card_yearly": "💳 कार्ड (वार्षिक)", "other": "💸 अन्य भुगतान"},
+        Lang.JPN: {"stars": "⭐ Telegram stars", "card_monthly": "💳 カード (月額)", "card_yearly": "💳 カード (年額)", "other": "💸 その他の支払い"}
     }
 
     selected_lang = dialog_manager.start_data.get("lang", Lang.ENG)
@@ -105,15 +123,68 @@ async def get_join_channel_star_link(dialog_manager: DialogManager, **kwargs):
     return {"join_channel_star_link": "https://t.me/+fEHq8cfO_ZkyZTFk"}
 
 
+async def get_join_channel_card_monthly_link(dialog_manager: DialogManager, **kwargs):
+    selected_lang = dialog_manager.start_data.get("lang", Lang.ENG)
+    if selected_lang == Lang.RUS:
+        return {"join_channel_card_monthly_link": "https://t.me/tribute/app?startapp=sf8Y"}
+    elif selected_lang == Lang.ENG:
+        return {"join_channel_card_monthly_link": "https://t.me/tribute/app?startapp=sf8R"}
+    elif selected_lang == Lang.ESP:
+        return {"join_channel_card_monthly_link": "https://t.me/tribute/app?startapp=sf91"}
+    elif selected_lang == Lang.DEU:
+        return {"join_channel_card_monthly_link": "https://t.me/tribute/app?startapp=sf97"}
+    elif selected_lang == Lang.FRA:
+        return {"join_channel_card_monthly_link": "https://t.me/tribute/app?startapp=sf90"}
+    elif selected_lang == Lang.ARA:
+        return {"join_channel_card_monthly_link": "https://t.me/tribute/app?startapp=sf94"}
+    elif selected_lang == Lang.CHI:
+        return {"join_channel_card_monthly_link": "https://t.me/tribute/app?startapp=sf95"}
+    elif selected_lang == Lang.HIN:
+        return {"join_channel_card_monthly_link": "https://t.me/tribute/app?startapp=sf92"}
+    elif selected_lang == Lang.JPN:
+        return {"join_channel_card_monthly_link": "https://t.me/tribute/app?startapp=sf96"}
+
+    # Else, return the English link
+    return {"join_channel_card_monthly_link": "https://t.me/tribute/app?startapp=sf8R"}
+
+
+async def get_join_channel_card_yearly_link(dialog_manager: DialogManager, **kwargs):
+    selected_lang = dialog_manager.start_data.get("lang", Lang.ENG)
+    if selected_lang == Lang.RUS:
+        return {"join_channel_card_yearly_link": "https://t.me/tribute/app?startapp=sf8Z"}
+    elif selected_lang == Lang.ENG:
+        return {"join_channel_card_yearly_link": "https://t.me/tribute/app?startapp=sf8S"}
+    elif selected_lang == Lang.ESP:
+        return {"join_channel_card_yearly_link": "https://t.me/tribute/app?startapp=sf9f"}
+    elif selected_lang == Lang.DEU:
+        return {"join_channel_card_yearly_link": "https://t.me/tribute/app?startapp=sf9c"}
+    elif selected_lang == Lang.FRA:
+        return {"join_channel_card_yearly_link": "https://t.me/tribute/app?startapp=sf9e"}
+    elif selected_lang == Lang.ARA:
+        return {"join_channel_card_yearly_link": "https://t.me/tribute/app?startapp=sf9h"}
+    elif selected_lang == Lang.CHI:
+        return {"join_channel_card_yearly_link": "https://t.me/tribute/app?startapp=sf9i"}
+    elif selected_lang == Lang.HIN:
+        return {"join_channel_card_yearly_link": "https://t.me/tribute/app?startapp=sf9g"}
+    elif selected_lang == Lang.JPN:
+        return {"join_channel_card_yearly_link": "https://t.me/tribute/app?startapp=sf9k"}
+
+    # Else, return the English link
+    return {"join_channel_card_yearly_link": "https://t.me/tribute/app?startapp=sf8Z"}
+
 
 def create_join_channel_window():
     window = [
         Window(
             Format("{join_channel_message}"),
             Url(Format("{join_channel_buttons[stars]}"), Format("{join_channel_star_link}")),
+            Row(
+                Url(Format("{join_channel_buttons[card_monthly]}"), Format("{join_channel_card_monthly_link}")),
+                Url(Format("{join_channel_buttons[card_yearly]}"), Format("{join_channel_card_yearly_link}")),
+            ),
             Button(Format("{join_channel_buttons[other]}"), id="another_payment_button", on_click=on_another_payment_button),
             *get_localized_close_button(F),
-            getter=[get_join_channel_message, get_join_channel_buttons, get_join_channel_star_link],
+            getter=[get_join_channel_message, get_join_channel_buttons, get_join_channel_star_link, get_join_channel_card_monthly_link, get_join_channel_card_yearly_link],
             state=JoinChannelStatesGroup.MAIN
         )]
     return window
