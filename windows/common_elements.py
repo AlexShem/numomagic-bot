@@ -124,7 +124,7 @@ def create_payment_buttons_group(F: MagicFilter):
         SwitchTo(Const("🇬🇧🏦 UK Bank Transfer"), id="uk_bank_transfer_btn", state=PaymentStatesGroup.UK_BANK),
         # SwitchTo(Const("🔐 Crypto"), id="crypto_btn", state=PaymentStatesGroup.CRYPTO), # Not implemented
         *get_channel_url(F),
-        *get_localized_more_methods_button(F),
+        # *get_localized_more_methods_button(F), # Remove "More methods available soon" button until new methods are being developed
         *get_localized_close_button(F),
         width=2
     )
