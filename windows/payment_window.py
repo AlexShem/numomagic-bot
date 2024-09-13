@@ -9,7 +9,7 @@ from windows.common_elements import create_payment_buttons_group, get_localized_
 
 
 async def get_bank_payment_description(dialog_manager: DialogManager, **kwargs):
-    proof_contact = "@JelenaLahmane"
+    proof_contact = "@PremiumCenterLTD"
     amount_monthly = 12
     amount_yearly = 120
 
@@ -164,7 +164,7 @@ async def get_revolut_payment_description(dialog_manager: DialogManager, **kwarg
         return {"description": "Payment via Revolut in English"}
 
 async def get_paypal_payment_description(dialog_manager: DialogManager, **kwargs):
-    proof_contact = "@JelenaLahmane"
+    proof_contact = "@PremiumCenterLTD"
     paypal_link = "https://www.paypal.com/paypalme/PremiumCenterLTD"
     paypal_email = "info@premiumctr.com"
     amount_monthly = 12
@@ -275,7 +275,7 @@ async def get_paypal_payment_description(dialog_manager: DialogManager, **kwargs
     return {"description": lang_messages.get(selected_lang)}
 
 async def get_uk_bank_payment_description(dialog_manager: DialogManager, **kwargs):
-    proof_contact = "@JelenaLahmane"
+    proof_contact = "@PremiumCenterLTD"
     amount_monthly = 12
     amount_yearly = 120
 
