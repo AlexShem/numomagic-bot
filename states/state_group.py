@@ -33,6 +33,7 @@ class SixDigitsStates(StatesGroup):
 class JoinChannelStatesGroup(StatesGroup):
     MAIN = State()
 
+# TODO: Remove "Other Payment" this feature
 class PaymentStatesGroup(StatesGroup):
     BANK = State()
     REVOLUT = State()

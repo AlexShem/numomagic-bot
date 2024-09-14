@@ -11,7 +11,7 @@ def get_localized_close_button(F: MagicFilter):
     return [Button(
         Case(
             {
-                Lang.ENG: Const("Close"),    #TODO: Make referense to payment description
+                Lang.ENG: Const("Close"),
                 Lang.RUS: Const("Закрыть"),
                 Lang.ESP: Const("Cerrar"),
                 Lang.DEU: Const("Schließen"),
@@ -46,7 +46,7 @@ def get_localized_learn_more_button(F: MagicFilter):
         id="join_channel", on_click=on_join_channel
     )]
 
-def get_channel_url(F: MagicFilter):
+def get_channel_url(F: MagicFilter): #TODO: Remove "Other Payment" this feature
     return [Url(
         Case(
             {

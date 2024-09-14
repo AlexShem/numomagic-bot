@@ -15,4 +15,5 @@ six_digits_dialog = Dialog(*create_six_digits_window())
 
 join_channel_dialog = Dialog(*create_join_channel_window())
 
+# TODO: Remove "Other Payment" this feature
 payment_dialog = Dialog(*create_bank_payment_window(), *create_revolut_payment_window(), *create_paypal_payment_window(), *create_uk_bank_payment_window())
