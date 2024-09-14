@@ -206,6 +206,7 @@ async def on_join_channel(callback: CallbackQuery, button, manager: DialogManage
     logger.warning(f"User {callback.from_user.username} selected to join the channel")
     await manager.start(JoinChannelStatesGroup.MAIN, data=manager.start_data)
 
+# TODO: Remove "Other Payment" this feature
 async def on_another_payment_button(callback: CallbackQuery, button, manager: DialogManager):
     logger.warning(f"User {callback.from_user.username} selected another payment method")
     await manager.start(PaymentStatesGroup.BANK, data=manager.start_data)

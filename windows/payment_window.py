@@ -8,8 +8,9 @@ from states.state_group import PaymentStatesGroup
 from windows.common_elements import create_payment_buttons_group, get_localized_close_button
 
 
+# TODO: Remove "Other Payment" this feature
 async def get_bank_payment_description(dialog_manager: DialogManager, **kwargs):
-    proof_contact = "@JelenaLahmane"
+    proof_contact = "@PremiumCenterLTD"
     amount_monthly = 12
     amount_yearly = 120
 
@@ -163,8 +164,10 @@ async def get_revolut_payment_description(dialog_manager: DialogManager, **kwarg
     else:
         return {"description": "Payment via Revolut in English"}
 
+
+# TODO: Remove "Other Payment" this feature
 async def get_paypal_payment_description(dialog_manager: DialogManager, **kwargs):
-    proof_contact = "@JelenaLahmane"
+    proof_contact = "@PremiumCenterLTD"
     paypal_link = "https://www.paypal.com/paypalme/PremiumCenterLTD"
     paypal_email = "info@premiumctr.com"
     amount_monthly = 12
@@ -274,8 +277,10 @@ async def get_paypal_payment_description(dialog_manager: DialogManager, **kwargs
     selected_lang = dialog_manager.start_data.get("lang", Lang.ENG)
     return {"description": lang_messages.get(selected_lang)}
 
+
+# TODO: Remove "Other Payment" this feature
 async def get_uk_bank_payment_description(dialog_manager: DialogManager, **kwargs):
-    proof_contact = "@JelenaLahmane"
+    proof_contact = "@PremiumCenterLTD"
     amount_monthly = 12
     amount_yearly = 120
 
@@ -393,6 +398,7 @@ async def get_uk_bank_payment_description(dialog_manager: DialogManager, **kwarg
     return {"description": lang_messages.get(selected_lang)}
 
 
+# TODO: Remove "Other Payment" this feature
 def create_bank_payment_window():
     return [
         Window(Format("{description}"),
@@ -401,6 +407,7 @@ def create_bank_payment_window():
             state=PaymentStatesGroup.BANK)
     ]
 
+# TODO: Remove "Other Payment" this feature
 def create_revolut_payment_window():
     return [
         Window(Format("{description}"),
@@ -409,6 +416,7 @@ def create_revolut_payment_window():
                state=PaymentStatesGroup.REVOLUT)
     ]
 
+# TODO: Remove "Other Payment" this feature
 def create_paypal_payment_window():
     return [
         Window(Format("{description}"),
@@ -417,6 +425,7 @@ def create_paypal_payment_window():
                state=PaymentStatesGroup.PAYPAL)
     ]
 
+# TODO: Remove "Other Payment" this feature
 def create_uk_bank_payment_window():
     return [
         Window(Format("{description}"),

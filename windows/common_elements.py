@@ -11,7 +11,7 @@ def get_localized_close_button(F: MagicFilter):
     return [Button(
         Case(
             {
-                Lang.ENG: Const("Close"),    #TODO: Make referense to payment description
+                Lang.ENG: Const("Close"),
                 Lang.RUS: Const("Закрыть"),
                 Lang.ESP: Const("Cerrar"),
                 Lang.DEU: Const("Schließen"),
@@ -46,7 +46,7 @@ def get_localized_learn_more_button(F: MagicFilter):
         id="join_channel", on_click=on_join_channel
     )]
 
-def get_channel_url(F: MagicFilter):
+def get_channel_url(F: MagicFilter): #TODO: Remove "Other Payment" this feature
     return [Url(
         Case(
             {
@@ -124,7 +124,7 @@ def create_payment_buttons_group(F: MagicFilter):
         SwitchTo(Const("🇬🇧🏦 UK Bank Transfer"), id="uk_bank_transfer_btn", state=PaymentStatesGroup.UK_BANK),
         # SwitchTo(Const("🔐 Crypto"), id="crypto_btn", state=PaymentStatesGroup.CRYPTO), # Not implemented
         *get_channel_url(F),
-        *get_localized_more_methods_button(F),
+        # *get_localized_more_methods_button(F), # Remove "More methods available soon" button until new methods are being developed
         *get_localized_close_button(F),
         width=2
     )
