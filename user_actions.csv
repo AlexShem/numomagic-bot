@@ -1,0 +1,14 @@
+timestamp,user_id,username,first_name,last_name,is_premium,app_language,action,action_details
+2024-10-03 17:39:16,58618863,alexshem,Aleksandr,Shemendyuk,True,en,start_command,
+2024-10-03 17:39:17,58618863,alexshem,Aleksandr,Shemendyuk,True,en,select_language,rus
+2024-10-03 17:39:19,58618863,alexshem,Aleksandr,Shemendyuk,True,en,select_date,2024-10-03
+2024-10-03 17:39:20,58618863,alexshem,Aleksandr,Shemendyuk,True,en,switch_period,period_4
+2024-10-03 17:39:22,58618863,alexshem,Aleksandr,Shemendyuk,True,en,switch_period,period_1
+2024-10-03 17:39:23,58618863,alexshem,Aleksandr,Shemendyuk,True,en,switch_period,period_5
+2024-10-03 17:39:26,58618863,alexshem,Aleksandr,Shemendyuk,True,en,close_dialog,
+2024-10-03 17:39:27,58618863,alexshem,Aleksandr,Shemendyuk,True,en,select_date,2024-10-31
+2024-10-03 17:39:29,58618863,alexshem,Aleksandr,Shemendyuk,True,en,switch_period,period_6
+2024-10-03 17:39:30,58618863,alexshem,Aleksandr,Shemendyuk,True,en,switch_period,period_4
+2024-10-03 17:39:31,58618863,alexshem,Aleksandr,Shemendyuk,True,en,join_channel,
+2024-10-03 17:39:38,58618863,alexshem,Aleksandr,Shemendyuk,True,en,close_dialog,
+2024-10-03 17:39:39,58618863,alexshem,Aleksandr,Shemendyuk,True,en,close_dialog,
