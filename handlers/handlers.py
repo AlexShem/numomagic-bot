@@ -1,4 +1,5 @@
-from logger.logger import get_logger, log_user_action
+from action import Action
+from logger.logger import get_logger, get_csv_logger
 from datetime import date
 
 from aiogram.types import CallbackQuery, Message
@@ -11,12 +12,13 @@ from states.state_group import DialogSG, FiveDigitsStates, FourDigitsStates, Six
     PaymentStatesGroup
 
 logger = get_logger(__name__)
+action_logger = get_csv_logger()
 
 
 # This function is called when the user starts the bot.
 async def start(message: Message, dialog_manager: DialogManager):
     logger.warning(f"User {message.from_user.username} started the bot")
-    log_user_action('start_command', message.from_user)
+    action_logger.info(Action("start", message.from_user))
     await dialog_manager.start(DialogSG.MAIN, mode=StartMode.RESET_STACK)
 
 
@@ -43,7 +45,7 @@ async def on_lang_selected(callback: CallbackQuery, button: Button, manager: Dia
 
     selected_language = manager.dialog_data["lang"]
     logger.warning(f"User {callback.from_user.username} selected language {selected_language}")
-    log_user_action('select_language', callback.from_user, action_details=selected_language.value)
+    action_logger.info(Action("on_lang_selected", callback.from_user, extra=selected_language.value))
     await manager.switch_to(DialogSG.CALENDAR)
 
 
@@ -123,7 +125,7 @@ async def on_date_selected(callback: CallbackQuery, widget, manager: DialogManag
     dialog_data["lang"] = lang
 
     logger.warning(f"User {callback.from_user.username} selected date {selected_date}, energy levels: {energy_levels}")
-    log_user_action('select_date', callback.from_user, action_details=str(selected_date))
+    action_logger.info(Action("on_date_selected", callback.from_user, extra=str(selected_date)))
 
     if len(prepared_answer) == 4:
         await manager.start(FourDigitsStates.PERIOD1, data=dialog_data)
@@ -134,77 +136,62 @@ async def on_date_selected(callback: CallbackQuery, widget, manager: DialogManag
 
 
 async def on_4_1(callback: CallbackQuery, widget, manager: DialogManager):
-    log_user_action('switch_period', callback.from_user, action_details='period_1')
     await manager.switch_to(FourDigitsStates.PERIOD1)
 
 
 async def on_4_2(callback: CallbackQuery, widget, manager: DialogManager):
-    log_user_action('switch_period', callback.from_user, action_details='period_2')
     await manager.switch_to(FourDigitsStates.PERIOD2)
 
 
 async def on_4_3(callback: CallbackQuery, widget, manager: DialogManager):
-    log_user_action('switch_period', callback.from_user, action_details='period_3')
     await manager.switch_to(FourDigitsStates.PERIOD3)
 
 
 async def on_4_4(callback: CallbackQuery, widget, manager: DialogManager):
-    log_user_action('switch_period', callback.from_user, action_details='period_4')
     await manager.switch_to(FourDigitsStates.PERIOD4)
 
 
 async def on_5_1(callback: CallbackQuery, widget, manager: DialogManager):
-    log_user_action('switch_period', callback.from_user, action_details='period_1')
     await manager.switch_to(FiveDigitsStates.PERIOD1)
 
 
 async def on_5_2(callback: CallbackQuery, widget, manager: DialogManager):
-    log_user_action('switch_period', callback.from_user, action_details='period_2')
     await manager.switch_to(FiveDigitsStates.PERIOD2)
 
 
 async def on_5_3(callback: CallbackQuery, widget, manager: DialogManager):
-    log_user_action('switch_period', callback.from_user, action_details='period_3')
     await manager.switch_to(FiveDigitsStates.PERIOD3)
 
 
 async def on_5_4(callback: CallbackQuery, widget, manager: DialogManager):
-    log_user_action('switch_period', callback.from_user, action_details='period_4')
     await manager.switch_to(FiveDigitsStates.PERIOD4)
 
 
 async def on_5_5(callback: CallbackQuery, widget, manager: DialogManager):
-    log_user_action('switch_period', callback.from_user, action_details='period_5')
     await manager.switch_to(FiveDigitsStates.PERIOD5)
 
 
 async def on_6_1(callback: CallbackQuery, widget, manager: DialogManager):
-    log_user_action('switch_period', callback.from_user, action_details='period_1')
     await manager.switch_to(SixDigitsStates.PERIOD1)
 
 
 async def on_6_2(callback: CallbackQuery, widget, manager: DialogManager):
-    log_user_action('switch_period', callback.from_user, action_details='period_2')
     await manager.switch_to(SixDigitsStates.PERIOD2)
 
 
 async def on_6_3(callback: CallbackQuery, widget, manager: DialogManager):
-    log_user_action('switch_period', callback.from_user, action_details='period_3')
     await manager.switch_to(SixDigitsStates.PERIOD3)
 
 
 async def on_6_4(callback: CallbackQuery, widget, manager: DialogManager):
-    log_user_action('switch_period', callback.from_user, action_details='period_4')
     await manager.switch_to(SixDigitsStates.PERIOD4)
 
 
 async def on_6_5(callback: CallbackQuery, widget, manager: DialogManager):
-    log_user_action('switch_period', callback.from_user, action_details='period_5')
     await manager.switch_to(SixDigitsStates.PERIOD5)
 
 
 async def on_6_6(callback: CallbackQuery, widget, manager: DialogManager):
-    log_user_action('switch_period', callback.from_user, action_details='period_6')
     await manager.switch_to(SixDigitsStates.PERIOD6)
 
 
@@ -212,7 +199,6 @@ async def on_6_6(callback: CallbackQuery, widget, manager: DialogManager):
 
 async def on_join_channel(callback: CallbackQuery, button, manager: DialogManager):
     logger.warning(f"User {callback.from_user.username} selected to join the channel")
-    log_user_action('join_channel', callback.from_user)
     await manager.start(JoinChannelStatesGroup.MAIN, data=manager.start_data)
 
 # TODO: Remove "Other Payment" this feature
@@ -224,5 +210,4 @@ async def on_another_payment_button(callback: CallbackQuery, button, manager: Di
 # Common close button handler -----------------------------------------------
 
 async def on_close_dialog(callback: CallbackQuery, button, manager: DialogManager):
-    log_user_action('close_dialog', callback.from_user)
     await manager.done()
