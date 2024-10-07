@@ -2,7 +2,7 @@ name: Deploy to Server via SSH
 
 on:
   workflow_run:
-    workflows: [ "Build and Push Docker Image" ]
+    workflows: ["Docker_build_and_push"]
     types:
       - completed
 
