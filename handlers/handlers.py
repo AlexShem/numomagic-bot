@@ -1,4 +1,5 @@
-from logger.logger import get_logger
+from action import Action
+from logger.logger import get_logger, get_csv_logger
 from datetime import date
 
 from aiogram.types import CallbackQuery, Message
@@ -11,27 +12,18 @@ from states.state_group import DialogSG, FiveDigitsStates, FourDigitsStates, Six
     PaymentStatesGroup
 
 logger = get_logger(__name__)
+action_logger = get_csv_logger()
 
 
 # This function is called when the user starts the bot.
 async def start(message: Message, dialog_manager: DialogManager):
-    logger.warning(f"User {message.from_user.username} started a bot")
+    logger.warning(f"User {message.from_user.username} started the bot")
+    action_logger.info(Action("start", message.from_user))
     await dialog_manager.start(DialogSG.MAIN, mode=StartMode.RESET_STACK)
 
 
 # This function is called when the user selects a language.
 async def on_lang_selected(callback: CallbackQuery, button: Button, manager: DialogManager):
-    """
-    Handles the event when a language is selected by the user.
-
-    Args:
-        callback (CallbackQuery): The callback query from the user interaction.
-        button (Button): The button that was pressed to select the language.
-        manager (DialogManager): The dialog manager handling the current dialog state.
-
-    This function sets the selected language in the dialog data based on the button pressed.
-    It then switches the dialog state to the calendar view and logs the selected language.
-    """
     if button.widget_id == Lang.ESP.value:
         manager.dialog_data["lang"] = Lang.ESP
     elif button.widget_id == Lang.RUS.value:
@@ -51,8 +43,10 @@ async def on_lang_selected(callback: CallbackQuery, button: Button, manager: Dia
     else:
         manager.dialog_data["lang"] = Lang.ENG
 
+    selected_language = manager.dialog_data["lang"]
+    logger.warning(f"User {callback.from_user.username} selected language {selected_language}")
+    action_logger.info(Action("on_lang_selected", callback.from_user, extra=selected_language.value))
     await manager.switch_to(DialogSG.CALENDAR)
-    logger.warning(f"User {callback.from_user.username} selected language {manager.dialog_data['lang']}")
 
 
 def prepare_user_energy_output(energy_levels, lang: Lang, selected_date: date):
@@ -131,6 +125,7 @@ async def on_date_selected(callback: CallbackQuery, widget, manager: DialogManag
     dialog_data["lang"] = lang
 
     logger.warning(f"User {callback.from_user.username} selected date {selected_date}, energy levels: {energy_levels}")
+    action_logger.info(Action("on_date_selected", callback.from_user, extra=str(selected_date)))
 
     if len(prepared_answer) == 4:
         await manager.start(FourDigitsStates.PERIOD1, data=dialog_data)

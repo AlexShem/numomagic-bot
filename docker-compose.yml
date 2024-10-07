@@ -5,5 +5,10 @@ services:
       dockerfile: Dockerfile
       platforms:
         - "linux/amd64"
-    image: registry365.cr.cloud.ru/numerology
+    image: registry365.cr.cloud.ru/numerology:latest
     restart: always
+    volumes:
+      - ./numologs:/tmp/numo_magic/logs
+
+volumes:
+  numologs:
