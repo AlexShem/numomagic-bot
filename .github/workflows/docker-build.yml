@@ -3,7 +3,7 @@ name: Docker_build_and_push
 on:
   push:
     branches:
-      - feature/data_collection
+      - main
 
 jobs:
   build:
