@@ -43,6 +43,9 @@ def get_csv_logger():
     ])
     if not os.path.exists(os.path.dirname(log_file)):
         os.makedirs(os.path.dirname(log_file))
+    if not os.path.exists(log_file):
+        with open(log_file, 'w') as file:
+            file.write(f"{fieldnames}\n")
 
     handler = TimedRotatingFileHandlerWithHeader(
         filename=log_file,
