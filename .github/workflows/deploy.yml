@@ -43,5 +43,6 @@ jobs:
           port: 22
           script: |
             cd /home/numomagic
+            echo ${{ DOCKER_PASSWORD}} | docker login --username ${{ DOCKER_USERNAME }} --password-stdin
             docker compose pull
             docker compose up -d
