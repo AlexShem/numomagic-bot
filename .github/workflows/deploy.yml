@@ -21,6 +21,27 @@ jobs:
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
-    - name: Deploy to server
-      run: |
-        ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd numerology && sudo docker compose pull && sudo docker compose up -d"
+    - name: Clone numo repo and copy docker-compose.yml
+      uses: appleboy/ssh-action@v0.1.7
+      with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd /home/numomagic && git clone git@github.com:d1merz/numerology.git
+            cp numerology/docker-compose.yml docker-compose.yml
+            rm numerology
+            ls -la
+
+    - name: Run docker container
+      uses: appleboy/ssh-action@v0.1.7
+      with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd /home/numomagic
+            sudo docker compose pull
+            sudo docker compose up -d
