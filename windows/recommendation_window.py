@@ -44,7 +44,7 @@ def create_four_digits_window():
         Button(Const("12:00-18:00"), id="b_4_3", on_click=on_4_3),
         Button(Const("18:00-24:00"), id="b_4_4", on_click=on_4_4),
         *get_localized_close_button(F),
-        *get_localized_learn_more_button(F),
+        # *get_localized_learn_more_button(F),
         width=2
     )
     windows = [
@@ -76,7 +76,7 @@ def create_five_digits_window():
         Button(Const("14:24-19:12"), id="b_5_4", on_click=on_5_4),
         Button(Const("19:12-24:00"), id="b_5_5", on_click=on_5_5),
         *get_localized_close_button(F),
-        *get_localized_learn_more_button(F),
+        # *get_localized_learn_more_button(F),
         width=2
     )
 
@@ -114,7 +114,7 @@ def create_six_digits_window():
         Button(Const("16:00-20:00"), id="b_6_5", on_click=on_6_5),
         Button(Const("20:00-24:00"), id="b_6_6", on_click=on_6_6),
         *get_localized_close_button(F),
-        *get_localized_learn_more_button(F),
+        # *get_localized_learn_more_button(F),
         width=2
     )
     windows = [
