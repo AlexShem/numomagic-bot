@@ -39,3 +39,7 @@ class PaymentStatesGroup(StatesGroup):
     REVOLUT = State()
     PAYPAL = State()
     UK_BANK = State()
+
+
+class SubscribeStatesGroup(StatesGroup):
+    MAIN = State()
