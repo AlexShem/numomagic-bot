@@ -9,7 +9,7 @@ from aiogram_dialog.widgets.kbd import Button
 from lang import Lang
 import energy
 from states.state_group import DialogSG, FiveDigitsStates, FourDigitsStates, SixDigitsStates, JoinChannelStatesGroup, \
-    PaymentStatesGroup
+    PaymentStatesGroup, SubscribeStatesGroup
 
 logger = get_logger(__name__)
 action_logger = get_csv_logger()
@@ -205,6 +205,31 @@ async def on_join_channel(callback: CallbackQuery, button, manager: DialogManage
 async def on_another_payment_button(callback: CallbackQuery, button, manager: DialogManager):
     logger.warning(f"User {callback.from_user.username} selected another payment method")
     await manager.start(PaymentStatesGroup.BANK, data=manager.start_data)
+
+
+
+# Subscribe dialog handler ------------------------------------------------
+
+async def on_subscribe_command(message: Message, dialog_manager: DialogManager):
+    """Handle /subscribe command and start the subscribe dialog"""
+    # Get user language from their Telegram settings or default to English
+    user_lang = Lang.ENG
+    if hasattr(message.from_user, 'language_code') and message.from_user.language_code:
+        lang_code = message.from_user.language_code.lower()
+        lang_mapping = {
+            'en': Lang.ENG, 'ru': Lang.RUS, 'de': Lang.DEU, 'es': Lang.ESP,
+            'fr': Lang.FRA, 'ar': Lang.ARA, 'zh': Lang.CHI, 'hi': Lang.HIN, 'ja': Lang.JPN
+        }
+        user_lang = lang_mapping.get(lang_code, Lang.ENG)
+        # Try prefix match for codes like 'en-US'
+        if user_lang == Lang.ENG and lang_code not in lang_mapping:
+            for code, lang in lang_mapping.items():
+                if lang_code.startswith(code):
+                    user_lang = lang
+                    break
+
+    logger.info(f"User {message.from_user.id} requested subscription in language {user_lang.value}")
+    await dialog_manager.start(SubscribeStatesGroup.MAIN, data={"lang": user_lang})
 
 
 # Common close button handler -----------------------------------------------
