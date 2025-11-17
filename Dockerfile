@@ -1,5 +1,5 @@
 # Stage 1: Build Stage
-FROM python:3.11-slim as builder
+FROM python:3.13-slim as builder
 
 # Install build dependencies
 RUN apt-get update && \
@@ -9,26 +9,31 @@ RUN apt-get update && \
         ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 
-# Install Rust
-RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
-ENV PATH="/root/.cargo/bin:${PATH}"
+# Copy uv binary from official uv container image
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
-# Устанавливаем рабочую директорию в контейнере
+# Set working directory in container
 WORKDIR /bot
 
-# Копируем файлы проекта в контейнер
+# Copy project metadata files
+COPY pyproject.toml uv.lock ./
+
+# Install dependencies using uv (system-wide installation)
+RUN uv pip install --system .
+
+# Copy remaining application code
 COPY . /bot
 
-# Устанавливаем зависимости
-RUN pip install -r requirements.txt
-
 # Stage 2: Final Image
-FROM python:3.11-slim
+FROM python:3.13-slim
+
+# Copy uv binary from official uv container image
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
 # Copy installed packages and application code from the builder stage
-COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+COPY --from=builder /usr/local/lib/python3.13/site-packages /usr/local/lib/python3.13/site-packages
 COPY --from=builder /bot /app
 
 WORKDIR /app
 
-CMD ["python3", "./main.py"]
+CMD ["uv", "run", "python", "main.py"]

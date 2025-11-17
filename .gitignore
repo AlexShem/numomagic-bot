@@ -5,3 +5,7 @@ remote
 id_rsa
 id_rsa.pub
 db
+.env
+
+# PyCache
+__pycache__/
