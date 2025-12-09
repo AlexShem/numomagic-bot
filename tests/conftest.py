@@ -6,7 +6,7 @@ from middlewares.paywall import ChannelMembershipGate
 
 load_dotenv()
 
-PRO_CHANNEL_ID = int(os.getenv("PRO_CHANNEL_ID"), 0)
+PRO_CHANNEL_ID = int(os.getenv("PRO_CHANNEL_ID", default="0"))
 
 
 @pytest.fixture

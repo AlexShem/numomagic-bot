@@ -23,4 +23,6 @@ jobs:
         run: uv sync --dev
 
       - name: Run tests
+        env:
+          PRO_CHANNEL_ID: ${{ secrets.PRO_CHANNEL_ID }}
         run: uv run pytest -v
