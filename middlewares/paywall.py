@@ -29,16 +29,20 @@ class ChannelMembershipGate(BaseMiddleware):
         is_member, _ = self._cache[user_id]
         return is_member
 
-    def _set_cached_membership(self, user_id: int, is_member: bool):
+    def _set_cached_membership(self, user_id: int, is_member: bool, expiry_seconds: float | None = None):
         """Cache membership status with expiry timestamp."""
-        expiry_time = time.time() + CACHE_EXPIRY_SECONDS
+        if expiry_seconds is None:
+            expiry_seconds = CACHE_EXPIRY_SECONDS
+        elif expiry_seconds <= 0:
+            expiry_seconds = CACHE_EXPIRY_SECONDS
+        expiry_time = time.time() + expiry_seconds
         self._cache[user_id] = (is_member, expiry_time)
 
     async def __call__(
-        self,
-        handler: Callable[[TelegramObject, dict], Awaitable[Any]],
-        event: TelegramObject,
-        data: dict,
+            self,
+            handler: Callable[[TelegramObject, dict], Awaitable[Any]],
+            event: TelegramObject,
+            data: dict,
     ) -> Any:
         user_id = None
 
@@ -78,7 +82,7 @@ class ChannelMembershipGate(BaseMiddleware):
                 logger.error(f"Error checking membership: {e}")
                 is_member = False
                 # Cache the negative result to avoid repeated API calls
-                self._set_cached_membership(user_id, False)
+                self._set_cached_membership(user_id, False, expiry_seconds=300)  # Shorter cache for failures
 
         # Only allow events to pass through if user is a confirmed member
         if is_member:
