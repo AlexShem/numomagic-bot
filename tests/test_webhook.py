@@ -9,6 +9,7 @@ from fastapi.testclient import TestClient
 # Set required env vars before importing webhook module
 os.environ.setdefault("BOT_TOKEN", "test_token")
 os.environ.setdefault("PRO_CHANNEL_ID", "0")
+os.environ.setdefault("LOG_PATH", "/tmp/test_logs/action.csv")
 
 
 class TestWebhookHandler:

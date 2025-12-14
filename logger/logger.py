@@ -36,7 +36,13 @@ def get_csv_logger():
     logger = logging.getLogger("csv_logger")
     logger.setLevel(logging.INFO)
     load_dotenv()
-    log_file = os.path.normpath(os.getenv("LOG_PATH"))
+    log_path = os.getenv("LOG_PATH")
+
+    # If LOG_PATH is not set (e.g., in tests), return a basic logger without file handler
+    if not log_path:
+        return logger
+
+    log_file = os.path.normpath(log_path)
     fieldnames = ",".join([
         'timestamp', 'user_id', 'username', 'first_name', 'last_name',
         'is_premium', 'app_language', 'action', 'action_details'

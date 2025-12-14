@@ -6,6 +6,9 @@ from middlewares.paywall import ChannelMembershipGate
 
 load_dotenv()
 
+# Set default env vars for testing
+os.environ.setdefault("LOG_PATH", "/tmp/test_logs/action.csv")
+
 PRO_CHANNEL_ID = int(os.getenv("PRO_CHANNEL_ID", default="0"))
 
 
