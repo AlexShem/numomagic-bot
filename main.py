@@ -14,7 +14,7 @@ logger = get_logger(__name__)
 
 async def run_polling():
     """Run bot in polling mode (for local development)."""
-    logger.warning("Bot is starting in POLLING mode")
+    logger.info("Bot is starting in POLLING mode")
     bot = create_bot()
     dp = get_dispatcher()
 
@@ -29,7 +29,7 @@ async def run_polling():
     except Exception as e:
         logger.error(f"An error occurred: {e}")
     finally:
-        logger.warning("Bot is stopping")
+        logger.info("Bot is stopping")
         await bot.session.close()
 
 
@@ -37,7 +37,7 @@ def main():
     """Main entry point - runs polling or webhook based on USE_WEBHOOK env var."""
     if USE_WEBHOOK:
         import uvicorn
-        logger.warning("Bot is starting in WEBHOOK mode")
+        logger.info("Bot is starting in WEBHOOK mode")
         port = int(os.getenv("PORT", 8080))
         uvicorn.run(app, host="0.0.0.0", port=port)
     else:

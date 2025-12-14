@@ -26,6 +26,8 @@ from middlewares.paywall import ChannelMembershipGate
 load_dotenv()
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
+if not BOT_TOKEN:
+    raise RuntimeError("BOT_TOKEN environment variable is required")
 PRO_CHANNEL_ID = int(os.getenv("PRO_CHANNEL_ID", 0))
 WEBHOOK_URL = os.getenv("WEBHOOK_URL", "")
 WEBHOOK_SECRET = os.getenv("WEBHOOK_SECRET", "")
@@ -34,7 +36,6 @@ logger = get_logger(__name__)
 
 # Cached dispatcher (stateless, can be reused)
 _dp: Dispatcher | None = None
-_cold_start = True  # Track if this is a cold start
 
 
 def create_bot() -> Bot:
@@ -50,11 +51,9 @@ def get_dispatcher() -> Dispatcher:
 
     Dispatcher is stateless and can be cached/reused across requests.
     """
-    global _dp, _cold_start
+    global _dp
     if _dp is None:
-        if _cold_start:
-            logger.info("Cold start: initializing dispatcher")
-            _cold_start = False
+        logger.info("Cold start: initializing dispatcher")
 
         dialog_router = Router()
         dialog_router.include_router(main_dialog)
@@ -122,12 +121,19 @@ async def health_check():
 
 
 @app.post("/setup-webhook")
-async def setup_webhook():
+async def setup_webhook(request: Request):
     """One-time webhook setup endpoint.
 
     Call this once after deployment to register the webhook with Telegram.
-    Example: curl -X POST https://your-domain.railway.app/setup-webhook
+    Requires WEBHOOK_SECRET as Authorization header for security.
+    Example: curl -X POST -H "Authorization: Bearer YOUR_SECRET" https://your-domain.railway.app/setup-webhook
     """
+    # Require authentication
+    auth_header = request.headers.get("Authorization", "")
+    expected_auth = f"Bearer {WEBHOOK_SECRET}" if WEBHOOK_SECRET else ""
+    if not WEBHOOK_SECRET or auth_header != expected_auth:
+        return Response(status_code=401, content="Unauthorized")
+
     if not WEBHOOK_URL:
         return {"error": "WEBHOOK_URL environment variable not set"}
 
@@ -136,7 +142,7 @@ async def setup_webhook():
 
     try:
         webhook_url = f"{WEBHOOK_URL}/webhook"
-        logger.warning(f"Setting webhook to: {webhook_url}")
+        logger.info(f"Setting webhook to: {webhook_url}")
 
         await bot.delete_webhook(drop_pending_updates=True)
         await bot.set_webhook(
@@ -145,7 +151,7 @@ async def setup_webhook():
             allowed_updates=dp.resolve_used_update_types(),
         )
 
-        logger.warning("Webhook set successfully")
+        logger.info("Webhook set successfully")
         return {"status": "success", "webhook_url": webhook_url}
     except Exception as e:
         logger.error(f"Failed to set webhook: {e}")
@@ -155,8 +161,18 @@ async def setup_webhook():
 
 
 @app.get("/webhook-info")
-async def webhook_info():
-    """Get current webhook information from Telegram."""
+async def webhook_info(request: Request):
+    """Get current webhook information from Telegram.
+
+    Requires WEBHOOK_SECRET as Authorization header for security.
+    Example: curl -H "Authorization: Bearer YOUR_SECRET" https://your-domain.railway.app/webhook-info
+    """
+    # Require authentication
+    auth_header = request.headers.get("Authorization", "")
+    expected_auth = f"Bearer {WEBHOOK_SECRET}" if WEBHOOK_SECRET else ""
+    if not WEBHOOK_SECRET or auth_header != expected_auth:
+        return Response(status_code=401, content="Unauthorized")
+
     bot = create_bot()
 
     try:
