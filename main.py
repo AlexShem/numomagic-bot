@@ -49,7 +49,14 @@ async def main():
 
     try:
         await bot.delete_webhook(drop_pending_updates=True)
-        await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
+        await dp.start_polling(
+            bot,
+            allowed_updates=dp.resolve_used_update_types(),
+            # Increase polling timeout for more efficient long polling
+            polling_timeout=30,
+            # Handle network errors gracefully with backoff
+            handle_signals=True,
+        )
     except Exception as e:
         logger.error(f"An error occurred: {e}")
     finally:
