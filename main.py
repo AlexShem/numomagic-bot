@@ -38,7 +38,7 @@ def main():
     if USE_WEBHOOK:
         import uvicorn
         logger.warning("Bot is starting in WEBHOOK mode")
-        port = int(os.getenv("PORT", 8000))
+        port = int(os.getenv("PORT", 8080))
         uvicorn.run(app, host="0.0.0.0", port=port)
     else:
         asyncio.run(run_polling())
