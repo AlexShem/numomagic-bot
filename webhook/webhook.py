@@ -34,6 +34,13 @@ WEBHOOK_SECRET = os.getenv("WEBHOOK_SECRET", "")
 
 logger = get_logger(__name__)
 
+# Warn if WEBHOOK_SECRET is not set (security concern)
+if not WEBHOOK_SECRET:
+    logger.warning(
+        "WEBHOOK_SECRET is not set. Management endpoints (/setup-webhook, /webhook-info) "
+        "will be disabled. Set WEBHOOK_SECRET environment variable to enable them."
+    )
+
 # Cached dispatcher (stateless, can be reused)
 _dp: Dispatcher | None = None
 
@@ -49,7 +56,11 @@ def create_bot() -> Bot:
 def get_dispatcher() -> Dispatcher:
     """Get or create dispatcher instance with all routers configured.
 
-    Dispatcher is stateless and can be cached/reused across requests.
+    The dispatcher configuration (routers, handlers) is stateless and can be
+    cached/reused across requests. However, the FSM state storage uses MemoryStorage,
+    which is ephemeral in webhook/serverless mode - state will not persist across
+    cold starts or multiple instances. Users may need to restart with /start if
+    their session state is lost.
     """
     global _dp
     if _dp is None:
@@ -128,10 +139,16 @@ async def setup_webhook(request: Request):
     Requires WEBHOOK_SECRET as Authorization header for security.
     Example: curl -X POST -H "Authorization: Bearer YOUR_SECRET" https://your-domain.railway.app/setup-webhook
     """
+    # Endpoint disabled if WEBHOOK_SECRET is not configured
+    if not WEBHOOK_SECRET:
+        return Response(
+            status_code=503,
+            content="Endpoint disabled: WEBHOOK_SECRET environment variable not set"
+        )
+
     # Require authentication
     auth_header = request.headers.get("Authorization", "")
-    expected_auth = f"Bearer {WEBHOOK_SECRET}" if WEBHOOK_SECRET else ""
-    if not WEBHOOK_SECRET or auth_header != expected_auth:
+    if auth_header != f"Bearer {WEBHOOK_SECRET}":
         return Response(status_code=401, content="Unauthorized")
 
     if not WEBHOOK_URL:
@@ -167,10 +184,16 @@ async def webhook_info(request: Request):
     Requires WEBHOOK_SECRET as Authorization header for security.
     Example: curl -H "Authorization: Bearer YOUR_SECRET" https://your-domain.railway.app/webhook-info
     """
+    # Endpoint disabled if WEBHOOK_SECRET is not configured
+    if not WEBHOOK_SECRET:
+        return Response(
+            status_code=503,
+            content="Endpoint disabled: WEBHOOK_SECRET environment variable not set"
+        )
+
     # Require authentication
     auth_header = request.headers.get("Authorization", "")
-    expected_auth = f"Bearer {WEBHOOK_SECRET}" if WEBHOOK_SECRET else ""
-    if not WEBHOOK_SECRET or auth_header != expected_auth:
+    if auth_header != f"Bearer {WEBHOOK_SECRET}":
         return Response(status_code=401, content="Unauthorized")
 
     bot = create_bot()

@@ -6,10 +6,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 import pytest
 from fastapi.testclient import TestClient
 
-# Set required env vars before importing webhook module
-os.environ.setdefault("BOT_TOKEN", "test_token")
-os.environ.setdefault("PRO_CHANNEL_ID", "0")
-os.environ.setdefault("LOG_PATH", "/tmp/test_logs/action.csv")
+# Note: Environment variables are set in conftest.py before imports
 
 
 class TestWebhookHandler:
@@ -138,6 +135,14 @@ class TestSetupWebhook:
         from webhook.webhook import app
         return TestClient(app)
 
+    def test_setup_webhook_disabled_without_secret(self, client):
+        """Test that setup-webhook returns 503 when WEBHOOK_SECRET is not set."""
+        with patch("webhook.webhook.WEBHOOK_SECRET", ""):
+            response = client.post("/setup-webhook")
+
+            assert response.status_code == 503
+            assert "WEBHOOK_SECRET" in response.text
+
     def test_setup_webhook_without_auth_returns_401(self, client):
         """Test that setup-webhook requires authentication."""
         with patch("webhook.webhook.WEBHOOK_SECRET", "test_secret"):
@@ -191,6 +196,14 @@ class TestWebhookInfo:
         from webhook.webhook import app
         return TestClient(app)
 
+    def test_webhook_info_disabled_without_secret(self, client):
+        """Test that webhook-info returns 503 when WEBHOOK_SECRET is not set."""
+        with patch("webhook.webhook.WEBHOOK_SECRET", ""):
+            response = client.get("/webhook-info")
+
+            assert response.status_code == 503
+            assert "WEBHOOK_SECRET" in response.text
+
     def test_webhook_info_without_auth_returns_401(self, client):
         """Test that webhook-info requires authentication."""
         with patch("webhook.webhook.WEBHOOK_SECRET", "test_secret"):
@@ -223,4 +236,44 @@ class TestWebhookInfo:
                 assert response.status_code == 200
                 data = response.json()
                 assert data["url"] == "https://example.com/webhook"
+
+
+class TestMainModeSelection:
+    """Tests for main.py mode selection logic."""
+
+    def test_use_webhook_false_by_default(self):
+        """Test that USE_WEBHOOK defaults to false."""
+        with patch.dict(os.environ, {}, clear=False):
+            os.environ.pop("USE_WEBHOOK", None)
+            # Re-import to get fresh value
+            import importlib
+            import main
+            importlib.reload(main)
+            assert main.USE_WEBHOOK is False
+
+    def test_use_webhook_true_when_set(self):
+        """Test that USE_WEBHOOK is true when env var is 'true'."""
+        with patch.dict(os.environ, {"USE_WEBHOOK": "true"}):
+            import importlib
+            import main
+            importlib.reload(main)
+            assert main.USE_WEBHOOK is True
+
+    def test_use_webhook_case_insensitive(self):
+        """Test that USE_WEBHOOK parsing is case-insensitive."""
+        with patch.dict(os.environ, {"USE_WEBHOOK": "TRUE"}):
+            import importlib
+            import main
+            importlib.reload(main)
+            assert main.USE_WEBHOOK is True
+
+    def test_invalid_port_raises_system_exit(self):
+        """Test that invalid PORT value raises SystemExit."""
+        with patch.dict(os.environ, {"USE_WEBHOOK": "true", "PORT": "invalid"}):
+            import importlib
+            import main
+            importlib.reload(main)
+
+            with pytest.raises(SystemExit):
+                main.main()
 
