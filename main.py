@@ -29,7 +29,7 @@ async def run_polling():
     except Exception as e:
         logger.error(f"An error occurred: {e}")
     finally:
-        logger.info("Bot is stopping")
+        logger.warning("Bot is stopping")
         await bot.session.close()
 
 
