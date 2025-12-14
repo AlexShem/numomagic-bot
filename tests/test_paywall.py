@@ -1,5 +1,5 @@
 import time
-from middlewares.paywall import ChannelMembershipGate, CACHE_EXPIRY_SECONDS
+from middlewares.paywall import ChannelMembershipGate
 
 
 class TestChannelMembershipCache:
@@ -23,7 +23,7 @@ class TestChannelMembershipCache:
         assert middleware._is_cached(user_id)
         assert middleware._get_cached_membership(user_id) is False
 
-    def test_cache_with_zero_expiry_uese_default(self, middleware: ChannelMembershipGate):
+    def test_cache_with_zero_expiry_uses_default(self, middleware: ChannelMembershipGate):
         """Test that zero or negative expiry uses default expiry time (one day)."""
         user_id = 111
         middleware._set_cached_membership(user_id=user_id, is_member=True, expiry_seconds=0)
