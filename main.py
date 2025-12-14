@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv
 
 from logger.logger import get_logger
-from webhook.webhook import get_bot, get_dispatcher, app
+from webhook.webhook import create_bot, get_dispatcher, app
 
 load_dotenv()
 
@@ -15,7 +15,7 @@ logger = get_logger(__name__)
 async def run_polling():
     """Run bot in polling mode (for local development)."""
     logger.warning("Bot is starting in POLLING mode")
-    bot = get_bot()
+    bot = create_bot()
     dp = get_dispatcher()
 
     try:
