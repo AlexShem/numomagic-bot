@@ -164,7 +164,7 @@ async def setup_webhook(request: Request):
         await bot.delete_webhook(drop_pending_updates=True)
         await bot.set_webhook(
             url=webhook_url,
-            secret_token=WEBHOOK_SECRET if WEBHOOK_SECRET else None,
+            secret_token=WEBHOOK_SECRET,
             allowed_updates=dp.resolve_used_update_types(),
         )
 
