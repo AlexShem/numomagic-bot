@@ -36,4 +36,7 @@ COPY --from=builder /bot /app
 
 WORKDIR /app
 
+# Expose port for webhook mode (Railway uses PORT env var)
+EXPOSE 8000
+
 CMD ["uv", "run", "python", "main.py"]
