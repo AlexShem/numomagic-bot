@@ -34,6 +34,7 @@ logger = get_logger(__name__)
 
 # Cached dispatcher (stateless, can be reused)
 _dp: Dispatcher | None = None
+_cold_start = True  # Track if this is a cold start
 
 
 def create_bot() -> Bot:
@@ -49,8 +50,12 @@ def get_dispatcher() -> Dispatcher:
 
     Dispatcher is stateless and can be cached/reused across requests.
     """
-    global _dp
+    global _dp, _cold_start
     if _dp is None:
+        if _cold_start:
+            logger.info("Cold start: initializing dispatcher")
+            _cold_start = False
+
         dialog_router = Router()
         dialog_router.include_router(main_dialog)
         dialog_router.include_router(four_digits_dialog)
@@ -110,7 +115,10 @@ async def webhook_handler(request: Request) -> Response:
 @app.get("/health")
 async def health_check():
     """Health check endpoint for Railway monitoring."""
-    return {"status": "healthy", "bot": "running"}
+    return {
+        "status": "healthy",
+        "dispatcher_cached": _dp is not None,
+    }
 
 
 @app.post("/setup-webhook")
